@@ -1,0 +1,96 @@
+{% extends 'base.html' %}  {% load static %}
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+        <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+        
+    </head>
+    
+    {% block content %}
+    <link rel="stylesheet" href="{% static 'globalFeed.css' %}" />
+
+    <div class="container-1">
+        
+        <h1 class="feedTitle">Inicio</h1>
+        <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm">
+            {% csrf_token %}
+            <textarea name="content" cols="55" rows="10" required="" id="id_content" spellcheck="false"></textarea>
+            <button>
+                Twittear
+            </button>
+        </form>
+    </div>
+    
+    <div class="tweets">
+        
+        {% if error %}
+            <img src="{% static '8331572.jpg' %}" alt="" class="notFoundImage">
+            <h1 class="notCoincidence">No se encontraron coincidencias</h1>
+        {% endif %}
+        {% for tweet in tweets %}
+             {% include 'Tweet.html' %}
+        {% endfor %}
+    </div>
+   
+   
+        
+
+        <script>
+            const msgButtons = document.querySelectorAll('.msgButton')
+            const modal = document.querySelector('.modal')
+            const cerrarModales = document.querySelectorAll('.modal_close')
+            const divContent = document.querySelectorAll('.div-content')            
+            const form = document.querySelector('.modal_container form');
+        
+            
+            msgButtons.forEach(button=>{
+                
+                button.addEventListener('click', (e)=>{
+                    e.preventDefault()  
+                    modal.classList.add('modal--show')
+                    const tweetId = button.id
+                    form.action = `tweet/response/${tweetId}`
+
+                })
+            })
+           
+            for(cerrarModal of cerrarModales){
+
+                cerrarModal.addEventListener('click', (e)=>{
+                    e.preventDefault()
+                    modal.classList.remove('modal--show')
+                })
+            }
+            
+            const optionButtons = document.querySelectorAll('.optionButtons')
+            const options = document.querySelectorAll('.options')
+            const messages = document.querySelectorAll('.tweetMessage')
+            optionButtons.forEach(button=>{
+                button.addEventListener('click', (e)=>{
+                    e.stopPropagation()
+                    e.preventDefault();
+                    option = button.nextElementSibling
+                        if(option.getAttribute('data') == "true"){
+                            option.style.display = "none"
+                            option.setAttribute('data', 'false');
+
+                        }else{
+                            option.style.display = "flex"
+                            option.setAttribute('data', 'true');
+                        }
+                        
+                    
+                        
+                })
+            })
+
+
+        </script>
+
+
+{% endblock content %}
+</html>

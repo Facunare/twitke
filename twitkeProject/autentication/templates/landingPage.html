@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% comment %} {% load socialaccount %} {% endcomment %}
+{% comment %} {% providers_media_js %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    
+    <main class="main-singin">
+        
+    </main>
+    <footer>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">LOG OUT</a></li>
+          {% else %}
+          <li><a href="{% url 'signup' %}">SIGN UP</a></li>
+          <li><a href="{% url 'signin' %}">SIGN IN</a></li>
+          {% endif %}
+    </footer>
+    {% endblock content %}
+
+</body>
+</html>

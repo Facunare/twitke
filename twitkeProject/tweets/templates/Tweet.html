@@ -1,0 +1,75 @@
+<a href="{% url 'tweetDetails' tweet.id %}" class="tweet">
+    <div class="div-content" id="{{tweet.id}}">
+        <div class="tweetHead">
+            
+            <form action="{% url 'myProfile' tweet.user.username %}">
+                <button class="usernameTweet">{{tweet.user.username}}</button>
+            </form>
+            <div class="tweetOptions">                         
+                <button  class="optionButtons" data="true"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M479.858 896Q460 896 446 881.858q-14-14.141-14-34Q432 828 446.142 814q14.141-14 34-14Q500 800 514 814.142q14 14.141 14 34Q528 868 513.858 882q-14.141 14-34 14Zm0-272Q460 624 446 609.858q-14-14.141-14-34Q432 556 446.142 542q14.141-14 34-14Q500 528 514 542.142q14 14.141 14 34Q528 596 513.858 610q-14.141 14-34 14Zm0-272Q460 352 446 337.858q-14-14.141-14-34Q432 284 446.142 270q14.141-14 34-14Q500 256 514 270.142q14 14.141 14 34Q528 324 513.858 338q-14.141 14-34 14Z"/></svg></button>
+                <div class="options" optionsId="{{tweet.id}}">
+                    <ul>
+                        {% if  tweet.user.username == user.username %}
+                            <form action="{% url 'deleteTweet' tweet.id %}" class="deleteForm">
+                                <button>
+                                    Delete
+                                </button>
+                            </form>
+                            
+                            
+                            <li>Editar</li>
+                            {% else %}
+                            <li>Dejar de seguir</li>
+                            
+                            {% endif %}
+                        </ul>
+                </div>
+            </div>                                              
+        </div>
+        
+        <span class="tweetMessage">{{tweet.content}}</span>
+        
+        
+        <div class="buttons">
+            <button class="msgButton" id="{{tweet.id}}">
+                    <svg class="msgSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                    </svg>
+                </button>
+                <form action="{% url 'like' tweet.id %}" class="likeForm">
+                    <button class="likeBtn">
+                        {% if request.user in tweet.likes_users.all %}
+                        <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="red"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        {% else %}                                           
+                            <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" ><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                        {% endif %}
+                    </button>
+                    {% if tweet.likes != 0 %}
+                    <p>{{tweet.likes}}</p>
+                    {% endif %}
+                </form>
+                <form>
+                    <button>
+                        <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
+                    </button>
+                    
+                </form>
+                
+            </div>
+
+            
+        </a>
+    </div>        
+    <section class="modal">
+        <div class="modal_container">
+            <button href="#" class="modal_close">X</button>
+            <form action="{% url 'responseTweet' tweet.id %}" method="POST" class="formResponse" > 
+                {% csrf_token %}
+                <input type="text" class="response" name="contentResponse" placeholder="Twittea tu respuesta..." autocomplete="off">
+                <button class="responseButton">
+                    Twittear
+                </button>
+            </form>
+        </div>
+    </section>

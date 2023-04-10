@@ -1,0 +1,172 @@
+{% extends 'base.html' %} {% load static %}
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    
+    {% block content %}
+    <link rel="stylesheet" href="{% static 'tweetDetail.css' %}" />
+    <link rel="stylesheet" href="{% static 'globalFeed.css' %}"S>
+        <header class="headerDetail">
+            <div class="backNav">
+                
+                <div class="firstNav">
+
+                    <a href="#" onclick="volverAlTweetAnterior();"><svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 96 1000 700" width="48"><path d="M480 896 160 576l320-320 42 42-248 248h526v60H274l248 248-42 42Z"/></svg></a>
+                    
+                    <h3>Tweet</h3>
+                </div>
+                {% if  parent_tweet.user.username == user.username %}
+                    <form action="{% url 'deleteTweet' parent_tweet.id %}" class="deleteForm">
+                        <button>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48" fill="red"><path d="M261 936q-24.75 0-42.375-17.625T201 876V306h-41v-60h188v-30h264v30h188v60h-41v570q0 24-18 42t-42 18H261Zm438-630H261v570h438V306ZM367 790h60V391h-60v399Zm166 0h60V391h-60v399ZM261 306v570-570Z"/></svg>
+                        </button>
+                    </form>                                          
+                {% endif %}
+            </div>
+            <div class="parent_tweet">
+                <form action="{% url 'myProfile' parent_tweet.user.username %}">
+                    <button class="usernameTweet" style="color:white">{{parent_tweet.user.username}}</button>
+                </form>
+                <p class="atName">@{{profile.username}}</p>
+                <p class="content">{{parent_tweet.content}}</p>
+                
+                
+                
+                <div class="dataSection">
+                    
+                    <p>{{parent_tweet.likes}} Me gusta</p>
+                    <p class="responses">0 respuestas</p>
+                    <p>0 Retweets</p>
+                </div>
+                <div class="buttons">
+                    <button class="msgButton" id="{{parent_tweet.id}}">
+                        <svg class="msgSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgba(113, 118, 123, 1)">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                        </svg>
+                    </button>
+                    <form action="{% url 'like' parent_tweet.id %}" class="likeForm">
+                        <button class="likeBtn">
+                            {% if request.user in parent_tweet.likes_users.all %}
+                            <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="red"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            {% else %}                                           
+                                <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"fill="rgba(113, 118, 123, 1)" ><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            {% endif %}
+                        </button>
+                        {% if tweet.likes != 0 %}
+                        <p>{{tweet.likes}}</p>
+                        {% endif %}
+                    </form>
+                    <form>
+                        <button>
+                            <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgba(113, 118, 123, 1)"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
+                        </button>
+                        
+                    </form>
+                </div>
+                <p class="created">{{parent_tweet.created_at}}</p>
+            
+            </div class="responses">                                              
+    
+                {% for tweet in tweets %}
+                   
+                    {% include 'Tweet.html' %}    
+                
+                {% endfor %}
+                
+                
+            </div>      
+        </div>
+            <section class="modal">
+                <div class="modal_container">
+                    <button href="#" class="modal_close">X</button>
+                    <form action="{% url 'responseTweet' parent_tweet.id %}" method="POST" class="formResponse" > 
+                        {% csrf_token %}
+                        <input type="text" class="response" name="contentResponse" placeholder="Twittea tu respuesta..." autocomplete="off">
+                        <button class="responseButton">
+                            Twittear
+                        </button>
+                    </form>
+                </div>
+            </section>
+            
+        </header>
+       
+        <script>
+            const msgButtons = document.querySelectorAll('.msgButton')
+            const modal = document.querySelector('.modal')
+            const cerrarModales = document.querySelectorAll('.modal_close')
+            const divContent = document.querySelectorAll('.div-content')            
+            const form = document.querySelector('.modal_container form');
+            const responses = document.querySelector('.responses')
+
+            responses.innerHTML = messageCount + ' respuestas'
+
+            
+            msgButtons.forEach(button=>{
+                
+                button.addEventListener('click', (e)=>{
+                    e.preventDefault()  
+                    modal.classList.add('modal--show')
+                    const tweetId = button.id
+                    console.log(tweetId)
+                    form.action = `../../tweet/response/${tweetId}`
+
+                })
+            })
+        
+            for(cerrarModal of cerrarModales){
+
+                cerrarModal.addEventListener('click', (e)=>{
+                    e.preventDefault()
+                    modal.classList.remove('modal--show')
+                })
+            }
+            
+            const optionButtons = document.querySelectorAll('.optionButtons')
+            const options = document.querySelectorAll('.options')
+
+            optionButtons.forEach(button=>{
+                button.addEventListener('click', ()=>{
+
+                    option = button.nextElementSibling
+                        if(option.getAttribute('data') == "true"){
+                            option.style.display = "none"
+                            option.setAttribute('data', 'false');
+
+                        }else{
+                            option.style.display = "flex"
+                            option.setAttribute('data', 'true');
+                        }
+                        
+                    
+                        
+                })
+            })
+
+            function volverAlTweetAnterior() {
+                const referrer = document.referrer;
+                const tweetRegExp = /^\/tweet\/detail\/\d+$/;
+                
+                if (tweetRegExp.test(referrer)) {
+                 
+                    window.location.href = referrer;
+                  // si la URL anterior es un tweet, redirigir al usuario a esa página
+                } else {
+                    // si no es un tweet, simplemente hacer history.back()
+                    history.back();
+                
+                }
+              }
+              
+              // evento para detectar cuando se utiliza el botón de retroceso
+              window.addEventListener('popstate', volverAlTweetAnterior);
+
+
+        </script>
+        {% endblock content %}
+</html>

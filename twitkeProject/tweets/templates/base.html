@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'base.css' %}" />
+    <title>Buy</title>
+
+  </head>
+  <body>
+    <div class="container">
+
+      <nav class="navbar-1">
+          <ul>
+            <img src="{% static 'logo.png' %}"></img>
+            <li><a href="{% url 'globalFeed' %}">INICIO</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'myProfile' user.username %}">MI PERFIL</a></li>
+            <li><a href="{% url 'logout' %}">LOG OUT</a></li>
+            
+            {% else %}
+            <li><a href="{% url 'signup' %}">SIGN UP</a></li>
+            <li><a href="{% url 'signin' %}">SIGN IN</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+        
+        <main class="baseMain">
+
+          {% block content %}
+          
+          {% endblock %}
+        </main>
+      
+     
+      
+      <nav class="navbar-2">
+        <form action="{% url 'search' %}">
+              <input type="text" class="searchbar" name="search">
+              <button>
+                Search
+              </button>
+            </form>
+      </nav>
+    </div>
+  </body>
+</html>
+

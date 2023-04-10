@@ -1,0 +1,263 @@
+
+.container-1{
+    width: 100%;
+  
+}
+
+.tweetMessage{
+    z-index: 1000000000000;
+    cursor: default;
+}
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 100vh;
+}
+.feedTitle{
+    font-size: 23px;
+    margin-left: 25px;
+}
+.postTweetForm{
+    width: 100%;
+}
+#id_content{
+    width: 100%;
+    outline: none;
+}
+
+.postTweetForm button{
+    position: absolute;
+    top: 225px;
+    color: white;
+    left: 410px;
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 20px;
+    padding: 5px;
+    border: none;
+    background-color: #368a8e;
+}
+
+.postTweetForm button:hover{
+    background-color: #41aaaf;
+}
+.tweet{
+    text-decoration: none;
+    color: black;
+    z-index: 0;
+}
+
+.tweets{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 40vw;
+}
+
+.div-content{
+    display: flex;
+    flex-direction: column;
+    margin: 0 10px 10px 0;
+    height: auto;
+    padding-left: 15px;
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+
+
+.div-content .usernameTweet{
+    text-decoration: none;
+    color: black;
+    background-color: transparent;
+    border: none;
+    font-size: 17px;
+    cursor: pointer;
+    
+}
+
+.tweetHead{
+    display: flex;
+    justify-content: space-between;
+}
+
+.tweetHead button{
+    margin-right: 30px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.tweetOptions div{
+    height: auto;
+    background-color: #7dcace;
+    position: absolute;
+    width: 100px;
+    padding: 5px;
+    transform: translate(-120px, -50px);
+    font-size: 15px;
+    display: none;
+}
+
+.tweetOptions button{
+    position: relative;
+    color: white;
+    font-size: 15px;
+    z-index: 1000000;
+    
+}
+
+.tweetOptions button:hover{
+    color: #616464;
+    
+}
+
+.tweetHead svg{
+    width: 24px;
+
+}
+
+
+.div-content .usernameTweet:hover{
+    text-decoration: underline black 2px;
+}
+
+.div-content:last-child{
+    border: 1px solid black;
+    
+}
+
+.buttons{
+    display: flex;
+}
+
+textarea{
+    width: 34vw;
+    resize: none;
+    padding: 15px;
+}
+
+
+.buttons button{
+    background: transparent;
+    border: none;
+    padding: 10px 10px 5px 0;
+    cursor: pointer;
+}
+
+.msgSvg:hover{
+    fill: rgb(66, 66, 233);
+}
+
+.likeSvg:hover{
+    fill: rgb(236, 52, 52);
+}
+
+.retweetSvg:hover{
+    fill: rgb(15, 184, 15);
+}
+
+.likeForm{
+    display: flex;
+    align-items: center;
+}
+
+.likeForm p{
+    text-decoration: none;
+    pointer-events: none;
+    transform: translateX(-7px);
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    z-index: 10000;
+    background-color: #0000003f;
+    opacity: 0;
+    transition: opacity .1s;
+    pointer-events: none;
+}
+
+.modal_container{
+    width: 90%;
+    background-color: white;
+    margin: auto;
+    max-width: 600px;
+    max-height: 90%;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 2em;
+
+}
+
+.modal_container form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal_container input{
+    padding: 10px 0 150px 10px;
+    width: 100%;
+    outline: none;
+    
+}
+
+.modal_container .responseButton{
+    right: 0;
+    align-self: end;
+    margin-top: 15px;
+    height: 40px;
+    width: 100px;
+    border-radius: 15px;
+    color: white;
+    font-size: 17px;
+    border: none;
+    background-color: #368a8e;
+    transition: background-color ease-in-out .1s;
+    cursor: pointer;
+}
+
+.modal_container .responseButton:hover{
+    background-color: #45b4b9;
+}
+
+.modal_close{
+    text-decoration: none;
+    color: black;
+    display: inline;
+    cursor: pointer;
+    border-radius: 6px;
+    align-self: flex-start;
+    font-weight: 300;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: transparent;
+    padding: 0 2px;
+}
+
+
+.modal--show{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .1s;
+}
+
+.notCoincidence{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.notFoundImage{
+    width: 300px;
+    align-self: center;
+
+}

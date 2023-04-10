@@ -1,0 +1,127 @@
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.profile{
+    width: 100%;
+}
+.profile-banner{
+    height: 20vh;
+    width: 100%;
+    background-color: rgb(128, 175, 228);
+}
+.profile-info{
+    width: 100%;
+    height: auto;
+    background-color: rgba(22, 32, 42, 1);
+    color: white;
+    padding: 10px;
+    padding-left: 20px;
+}
+
+.atName, .createdAt {
+    color: rgba(113, 118, 123, 1);
+    font-weight: 100;
+    font-size: 13px;
+}
+.createdAt{
+    margin-top: 10px;
+}
+.followers-info{
+    margin-top: 15px;
+    display: flex;
+    gap: 20px;
+}
+
+.cant_followers, h4{
+    bottom: 0;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    
+}
+
+.followName{
+    display: flex;
+    gap: 20px;
+}
+
+.followButton{
+    padding: 2px;
+    border-radius: 10px;
+    width: 80px;
+    cursor: pointer;
+
+}
+
+.followButton:Hover{
+    background-color: rgb(207, 201, 201);
+}
+
+.myTweets{
+    font-size: 15px;
+    margin-top: 20px;
+    border-bottom: 3px solid rgb(37, 138, 179);  
+    display: inline-block;
+}
+
+span{
+    color: rgba(113, 118, 123, 1);
+    font-weight: 100;
+}
+
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    z-index: 10000;
+    background-color: #0000003f;
+    opacity: 0;
+    transition: opacity .1s;
+    pointer-events: none;
+}
+
+.modal_container{
+    width: 90%;
+    background-color: white;
+    margin: auto;
+    max-width: 600px;
+    max-height: 90%;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 2em;
+
+}
+
+
+.modal_close{
+    text-decoration: none;
+    color: black;
+    display: inline;
+    cursor: pointer;
+    border-radius: 6px;
+    align-self: flex-start;
+    font-weight: 300;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: transparent;
+    padding: 0 2px;
+}
+
+
+.modal--show{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .1s;
+}

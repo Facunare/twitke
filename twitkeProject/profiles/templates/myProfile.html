@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <link rel="stylesheet" href="{% static 'myProfile.css' %}">
+    <link rel="stylesheet" href="{% static 'globalFeed.css' %}">
+        <div class="profile">
+            <div class="profile-banner">
+                <!-- <img src="#"> -->
+            </div>
+            <div class="profile-info">
+                <div class="followName">
+
+                    <h3 class="username">{{usuario.user.username}}</h3>
+                    {% if not is_self %}
+                            {% if request.user not in usuario.followers_users.all %}
+                            <form action="{% url 'follow' id=usuario.id %}?return_url={{ request.path }}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="followButton">Follow</button>
+                            </form>
+                            {% else %}
+                            <form action="{% url 'follow' id=usuario.id %}?return_url={{ request.path }}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="followButton">Unfollow</button>
+                            </form>
+                        {% endif %}       
+                    {% endif %}
+                </div>
+                <h4 class="atName">@{{usuario.username}}</h4>                
+                <h4 class="createdAt">Se union en {{ usuario.created_at|date:"F" }} de {{ usuario.created_at|date:"Y" }}</h4>
+                <div class="followers-info">
+                    {% if cant_followers == 1 %}
+                        <a href="#" class="cant_followers">{{cant_followers}} <span>seguidor</span></a>
+                    {% else %}
+                        <a href="#" class="cant_followers">{{cant_followers}} <span>seguidores</span></a>
+                    {% endif %}
+                    <h4>0 <span>siguiendo</span></h4>
+                </div>
+                <h1 class="myTweets">Mis tweets</h1>
+            </div>
+            <section class="modal">
+                <div class="modal_container">
+                    <button href="#" class="modal_close">X</button>
+                    <h1>Seguidores</h1>
+                    <div class="seguidores">
+                        {% for follower in followers %}
+                            <div class="seguidor">
+
+                                <p>{{follower.username}}</p>
+                                
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </section>
+                
+    
+            {% for tweet in tweets %}
+
+                    {% include 'Tweet.html' %}
+            {% endfor %}
+        </div>
+        <script>
+            const modal = document.querySelector('.modal')
+            const cerrarModal = document.querySelector('.modal_close')
+            const button = document.querySelector('.cant_followers')
+            button.addEventListener('click', (e)=>{
+                e.preventDefault()  
+                modal.classList.add('modal--show')
+                
+
+            })
+
+            cerrarModal.addEventListener('click', (e)=>{
+                e.preventDefault()
+                modal.classList.remove('modal--show')
+            })
+            
+            
+            const optionButtons = document.querySelectorAll('.optionButtons')
+            const options = document.querySelectorAll('.options')
+            const messages = document.querySelectorAll('.tweetMessage')
+            optionButtons.forEach(button=>{
+                button.addEventListener('click', (e)=>{
+                    e.stopPropagation()
+                    e.preventDefault();
+                    option = button.nextElementSibling
+                        if(option.getAttribute('data') == "true"){
+                            option.style.display = "none"
+                            option.setAttribute('data', 'false');
+
+                        }else{
+                            option.style.display = "flex"
+                            option.setAttribute('data', 'true');
+                        }
+                        
+                    
+                        
+                })
+            })
+
+
+        </script>
+            
+    {% endblock content %}
+
+        
+</body>
+</html>

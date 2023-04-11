@@ -261,3 +261,14 @@ textarea{
     align-self: center;
 
 }
+
+.fotoPerfil{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.fotoPerfil svg, .fotoPerfil button{
+    width: 35px;
+}

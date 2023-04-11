@@ -76,7 +76,7 @@ span{
 }
 
 
-.modal{
+.modal, .modal2{
     position: fixed;
     top: 0;
     left: 0;
@@ -178,4 +178,27 @@ span{
 
 .usernameTweet:hover{
     text-decoration: underline black;
+}
+
+.top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editButton{
+    margin-right: 50px;
+    border-radius: 5px;
+    background-color: rgba(113, 118, 123, 0.514);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 7px;
+    color: white;
+    transition: background-color .3s ease, color .3s ease-in-out;
+}
+
+.editButton:hover{
+    background-color: white;
+    color: black;
 }

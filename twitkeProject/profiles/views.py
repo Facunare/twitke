@@ -8,11 +8,12 @@ def myProfile(request, account):
     
     user = Profiles.objects.get(username=account)
     followers = user.followers_users.all()
-    
+    current_profile = Profiles.objects.get(user__username = request.user.username)
     cant_followers = int(user.followers)
     tweets = Tweet.objects.filter(user__username=account).all()
     return render(request, 'myProfile.html', {
         'usuario': user,
+        'current_user': current_profile,
         'is_self': request.user.is_authenticated and request.user.username == account,
         'followers': followers,
         'cant_followers': cant_followers,
@@ -21,14 +22,14 @@ def myProfile(request, account):
     
 def follow(request, id):
     profile = Profiles.objects.get(id=id)
-    user = request.user
-    if user in profile.followers_users.all():
-        profile.followers_users.remove(request.user)      
+    current_profile = Profiles.objects.get(user__username = request.user.username)
+    if current_profile in profile.followers_users.all():
+        profile.followers_users.remove(current_profile)      
         profile.followers -= 1
         profile.save()
         followed = False
     else:
-        profile.followers_users.add(request.user)
+        profile.followers_users.add(current_profile)
         profile.followers += 1
         profile.save()
         followed = True

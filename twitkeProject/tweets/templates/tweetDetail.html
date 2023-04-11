@@ -104,7 +104,7 @@
             const form = document.querySelector('.modal_container form');
             const responses = document.querySelector('.responses')
 
-            responses.innerHTML = messageCount + ' respuestas'
+            // responses.innerHTML = messageCount + ' respuestas'
 
             
             msgButtons.forEach(button=>{
@@ -112,6 +112,7 @@
                 button.addEventListener('click', (e)=>{
                     e.preventDefault()  
                     modal.classList.add('modal--show')
+                    console.log("hola")
                     const tweetId = button.id
                     console.log(tweetId)
                     form.action = `../../tweet/response/${tweetId}`
@@ -129,10 +130,12 @@
             
             const optionButtons = document.querySelectorAll('.optionButtons')
             const options = document.querySelectorAll('.options')
-
+            const messages = document.querySelectorAll('.tweetMessage')
             optionButtons.forEach(button=>{
-                button.addEventListener('click', ()=>{
-
+                button.addEventListener('click', (e)=>{
+                    e.stopPropagation()
+                    e.preventDefault();
+                    console.log("hola")
                     option = button.nextElementSibling
                         if(option.getAttribute('data') == "true"){
                             option.style.display = "none"

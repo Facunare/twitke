@@ -125,3 +125,57 @@ span{
     pointer-events: unset;
     transition: opacity .1s;
 }
+.seguidores{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.seguidor{
+    width: 100%;
+    border: 1px solid rgba(113, 118, 123, 1);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 20px;
+}
+
+.username p:first-child{
+    font-weight: bolder;
+}
+
+.username p:last-child{
+    font-size: 13px;
+}
+
+.seguidor:first-child{
+    margin-top: 20px;
+}
+
+.seguidor .follow{
+    width: 100px;
+    height: 100%;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: rgba(113, 118, 123, 0.514);
+    color: white;
+}
+
+.seguidor .follow:hover{
+    background-color: rgba(113, 118, 123, 0.603);
+}
+
+.profile-info svg{
+    width: 80px;
+}
+
+.usernameTweet{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.usernameTweet:hover{
+    text-decoration: underline black;
+}

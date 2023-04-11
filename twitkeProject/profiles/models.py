@@ -10,7 +10,7 @@ class Profiles(models.Model):
     biography = models.TextField(max_length=250,  null=True, default="", blank=True)
     profileImage = models.ImageField(null=True, blank=True, upload_to='profileImages')
     followers = models.IntegerField(default=0)
-    followers_users = models.ManyToManyField(User, related_name="followers_users", null=True, blank=True)
+    followers_users = models.ManyToManyField('self', related_name="followers_users", blank=True)
     followed_users = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
     birthday = models.DateField(null=True, default=timezone.now)
     created_at = models.DateTimeField(auto_now_add=True)

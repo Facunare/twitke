@@ -51,6 +51,8 @@
                 
                 button.addEventListener('click', (e)=>{
                     e.preventDefault()  
+                    e.stopPropagation()
+                    console.log(1)
                     modal.classList.add('modal--show')
                     const tweetId = button.id
                     form.action = `tweet/response/${tweetId}`

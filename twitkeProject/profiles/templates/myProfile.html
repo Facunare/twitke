@@ -89,9 +89,21 @@
                                     <p>@{{follower.username}}</p>
 
                                 </div>
-                                <form action="">
-                                    <button class="follow">Seguir</button>
-                                </form>
+                                <!-- {% if follower.user.id == current_profile.user.id  %} -->
+                                    {% if current_user not in follower.followers_users.all %}
+                                        <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton">Follow</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton">Unfollow</button>
+                                        </form>
+                                    {% endif %}
+                            
+                                    
+                                <!-- {% endif %} -->
                             </div>
                         {% endfor %}
 

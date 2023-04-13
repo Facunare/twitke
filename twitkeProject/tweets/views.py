@@ -7,12 +7,11 @@ from .models import Tweet
 from profiles.models import Profiles
 # Create your views here.
 
+# 1. Buscardor de profiles en followers 
 
 # 2. Profiles (in process).
 
 # 3. Retweet
-
-# 4. Trends
 
 # 5. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
 
@@ -22,15 +21,12 @@ from profiles.models import Profiles
 
 # 8. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 9. messenger (lo menos probable que haga)
-
 # 10. Ajax en botones
 
 # 11. Buscar usuarios en el buscador
 
 # Errores boludos:
 # 2. Arreglar cuando se crea un usuario con gmail.
-# 3. Que se pueda seleccionar el texto del tweet
 
 def globalFeed(request):
     tweets = Tweet.objects.all().filter(parent_tweet = None)

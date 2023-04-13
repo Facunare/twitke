@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 from django.contrib.auth.models import User
 # Create your models here.
 
@@ -10,4 +11,3 @@ class Tweet(models.Model):
     likes_users = models.ManyToManyField(User, related_name="likes_tweets")
     retweets = models.IntegerField(default=0)
     parent_tweet = models.IntegerField(null=True)
-    

@@ -272,3 +272,9 @@ textarea{
 .fotoPerfil svg, .fotoPerfil button{
     width: 35px;
 }
+
+.timeAgo{
+    font-size: 13px;
+    margin-left: 10px;
+    
+}

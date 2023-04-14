@@ -71,7 +71,7 @@
                     {% else %}
                         <a href="#" class="cant_followers">{{cant_followers}} <span>seguidores</span></a>
                     {% endif %}
-                    <h4>0 <span>siguiendo</span></h4>
+                    <a href="#" class="following">{{cant_following}}<span  class="cant_following">siguiendo</span></a>
                 </div>
                 <h1 class="myTweets">Mis tweets</h1>
             </div>
@@ -110,6 +110,41 @@
                     </div>
                 </div>
             </section>
+            <section class="modal3">
+                <div class="modal_container3">
+                    <button href="#" class="modal_close">X</button>
+                    <h1>Siguiendo</h1>
+                    <div class="siguiendo">
+                        {% for follow in following %}
+                            <div class="seguidor">
+                                <div class="username">
+                                    <form action="{% url 'myProfile' follow.user.username %}">
+                                        <button class="usernameTweet">{{follow.user.username}}</button>
+                                    </form>
+                                    <p>@{{follow.username}}</p>
+
+                                </div>
+                                <!-- {% if follower.user.id == current_profile.user.id  %} -->
+                                    {% if current_user not in follower.followers_users.all %}
+                                        <form action="{% url 'follow' id=follow.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton">Follow</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'follow' id=follow.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton">Unfollow</button>
+                                        </form>
+                                    {% endif %}
+                            
+                                    
+                                <!-- {% endif %} -->
+                            </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </section>
                 <div class="tweets">
 
                     {% for tweet in tweets %}
@@ -122,19 +157,31 @@
         <script>
             const modal = document.querySelector('.modal')
             const modal2 = document.querySelector('.modal2')
+            const modal3 = document.querySelector('.modal3')
             const cerrarModales = document.querySelectorAll('.modal_close')
             const button = document.querySelector('.cant_followers')
+            const following = document.querySelector('.following')
             button.addEventListener('click', (e)=>{
                 e.preventDefault()  
                 modal.classList.add('modal--show')
                 
 
             })
+
+            following.addEventListener('click', (e)=>{
+                e.preventDefault()  
+                modal3.classList.add('modal--show')
+            })
+
+
+
+
             for(let cerrarModal of cerrarModales){
                 cerrarModal.addEventListener('click', (e)=>{
                     e.preventDefault()
                     modal.classList.remove('modal--show')
                     modal2.classList.remove('modal--show')
+                    modal3.classList.remove('modal--show')
                 })
             }
             

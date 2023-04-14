@@ -5,19 +5,27 @@ from .models import Profiles, Tweet
 
 def myProfile(request, account):
     
-    
+    current_profile = ""
     user = Profiles.objects.get(username=account)
     followers = user.followers_users.all()
-    current_profile = Profiles.objects.get(user__username = request.user.username)
+    following = user.followed_users.all()
+    if request.user.is_authenticated and request.user.username == account:
+        current_profile = Profiles.objects.get(user__username = request.user.username)
+    else:
+        print(1)
     cant_followers = int(user.followers)
     tweets = Tweet.objects.filter(user__username=account).all()
+    cant_following = user.followed_users.all().count()
+    print(cant_following)
     return render(request, 'myProfile.html', {
         'usuario': user,
         'current_user': current_profile,
         'is_self': request.user.is_authenticated and request.user.username == account,
         'followers': followers,
         'cant_followers': cant_followers,
-        'tweets': tweets
+        'tweets': tweets,
+        'cant_following': cant_following,
+        'following': following
     })
     
 def follow(request, id):
@@ -33,6 +41,11 @@ def follow(request, id):
         profile.followers += 1
         profile.save()
         followed = True
+    if profile in current_profile.followed_users.all():
+        current_profile.followed_users.remove(profile)
+    else:
+        current_profile.followed_users.add(profile)
+
 
     return_url = request.GET.get('return_url')
     if return_url:

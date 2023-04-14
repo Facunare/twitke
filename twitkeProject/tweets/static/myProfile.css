@@ -38,7 +38,7 @@ main{
     gap: 20px;
 }
 
-.cant_followers, h4{
+.cant_followers, h4, .following{
     bottom: 0;
     text-decoration: none;
     color: white;
@@ -76,7 +76,7 @@ span{
 }
 
 
-.modal, .modal2{
+.modal, .modal2, .modal3{
     position: fixed;
     top: 0;
     left: 0;
@@ -90,7 +90,7 @@ span{
     pointer-events: none;
 }
 
-.modal_container{
+.modal_container, .modal_container3{
     width: 90%;
     background-color: white;
     margin: auto;
@@ -214,3 +214,6 @@ span{
     padding: 0;
 }
 
+.cant_following{
+    padding-left: 5px;
+}

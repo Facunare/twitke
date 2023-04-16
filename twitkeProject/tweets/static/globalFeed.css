@@ -3,6 +3,25 @@
     width: 100%;
   
 }
+.containerKept{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    flex-direction: column;
+}
+
+.containerKept h1{
+    border-bottom: 1px solid black;
+    margin-bottom: 50px;
+    padding: 20px;
+}
+.containerKept h2{
+    text-align: center;
+    font-size: 40px;
+}
+
+
 
 .tweetMessage{
     z-index: 1000000000000;
@@ -28,16 +47,14 @@ main{
 }
 
 .postTweetForm button{
-    position: absolute;
-    top: 225px;
     color: white;
-    left: 410px;
     cursor: pointer;
     margin-left: 5px;
     border-radius: 20px;
     padding: 5px;
     border: none;
     background-color: #368a8e;
+    transform: translate(20px, -50px);
 }
 
 .postTweetForm button:hover{
@@ -125,7 +142,6 @@ main{
 
 .div-content:last-child{
     border: 1px solid black;
-    
 }
 
 .buttons{
@@ -157,6 +173,11 @@ textarea{
 .retweetSvg:hover{
     fill: rgb(15, 184, 15);
 }
+
+.keepSvg:hover{
+    fill: rgb(211, 165, 15);
+}
+
 
 .likeForm{
     display: flex;

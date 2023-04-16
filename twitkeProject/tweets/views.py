@@ -7,7 +7,6 @@ from .models import Tweet
 from profiles.models import Profiles
 # Create your views here.
 
-# 1. Buscardor de profiles en followers 
 
 # 2. Profiles (in process).
 
@@ -16,8 +15,6 @@ from profiles.models import Profiles
 # 5. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
 
 # 6. Function for the post of tweets. (add images, emojis, self location, pools)
-
-# 7. Keep tweets. ("guardados section")
 
 # 8. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
@@ -30,10 +27,11 @@ from profiles.models import Profiles
 
 def globalFeed(request):
     tweets = Tweet.objects.all().filter(parent_tweet = None)
-    
+    profile = Profiles.objects.get(user=request.user)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
-            'tweets': tweets
+            'tweets': tweets,
+            'profile': profile
     })
 
 @login_required
@@ -97,4 +95,27 @@ def searchTweet(request):
 
     return render(request, 'globalFeed.html',{
         'tweets': tweets
+    })
+    
+def keepTweets(request, tweetId):
+    tweet = Tweet.objects.get(id=tweetId)
+    profile = Profiles.objects.get(user=request.user)
+
+    if tweet in profile.keeps.all():
+        profile.keeps.remove(tweet)
+        kept = False
+    else:
+        profile.keeps.add(tweet) 
+        kept = True
+    
+    
+    
+    return redirect(request.META.get('HTTP_REFERER', '/'), {'kept': kept})
+    
+def keeped(request, account):
+    profile = Profiles.objects.get(username=account)
+    keptTweets = profile.keeps.all()
+    return render(request, 'keptTweets.html', {
+        'keeps': keptTweets,
+        'profile': profile
     })

@@ -10,5 +10,6 @@ urlpatterns = [
     path('like/<int:id>', views.like, name="like"),
     path('like/<int:id>/delete', views.deleteTweet, name="deleteTweet"),
     path('search/', views.searchTweet, name="search"),
-    
+    path('keep/<int:tweetId>', views.keepTweets, name="keepTweets"),
+    path('keepTweets/<str:account>', views.keeped, name="keeped"),
 ]

@@ -24,6 +24,8 @@ def signup(request):
                     Profiles.objects.create(id = user.id, user = user, username = user.username)
                 except Exception as e:
                     print(e)
+                    
+                
                 return redirect('/signin/')
             except:
                 

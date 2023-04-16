@@ -18,6 +18,7 @@
             <li><a href="{% url 'globalFeed' %}">INICIO</a></li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'myProfile' user.username %}">MI PERFIL</a></li>
+            <li><a href="{% url 'keeped' user.username %}">GUARDADOS</a></li>
             <li><a href="{% url 'logout' %}">LOG OUT</a></li>
             
             {% else %}

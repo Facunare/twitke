@@ -1,0 +1,29 @@
+{% extends 'base.html' %}{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy</title>
+    
+  </head>
+  <body>
+    {% block content %}
+    <link rel="stylesheet" href="{% static 'globalFeed.css' %}" />
+    <div class="containerKept">
+      <h1>Tweets guardados</h1>
+      {% if keeps.all|length == 0 %}
+          <h2>No tienes tweets en favoritos</h2>
+          <img src="{% static 'New-Startup-idea-searching.svg' %}">
+      {% else %}
+        {% for tweet in keeps %}
+            {% include 'Tweet.html' %}
+        {% endfor %}
+          
+      {% endif %}
+    </div>
+  </body>
+  {% endblock %}
+</html>
+

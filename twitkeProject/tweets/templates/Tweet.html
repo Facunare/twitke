@@ -24,10 +24,22 @@
                             </form>
                             
                             
-                            <li>Editar</li>
+                            <button class="edit">Editar</button>
+                            {% comment %} <section class="modalUpdate">
+                                <div class="modal_container_update">
+                                    <button href="#" class="modal_close">X</button>
+                                    <form action="{% url 'updateTweet' tweet.id %}" method="POST" class="formResponse" >  
+                                        {% csrf_token %}
+                                        <input type="text" class="tweetContent" name="contentResponse" autocomplete="off">
+                                        <button class="responseButton">
+                                            Actualizar
+                                        </button>
+                                    </form>
+                                </div>
+                            </section> {% endcomment %}
                             {% else %}
 
-                                <!-- {% if current_user not in usuario.followers_users.all %}
+                                {% if current_user not in usuario.followers_users.all %}
                                     <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
                                         {% csrf_token %}
                                         <button type="submit" class="followButton">Follow</button>
@@ -37,7 +49,7 @@
                                         {% csrf_token %}
                                         <button type="submit" class="followButton">Unfollow</button>
                                     </form>
-                                {% endif %} -->
+                                {% endif %} 
                             
                         {% endif %}
                     </ul>

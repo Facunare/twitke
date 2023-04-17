@@ -34,7 +34,7 @@
     color: white;
     align-items: center;
     margin-left: 0px;
-    margin-bottom: 50px;
+
 }
 
 
@@ -224,7 +224,7 @@ textarea{
     transform: translateX(-7px);
 }
 
-.modal{
+.modal, .modalUpdate{
     position: fixed;
     top: 0;
     left: 0;
@@ -238,7 +238,7 @@ textarea{
     pointer-events: none;
 }
 
-.modal_container{
+.modal_container, .modal_container_update{
     width: 90%;
     background-color: white;
     margin: auto;

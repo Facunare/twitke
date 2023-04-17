@@ -20,11 +20,11 @@
                 {% csrf_token %}
                 <div class="input-div">
                     <img src="{% static 'user.svg' %}" alt="">
-                    <input placeholder="Username" type="text" name="username" id="username" autocomplete="off">
+                    <input placeholder="Username" type="text" name="username" id="username" autocomplete="off" class="passwords">
                 </div>
                 <div class="input-div">
                     <img src="{% static 'lock.svg' %}" alt="">
-                    <input placeholder="Password" type="password" name="password1" id="password1" autocomplete="off">
+                    <input placeholder="Password" type="password" name="password1" id="password1" autocomplete="off" class="passwords">
                 </div>
                 <div class="input-div">
                     <img src="{% static 'lock.svg' %}" alt="">
@@ -46,6 +46,7 @@
                  top: 20px; outline: 1px solid red; border-radius: 10px; padding: 10px;">{{error}}</span>
             {% endif %}
         </main>
+        <script src="{% static 'validation.js' %}"></script>
     {% endblock content %}
 
         

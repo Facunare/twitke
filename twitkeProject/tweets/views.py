@@ -24,8 +24,6 @@ from profiles.models import Profiles
 
 # 8. Edit tweets
 
-# 9. Javascript para formularios.
-
 # Errores boludos:
 # 1. Arreglar cuando se crea un usuario con gmail.
 # 2. Lo del texto del tweet

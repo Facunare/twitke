@@ -18,7 +18,7 @@
 }
 .containerKept h2{
     text-align: center;
-    font-size: 40px;
+    font-size: 30px;
 }
 
 
@@ -294,8 +294,7 @@ textarea{
     width: 35px;
 }
 
-.timeAgo{
-    font-size: 13px;
-    margin-left: 10px;
-    
+.formName{
+    font-size: 11px;
+    gap: 20px;
 }

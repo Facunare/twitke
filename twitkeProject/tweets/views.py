@@ -8,26 +8,30 @@ from profiles.models import Profiles
 # Create your views here.
 
 
-# 2. Profiles (in process).
+# 1. Profiles (in process).
 
-# 3. Retweet
+# 2. Retweet
 
-# 5. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
+# 3. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
 
-# 6. Function for the post of tweets. (add images, emojis, self location, pools)
+# 4. Function for the post of tweets. (add images, emojis, self location, pools)
 
-# 8. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
+# 5. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 10. Ajax en botones
+# 6. Ajax en botones
 
-# 11. Buscar usuarios en el buscador
+# 7. Buscar usuarios en el buscador, y en los seguidos y seguidores.
 
 # Errores boludos:
-# 2. Arreglar cuando se crea un usuario con gmail.
+# 1. Arreglar cuando se crea un usuario con gmail.
+# 2. Lo del texto del tweet
+
 
 def globalFeed(request):
+    profile = None
     tweets = Tweet.objects.all().filter(parent_tweet = None)
-    profile = Profiles.objects.get(user=request.user)
+    if request.user.is_authenticated:
+        profile = Profiles.objects.get(user=request.user)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
@@ -83,6 +87,8 @@ def tweetDetails(request, id):
         'profile': profile
     })
     
+
+
 def searchTweet(request):
     search = request.GET.get("search")
     
@@ -96,7 +102,8 @@ def searchTweet(request):
     return render(request, 'globalFeed.html',{
         'tweets': tweets
     })
-    
+
+@login_required
 def keepTweets(request, tweetId):
     tweet = Tweet.objects.get(id=tweetId)
     profile = Profiles.objects.get(user=request.user)
@@ -111,7 +118,7 @@ def keepTweets(request, tweetId):
     
     
     return redirect(request.META.get('HTTP_REFERER', '/'), {'kept': kept})
-    
+@login_required    
 def keeped(request, account):
     profile = Profiles.objects.get(username=account)
     keptTweets = profile.keeps.all()

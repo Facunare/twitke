@@ -22,6 +22,10 @@ from profiles.models import Profiles
 
 # 7. Buscar usuarios en el buscador, y en los seguidos y seguidores.
 
+# 8. Edit tweets
+
+# 9. Javascript para formularios.
+
 # Errores boludos:
 # 1. Arreglar cuando se crea un usuario con gmail.
 # 2. Lo del texto del tweet
@@ -40,12 +44,14 @@ def globalFeed(request):
 
 @login_required
 def postTweet(request):
+
+    current_profile = Profiles.objects.get(user__username = request.user.username)
     if request.method == 'GET':
         return render(request, 'globalFeed.html',{
             'form': forms.postTweet
         })
     else:
-        Tweet.objects.create(user = request.user, content = request.POST['content'])
+        Tweet.objects.create(current_profile, content = request.POST['content'])
         return redirect('/')
 
 @login_required

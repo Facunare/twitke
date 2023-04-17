@@ -59,10 +59,6 @@ main{
 
 }
 
-.followButton:Hover{
-    background-color: rgb(207, 201, 201);
-}
-
 .myTweets{
     font-size: 15px;
     margin-top: 20px;
@@ -137,6 +133,17 @@ span{
     justify-content: space-between;
     padding: 10px;
     gap: 20px;
+    align-items: center;
+}
+
+.seguidor2{
+    width: 100%;
+    border: 1px solid rgba(113, 118, 123, 1);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 20px;
+    align-items: center;
 }
 
 .username p:first-child{
@@ -218,3 +225,18 @@ span{
     padding-left: 5px;
 }
 
+.follow{
+    border: none;
+    background-color: rgba(113, 118, 123, 0.514);
+    color: white;
+}
+
+.follow:hover{
+    background-color: rgba(113, 118, 123, 1);
+}
+
+.unfollowButton{
+    border: none;
+    color: white;
+    background-color: rgb(71, 132, 201);
+}

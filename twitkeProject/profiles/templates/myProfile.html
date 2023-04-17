@@ -47,12 +47,12 @@
 
                     <h3 class="username">{{usuario.user.username}}</h3>
                     {% if not is_self %}
-                            {% if current_user not in usuario.followers_users.all %}
+                        {% if current_user not in usuario.followers_users.all %}
                             <form action="{% url 'follow' id=usuario.id %}?return_url={{ request.path }}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="followButton">Follow</button>
                             </form>
-                            {% else %}
+                        {% else %}
                             <form action="{% url 'follow' id=usuario.id %}?return_url={{ request.path }}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="followButton">Unfollow</button>
@@ -81,28 +81,28 @@
                     <h1>Seguidores</h1>
                     <div class="seguidores">
                         {% for follower in followers %}
-                            <div class="seguidor">
+                            <div class="seguidor2">
                                 <div class="username">
                                     <form action="{% url 'myProfile' follower.user.username %}">
                                         <button class="usernameTweet">{{follower.user.username}}</button>
                                     </form>
                                     <p>@{{follower.username}}</p>
-                                    {% if current_user not in follower.followers_users.all %}
-                                        {% if follower.user != request.user %}
-                                            <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
-                                                {% csrf_token %}
-                                                <button type="submit" class="followButton">Follow</button>
-                                            </form>
-                                        {% endif %}
-                                        {% else %}
-                                            
-                                            <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
-                                                {% csrf_token %}
-                                                <button type="submit" class="followButton">Unfollow</button>
-                                            </form>
-                                            
-                                    {% endif %}
                                 </div>
+                                {% if current_user not in follower.followers_users.all %}
+                                    {% if follower.user != request.user %}
+                                        <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton follow">Follow</button>
+                                        </form>
+                                    {% endif %}
+                                    {% else %}
+                                        
+                                        <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton unfollowButton">Unfollow</button>
+                                        </form>
+                                        
+                                {% endif %}
                             </div>
                         {% endfor %}
 
@@ -127,12 +127,12 @@
                                     {% if current_user not in follow.followers_users.all %}
                                         <form action="{% url 'follow' id=follow.id %}?return_url={{ request.path }}" method="POST">
                                             {% csrf_token %}
-                                            <button type="submit" class="followButton">Follow</button>
+                                            <button type="submit" class="followButton follow">Follow</button>
                                         </form>
                                     {% else %}
                                         <form action="{% url 'follow' id=follow.id %}?return_url={{ request.path }}" method="POST">
                                             {% csrf_token %}
-                                            <button type="submit" class="followButton">Unfollow</button>
+                                            <button type="submit" class="followButton unfollowButton">Unfollow</button>
                                         </form>
                                     {% endif %}                                                       
                                 

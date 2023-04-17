@@ -140,13 +140,15 @@ main{
 
 .tweetOptions div{
     height: auto;
-    background-color: #7dcace;
+    background-color: #488386;
     position: absolute;
     width: 100px;
     padding: 5px;
     transform: translate(-120px, -50px);
     font-size: 15px;
+    border-radius: 5px;
     display: none;
+    box-shadow: 0 px 5px 1px #999;
 }
 
 .tweetOptions button{
@@ -158,7 +160,7 @@ main{
 }
 
 .tweetOptions button:hover{
-    color: #616464;
+    color: #c8e6e6;
     
 }
 

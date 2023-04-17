@@ -26,10 +26,21 @@
                             
                             <li>Editar</li>
                             {% else %}
-                            <li>Dejar de seguir</li>
+
+                                <!-- {% if current_user not in usuario.followers_users.all %}
+                                    <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="followButton">Follow</button>
+                                    </form>
+                                {% else %}
+                                    <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="followButton">Unfollow</button>
+                                    </form>
+                                {% endif %} -->
                             
-                            {% endif %}
-                        </ul>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>                                              
         </div>

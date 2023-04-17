@@ -18,7 +18,39 @@
 }
 .containerKept h2{
     text-align: center;
-    font-size: 30px;
+    font-size: 25px;
+}
+.firstNav{
+    justify-self: flex-start;
+    display: flex;
+    align-items: center;
+}
+
+.backNav{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: black;
+    color: white;
+    align-items: center;
+    margin-left: 0px;
+    margin-bottom: 50px;
+}
+
+
+.backNav a{
+    margin: 0  10px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.backNav a svg{
+    color: white;
+    width: 27px;
+    filter: invert(1);
+    font-weight: bold;
 }
 
 

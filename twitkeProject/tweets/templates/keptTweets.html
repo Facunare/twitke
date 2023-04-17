@@ -12,9 +12,17 @@
     {% block content %}
     <link rel="stylesheet" href="{% static 'globalFeed.css' %}" />
     <div class="containerKept">
-      <h1>Tweets guardados</h1>
+      <div class="backNav">
+                
+        <div class="firstNav">
+
+            <a href="#" onclick="volverAlTweetAnterior();"><svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 96 1000 700" width="48"><path d="M480 896 160 576l320-320 42 42-248 248h526v60H274l248 248-42 42Z"/></svg></a>
+            
+            <h3>Tweet guardados</h3>
+        </div>
+    </div>
       {% if keeps.all|length == 0 %}
-          <h2>No tienes tweets en favoritos</h2>
+          <h2>Guarda tus tweets favoritos para verlos más tarde</h2>
           <img src="{% static 'New-Startup-idea-searching.svg' %}">
       {% else %}
         {% for tweet in keeps %}
@@ -24,6 +32,25 @@
       {% endif %}
     </div>
   </body>
+  <script>
+    function volverAlTweetAnterior() {
+                const referrer = document.referrer;
+                const tweetRegExp = /^\/tweet\/detail\/\d+$/;
+                
+                if (tweetRegExp.test(referrer)) {
+                 
+                    window.location.href = referrer;
+                  // si la URL anterior es un tweet, redirigir al usuario a esa página
+                } else {
+                    // si no es un tweet, simplemente hacer history.back()
+                    history.back();
+                
+                }
+              }
+              
+              // evento para detectar cuando se utiliza el botón de retroceso
+              window.addEventListener('popstate', volverAlTweetAnterior);
+  </script>
   {% endblock %}
 </html>
 

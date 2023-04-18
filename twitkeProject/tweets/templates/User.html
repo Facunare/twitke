@@ -1,0 +1,11 @@
+<div class="profile-card">
+    <img src="{{profile.profileImage}}" alt="">
+    <form action="{% url 'myProfile' profile.user.username %}">
+        <button class="usernameTweet" style="color:white"><p>{{profile.user.username}}</p></button>
+    </form>
+    <p class="atName" >@{{profile.username}}</p>
+    <p>{{profile.biography}}</p>
+    <form action="">
+        <button class="followbutton">Seguir</button>
+    </form>
+</div>

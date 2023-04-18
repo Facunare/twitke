@@ -238,7 +238,7 @@ textarea{
     pointer-events: none;
 }
 
-.modal_container, .modal_container_update{
+.modal_container, .modal_container_update, .modal_container_editProfile{
     width: 90%;
     background-color: white;
     margin: auto;
@@ -251,13 +251,25 @@ textarea{
 
 }
 
+.editImage{
+    display: flex;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
 .modal_container form, .modal_container_update form{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.modal_container input, .modal_container_update input{
+.modal_container_editProfile{
+    display: flex;
+    flex-direction: column;
+}
+
+.modal_container .response, .modal_container_update input{
     padding: 10px 0 150px 10px;
     width: 100%;
     outline: none;

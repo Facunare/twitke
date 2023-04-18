@@ -24,6 +24,8 @@ from profiles.models import Profiles
 
 # 8. Edit tweets
 
+# 9. Tweet design
+
 # Errores boludos:
 # 1. Arreglar cuando se crea un usuario con gmail.
 # 2. Lo del texto del tweet
@@ -98,13 +100,15 @@ def searchTweet(request):
     
     if search:
         tweets = Tweet.objects.filter(content__icontains = search)
-        if tweets.count() == 0:
+        profiles = Profiles.objects.filter(user__username__icontains = search)
+        if tweets.count() == 0 and profiles.count() == 0:
              return render(request, 'globalFeed.html',{
                 'error': True
             })
 
     return render(request, 'globalFeed.html',{
-        'tweets': tweets
+        'tweets': tweets,
+        'profilesSearched': profiles
     })
 
 @login_required

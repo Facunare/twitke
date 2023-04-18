@@ -12,7 +12,8 @@
     
     {% block content %}
     <link rel="stylesheet" href="{% static 'globalFeed.css' %}" />
-
+    <link rel="stylesheet" href="{% static 'User.css' %}" />
+    
     <div class="container-1">
         
         <h1 class="feedTitle">Inicio</h1>
@@ -25,15 +26,22 @@
         </form>
     </div>
     
+        <div class="users"> 
+
+            {% for profile in profilesSearched %}
+                {% include 'User.html' %}
+            {% endfor %}
+        </div>
     <div class="tweets">
+        {% for tweet in tweets %}
+            {% include 'Tweet.html' %}
+        {% endfor %}
         
         {% if error %}
             <img src="{% static '8331572.jpg' %}" alt="" class="notFoundImage">
             <h1 class="notCoincidence">No se encontraron coincidencias</h1>
         {% endif %}
-        {% for tweet in tweets %}
-             {% include 'Tweet.html' %}
-        {% endfor %}
+
     </div>
    
    

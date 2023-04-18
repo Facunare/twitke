@@ -5,7 +5,15 @@
     </form>
     <p class="atName" >@{{profile.username}}</p>
     <p>{{profile.biography}}</p>
-    <form action="">
-        <button class="followbutton">Seguir</button>
-    </form>
+    {% if current_profile not in profile.followers_users.all %}
+        <form action="{% url 'follow' id=profile.user.id %}?return_url={{ request.get_full_path }}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="followButton">Follow</button>
+        </form>
+    {% else %}
+        <form action="{% url 'follow' id=profile.user.id %}?return_url={{  request.get_full_path  }}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="followButton">Unfollow</button>
+        </form>
+    {% endif %} 
 </div>

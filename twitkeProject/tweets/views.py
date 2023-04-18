@@ -97,7 +97,9 @@ def tweetDetails(request, id):
 
 def searchTweet(request):
     search = request.GET.get("search")
-    
+    tweets = ""
+    profiles= ""
+    current_profile = Profiles.objects.get(user=request.user)
     if search:
         tweets = Tweet.objects.filter(content__icontains = search)
         profiles = Profiles.objects.filter(user__username__icontains = search)
@@ -108,7 +110,8 @@ def searchTweet(request):
 
     return render(request, 'globalFeed.html',{
         'tweets': tweets,
-        'profilesSearched': profiles
+        'profilesSearched': profiles,
+        'current_profile': current_profile
     })
 
 @login_required

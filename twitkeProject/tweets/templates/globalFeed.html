@@ -32,17 +32,17 @@
                 {% include 'User.html' %}
             {% endfor %}
         </div>
-    <div class="tweets">
-        {% for tweet in tweets %}
-            {% include 'Tweet.html' %}
-        {% endfor %}
-        
-        {% if error %}
-            <img src="{% static '8331572.jpg' %}" alt="" class="notFoundImage">
-            <h1 class="notCoincidence">No se encontraron coincidencias</h1>
-        {% endif %}
+        <div class="tweets">
+            {% for tweet in tweets %}
+                {% include 'Tweet.html' %}
+            {% endfor %}
+            
+            {% if error %}
+                <img src="{% static '8331572.jpg' %}" alt="" class="notFoundImage">
+                <h1 class="notCoincidence">No se encontraron coincidencias</h1>
+            {% endif %}
 
-    </div>
+        </div>
    
    
         

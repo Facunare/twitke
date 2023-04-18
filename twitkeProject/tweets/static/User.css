@@ -35,7 +35,12 @@
 
 .profile-card .usernameTweet p{
     color: black;
+    cursor: pointer;
     font-size: 17px;
+}
+
+.profile-card .usernameTweet p:Hover{
+    text-decoration: underline 2px black;
 }
 
 .atName{

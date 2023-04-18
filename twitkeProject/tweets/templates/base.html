@@ -14,12 +14,12 @@
 
       <nav class="navbar-1">
           <ul>
-            <img src="{% static 'logo.png' %}"></img>
-            <li><a href="{% url 'globalFeed' %}">INICIO</a></li>
+            <img src="{% static 'logo.png' %}" class="logo">
+            <li><a href="{% url 'globalFeed' %}"><img  class="img-ul" src="{% static 'home_FILL0_wght400_GRAD0_opsz48.svg' %}"></a><li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'myProfile' user.username %}">MI PERFIL</a></li>
-            <li><a href="{% url 'keeped' user.username %}">GUARDADOS</a></li>
-            <li><a href="{% url 'logout' %}">LOG OUT</a></li>
+            <li><a href="{% url 'myProfile' user.username %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
+            <li><a href="{% url 'keeped' user.username %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
+            <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             
             {% else %}
             <li><a href="{% url 'signup' %}">SIGN UP</a></li>

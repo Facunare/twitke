@@ -60,11 +60,23 @@
                 })
             })
            
+            const updateForm = document.querySelector('.modalUpdate')
+            const edits = document.querySelectorAll('.edits')
+            for(let edit of edits){
+                edit.addEventListener('click', (e)=>{
+                    e.preventDefault()  
+                    e.stopPropagation()
+                    console.log(1)
+                    updateForm.classList.add('modalUpdate--show')
+
+                })
+            }
             for(cerrarModal of cerrarModales){
 
                 cerrarModal.addEventListener('click', (e)=>{
                     e.preventDefault()
                     modal.classList.remove('modal--show')
+                    updateForm.classList.remove('modalUpdate--show')
                 })
             }
             

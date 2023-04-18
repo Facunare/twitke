@@ -251,13 +251,13 @@ textarea{
 
 }
 
-.modal_container form{
+.modal_container form, .modal_container_update form{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.modal_container input{
+.modal_container input, .modal_container_update input{
     padding: 10px 0 150px 10px;
     width: 100%;
     outline: none;
@@ -299,7 +299,7 @@ textarea{
 }
 
 
-.modal--show{
+.modal--show, .modalUpdate--show{
     opacity: 1;
     pointer-events: unset;
     transition: opacity .1s;

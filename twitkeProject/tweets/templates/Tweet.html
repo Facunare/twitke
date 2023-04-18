@@ -24,19 +24,7 @@
                             </form>
                             
                             
-                            <button class="edit">Editar</button>
-                            <section class="modalUpdate">
-                                <div class="modal_container_update">
-                                    <button href="#" class="modal_close">X</button>
-                                    <!-- <form action="{% url '' tweet.id %}" method="POST" class="formResponse" >   -->
-                                        <!-- {% csrf_token %} -->
-                                        <input type="text" class="tweetContent" name="contentResponse" autocomplete="off">
-                                        <button class="responseButton">
-                                            Actualizar
-                                        </button>
-                                    <!-- </form> -->
-                                </div>
-                            </section>
+                            <button class="edits">Editar</button>
                             {% else %}
 
                                 {% if current_user not in usuario.followers_users.all %}
@@ -110,5 +98,17 @@
                     Twittear
                 </button>
             </form>
+        </div>
+    </section>
+    <section class="modalUpdate">
+        <div class="modal_container_update">
+            <button href="#" class="modal_close">X</button>
+                <form method="POST" class="formResponse" >  
+                {% csrf_token %}
+                <input type="text" class="tweetContent" name="contentResponse" autocomplete="off">
+                <button class="responseButton">
+                    Actualizar
+                </button>
+            </form>   
         </div>
     </section>

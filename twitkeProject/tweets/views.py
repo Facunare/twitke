@@ -49,7 +49,7 @@ def postTweet(request):
             'form': forms.postTweet
         })
     else:
-        Tweet.objects.create(current_profile, content = request.POST['content'])
+        Tweet.objects.create(user = request.user, content = request.POST['content'])
         return redirect('/')
 
 @login_required

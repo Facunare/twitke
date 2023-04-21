@@ -17,7 +17,7 @@
             <img src="{% static 'logo.png' %}" class="logo">
             <li><a href="{% url 'globalFeed' %}"><img  class="img-ul" src="{% static 'home_FILL0_wght400_GRAD0_opsz48.svg' %}"></a><li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'myProfile' user.username %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
+            <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
             <li><a href="{% url 'keeped' user.username %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             

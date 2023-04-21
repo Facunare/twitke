@@ -10,15 +10,15 @@ from profiles.models import Profiles
 
 # 1. Profiles (in process).
 
-# 2. Retweet
+# 2. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
 
-# 3. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
+# 3. Retweet
 
 # 4. Function for the post of tweets. (add images, emojis, self location, pools)
 
 # 5. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 6. Ajax en botones
+# 6. Ajax en botones (in process)
 
 # 7. Buscar usuarios en el buscador, y en los seguidos y seguidores.
 
@@ -34,14 +34,13 @@ from profiles.models import Profiles
 def globalFeed(request):
     profile = None
     tweets = Tweet.objects.all().filter(parent_tweet = None)
-    if request.user.is_authenticated:
-        profile = Profiles.objects.get(user=request.user)
+    profile = Profiles.objects.get(user=request.user)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
             'profile': profile
     })
-
+    
 @login_required
 def postTweet(request):
 

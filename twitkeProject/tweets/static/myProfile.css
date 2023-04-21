@@ -253,3 +253,23 @@ span{
     color: white;
     background-color: rgb(71, 132, 201);
 }
+
+.userBiography{
+    color: white;
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.profilePhoto{
+   height: 80px;
+   width: 80px;
+   border-radius: 50%;
+   margin-bottom: 15px;
+   
+}
+
+.fotito{
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+}

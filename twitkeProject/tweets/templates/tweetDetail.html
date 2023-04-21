@@ -28,7 +28,7 @@
                 {% endif %}
             </div>
             <div class="parent_tweet">
-                <form action="{% url 'myProfile' parent_tweet.user.username %}">
+                <form action="{% url 'myProfile' parent_tweet.user.id %}">
                     <button class="usernameTweet" style="color:white">{{parent_tweet.user.username}}</button>
                 </form>
                 <p class="atName">@{{profile.username}}</p>

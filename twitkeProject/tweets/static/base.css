@@ -74,6 +74,10 @@ ul li a{
     width: 50px;
 }
 
+.img-ul:hover{
+    transform: scale(1.1);
+}
+
 .logo{
     margin-bottom: 20px;
 }

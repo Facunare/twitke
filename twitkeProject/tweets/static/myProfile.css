@@ -29,11 +29,9 @@ main{
     font-weight: 100;
     font-size: 13px;
 }
-.createdAt{
-    margin-top: 10px;
-}
+
 .followers-info{
-    margin-top: 15px;
+    
     display: flex;
     gap: 20px;
 }
@@ -272,4 +270,56 @@ span{
     height: 35px;
     width: 35px;
     border-radius: 50%;
+}
+
+.userWebSite{
+    font-size: 13px;
+    margin: 10px 0;
+    color: rgba(113, 118, 123, 1);
+}
+
+.webAndCreated{
+    display: flex;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+.userWeb{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userWeb svg, .userBirth svg{
+    color: white;
+    width: 25px;
+    padding: 3px;
+}
+
+.editImage form input{
+    outline: none;
+}
+
+.userBirth{
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+}
+
+.userBirth p{
+    color: rgba(113, 118, 123, 1);
+    font-size: 13px;
+}
+
+.profile-banner{
+    width: 100%;
+}
+
+.profileBanner{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }

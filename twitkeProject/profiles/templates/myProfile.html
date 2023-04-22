@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="{% static 'globalFeed.css' %}">
         <div class="profile">
             <div class="profile-banner">
-                <!-- <img src="#"> -->
+                {% if usuario.profileBanner %}
+                        <img src="{{usuario.profileBanner.url}} " alt="" class="profileBanner">
+                {% endif %}
             </div>
             <div class="profile-info">
                 <div class="top">
@@ -31,7 +33,7 @@
                     <section class="modal2">
                         <div class="modal_container_editProfile">
                             <div class="editImage">         
-                                <form action="{% url 'updateProfile' usuario.id %}?return_url={{ request.path }}" method="POST"  enctype="multipart/form-data"> 
+                                <form action="{% url 'updateProfile' usuario.id %}?return_url={{ request.path }}" method="POST"  enctype="multipart/form-data" class="editFrom"> 
                                     <div class="buttonsEdit">
 
                                         <button href="#" class="modal_close">X</button>
@@ -43,24 +45,36 @@
                                     <div class="updateImage">
 
                                         {% if usuario.profileImage %}
-                                        <img src="{{usuario.profileImage.url}} " alt="" class="profilePhoto">
+                                            <img src="{{usuario.profileImage.url}} " alt="" class="profilePhoto">
                                         {% else %}
-                                        <svg class="imgToEdit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>
-                                        
+                                            <svg class="imgToEdit" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>                                       
                                         {% endif %}
                                         <input
                                             type="file"
                                             name="input-photo"
-                                            accept="image/*"
-                                            required=""
+                                            accept="image/*"                              
                                             id="input-photo"
                                             class="input-file"
                                             />
         
                                     </div>
+
+                                    <div class="uploadBanner">
+                                        <input
+                                            type="file"
+                                            name="input-banner"
+                                            accept="image/*"                              
+                                            id="input-banner"
+                                            class="input-file"
+                                            />
+                                    </div>
+
+
                                     <input type="text" class="updateName" placeholder="Nombre..." name="input-name">
                                     <input placeholder="Biografia..." name="input-biography">
-                                    <input type="text" value="" placeholder="Sitio web">
+                                    <input type="date" name="birthday">
+
+                                    <input type="text" value="" placeholder="Sitio web" name="webSite" class="webSite">
                                 </form>                     
                             </div>
                         </div>
@@ -91,6 +105,22 @@
                     <p class="userBiography">{{usuario.biography}}</p>
                 {% endif %}           
                 <h4 class="createdAt">Se union en {{ usuario.created_at|date:"F" }} de {{ usuario.created_at|date:"Y" }}</h4>
+                <div class="webAndCreated">
+                    
+                    {% if usuario.birthday %}
+                    <div class="userBirth">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path fill="rgba(113, 118, 123, 1)" d="m80 976 186-520 337 333L80 976Zm101-101 314-112-203-204-111 316Zm376-264-34-34 240-240q32-32 81-32.5t81 31.5l17 17-34 34-19-19q-19-19-44-19.5T800 368L557 611ZM398 456l-34-34 30-30q23-23 21.5-52.5T394 290l-28-28 34-34 26 26q35 35 34.5 87.5T425 429l-27 27Zm81 77-34-34 152-152q19-19 18.5-48.5T596 250l-61-61 34-34 63 63q31 32 32 80.5T633 379L479 533Zm158 159-34-34 47-47q35-35 84-36t84 34l51 51-34 34-52-52q-23-23-48-23t-48 23l-50 50ZM181 875Z"/></svg>
+                        <p>{{usuario.birthday}}</p>
+                    </div>
+                    {% endif %}  
+                    {% if usuario.webSite %}
+                        <div class="userWeb">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 96 960 960" width="25"><path fill="rgba(113, 118, 123, 1)" d="M450 776H280q-83 0-141.5-58.5T80 576q0-83 58.5-141.5T280 376h170v60H280q-58.333 0-99.167 40.765-40.833 40.764-40.833 99Q140 634 180.833 675q40.834 41 99.167 41h170v60ZM325 606v-60h310v60H325Zm185 170v-60h170q58.333 0 99.167-40.765 40.833-40.764 40.833-99Q820 518 779.167 477 738.333 436 680 436H510v-60h170q83 0 141.5 58.5T880 576q0 83-58.5 141.5T680 776H510Z"/></svg>
+                            <a href="https://{{usuario.webSite}}" class="userWebSite" target="_blank">{{usuario.webSite}}</a>
+                        </div>
+                    {% endif %}
+                </div>
+
                 <div class="followers-info">
                     {% if cant_followers == 1 %}
                         <a href="#" class="cant_followers">{{cant_followers}} <span>seguidor</span></a>
@@ -178,6 +208,29 @@
     
             </div>
         <script>
+
+
+            const regexWebSite = /www\.\w+\.\w{2,}/
+            const inputWebSite = document.querySelector('.webSite')
+            const editForm = document.querySelector('.editFrom')
+            inputWebSite.addEventListener('input', e => {
+                if (!regexWebSite.test(inputWebSite.value)) {
+                    inputWebSite.style.border = '1px solid red';
+                } else {
+                    inputWebSite.style.border = '1px solid green';
+                }
+            })
+            
+            editForm.addEventListener("submit", e => {
+                e.preventDefault();
+                if (inputWebSite.value === '') {
+                    editForm.submit();
+                } else if (regexWebSite.test(inputWebSite.value)) {
+                    editForm.submit();
+                }
+            })
+
+
             const modal = document.querySelector('.modal')
             const modal2 = document.querySelector('.modal2')
             const modal3 = document.querySelector('.modal3')

@@ -10,10 +10,12 @@ class Profiles(models.Model):
     keeps = models.ManyToManyField(Tweet, related_name='kept_by_profiles', blank=True)
     biography = models.TextField(max_length=250,  null=True, default="", blank=True)
     profileImage = models.ImageField(null=True, blank=True, upload_to='profileImages')
+    profileBanner = models.ImageField(null=True, blank=True, upload_to='profileBanners')
     followers = models.IntegerField(default=0)
     followers_users = models.ManyToManyField('self', symmetrical=False, related_name="followage", blank=True)
     followed_users = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
-    birthday = models.DateField(null=True, default=timezone.now)
+    birthday = models.DateField(null=True)
+    webSite = models.CharField(null=True, max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.username

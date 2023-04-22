@@ -10,35 +10,34 @@ from profiles.models import Profiles
 
 # 1. Profiles (in process).
 
-# 2. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc.
+# 2. Edit tweets (in process)
 
-# 3. Retweet
+# 3. Ajax en botones (in process)
 
-# 4. Function for the post of tweets. (add images, emojis, self location, pools)
+# 4. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc. (casi terminado)
+
+# 5. Retweet
+
+# 6. Function for the post of tweets. (add images, emojis, self location, pools)
 
 # 5. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 6. Ajax en botones (in process)
+# 7. Buscar usuarios en los seguidos y seguidores.
 
-# 7. Buscar usuarios en el buscador, y en los seguidos y seguidores.
-
-# 8. Edit tweets
-
-# 9. Tweet design
+# 9. Twitter design
 
 # Errores boludos:
 # 1. Arreglar cuando se crea un usuario con gmail.
-# 2. Lo del texto del tweet
 
 
 def globalFeed(request):
     profile = None
     tweets = Tweet.objects.all().filter(parent_tweet = None)
-    profile = Profiles.objects.get(user=request.user)
+    # profile = Profiles.objects.get(user=request.user)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
-            'profile': profile
+            # 'profile': profile
     })
     
 @login_required

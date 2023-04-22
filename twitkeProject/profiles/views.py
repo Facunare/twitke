@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect    
 from django.contrib.auth.models import User
 from .models import Profiles, Tweet
+from datetime import datetime
 # Create your views here.
 
 def myProfile(request, id):
@@ -64,11 +65,20 @@ def updateProfile(request, id):
     if request.POST['input-biography']:
         profile.biography = str(request.POST['input-biography'])
     
-    if request.FILES['input-photo']:
+    if request.FILES.get('input-photo'):
         profile.profileImage = request.FILES['input-photo']
         
+    if request.FILES.get('input-banner'):
+        profile.profileBanner= request.FILES['input-banner']
+        
+    if request.POST['webSite']:
+        profile.webSite = request.POST['webSite']
+    birthday_str = request.POST.get('birthday')
+    if birthday_str:    
+        birthday = datetime.strptime(birthday_str, '%Y-%m-%d').date()
+        profile.birthday = birthday
+        
     profile.save()    
-    
     return_url = request.GET.get('return_url')
     if return_url:
         return redirect(return_url)

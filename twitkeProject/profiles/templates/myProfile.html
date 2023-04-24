@@ -258,6 +258,7 @@
                     modal.classList.remove('modal--show')
                     modal2.classList.remove('modal--show')
                     modal3.classList.remove('modal--show')
+                    modalMsg.classList.remove('modal--show')
                 })
             }
             
@@ -287,11 +288,12 @@
 
             const msgButtons = document.querySelectorAll('.msgButton')
             const editButton = document.querySelector('.editButton')
+            const modalMsg = document.querySelector('.modalMsg')
             msgButtons.forEach(button=>{
                 
                 button.addEventListener('click', (e)=>{
                     e.preventDefault()  
-                    modal.classList.add('modal--show')
+                    modalMsg.classList.add('modal--show')
                     console.log("hola")
                     const tweetId = button.id
                     console.log(tweetId)

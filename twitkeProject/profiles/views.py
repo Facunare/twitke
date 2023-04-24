@@ -58,10 +58,13 @@ def follow(request, id):
 def updateProfile(request, id):
     
     profile = Profiles.objects.get(id=id)
-    
+    profiles = Profiles.objects.all()
     if request.POST['input-name']:
-        profile.username = str(request.POST['input-name'])
-        
+        for profile in profiles:
+            if profile.username == str(request.POST['input-name']):
+                print('Ese nombre esta en uso')
+            else:
+                profile.username = str(request.POST['input-name'])
     if request.POST['input-biography']:
         profile.biography = str(request.POST['input-biography'])
     

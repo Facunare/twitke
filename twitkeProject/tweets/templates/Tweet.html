@@ -9,6 +9,7 @@
                 {% endif %}
                 <form action="{% url 'myProfile' tweet.user.id %}" class="formName">
                     <button class="usernameTweet">{{tweet.user.username}}</button>
+                    
                     <p class="timeAgo">{{tweet.created_at|timesince}} ago</p>
                 </form>
             </div>
@@ -92,7 +93,7 @@
             
         </a>
     </div>        
-    <section class="modal">
+    <section class="modal modalMsg">
         <div class="modal_container">
             <button href="#" class="modal_close">X</button>
             <form action="{% url 'responseTweet' tweet.id %}" method="POST" class="formResponse" > 

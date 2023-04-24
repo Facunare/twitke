@@ -24,19 +24,22 @@ from profiles.models import Profiles
 
 # 7. Twitter design
 
+
 # Errores boludos:
 # 1. Arreglar gmail.
 # 2. Ver fotos de perfil en globalFeed
-
+# 3. Que no te permita ponerte cualquier nombre
+# 4. Cuando arregle lo de profiles en el globalFeed, mostrar nombre de usuario en cada tweet.
 
 def globalFeed(request):
     # Si hay error seguro es esta linea
-    current_profile = Profiles.objects.get(user__id = request.user.id)
+    
+    # current_profile = Profiles.objects.get(user__id = request.user.id)
     tweets = Tweet.objects.all().filter(parent_tweet = None)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
-            'profile': current_profile,
+            # 'profile': current_profile,
             
     })
     
@@ -71,13 +74,12 @@ def like(request, id):
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({'error': str(e)})
-    # return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @login_required
 def deleteTweet(request, id):
     tweet = Tweet.objects.get(id = id)
     tweet.delete()
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+    return redirect('globalFeed')
 
 @login_required
 def responseTweet(request, id):

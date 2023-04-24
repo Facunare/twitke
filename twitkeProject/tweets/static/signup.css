@@ -75,3 +75,13 @@
 .buttons svg{
     width: 20px;
 }
+
+.haveAccount{
+    margin-top: 15px;
+    color: black;
+    
+}
+
+.haveAccount:hover{
+    color: rgb(28, 28, 131);
+}

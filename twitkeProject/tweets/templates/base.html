@@ -18,12 +18,14 @@
             <li><a href="{% url 'globalFeed' %}"><img  class="img-ul" src="{% static 'home_FILL0_wght400_GRAD0_opsz48.svg' %}"></a><li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
-            <li><a href="{% url 'keeped' user.username %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
+            <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             
             {% else %}
-            <li><a href="{% url 'signup' %}">SIGN UP</a></li>
-            <li><a href="{% url 'signin' %}">SIGN IN</a></li>
+          
+            <li class="signupButton"><a href="{% url 'signup' %}" >SIGN UP</a></li>
+            <li class="signinButton"><a href="{% url 'signin' %}">SIGN IN</a></li>
+          
             {% endif %}
           </ul>
         </nav>

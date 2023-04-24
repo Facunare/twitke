@@ -78,3 +78,13 @@
 .buttons svg{
     width: 20px;
 }
+
+.dontHaveAccount{
+    margin-top: 15px;
+    color: black;
+    
+}
+
+.dontHaveAccount:hover{
+    color: rgb(28, 28, 131);
+}

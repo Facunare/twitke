@@ -22,8 +22,8 @@
         </div>
     </div>
       {% if keeps.all|length == 0 %}
-          <h2>Guarda tus tweets favoritos para verlos más tarde</h2>
-          <img src="{% static 'New-Startup-idea-searching.svg' %}">
+          <h2 style="margin-top: 100px">Guarda tus tweets favoritos para verlos más tarde</h2>
+          <img src="{% static 'New-Startup-idea-searching.svg' %}" style="transform: scale(.7)">
       {% else %}
         {% for tweet in keeps %}
             {% include 'Tweet.html' %}
@@ -50,6 +50,28 @@
               
               // evento para detectar cuando se utiliza el botón de retroceso
               window.addEventListener('popstate', volverAlTweetAnterior);
+            
+              function favs(e, btn){
+                e.preventDefault();
+                var keepForm = new FormData(document.getElementById('keepForm'));
+                var id = btn.getAttribute('tweet-id');
+                console.log(id);
+                
+                fetch(`/keep/${id}`, {
+                    method: "POST",
+                    body: keepForm,
+                    headers: {
+                        "X-CSRFToken": getCookie('csrftoken'),
+                        "X-Requested-With": "XMLHttpRequest"
+                    }
+                }).then(function(res){
+                    return res.json();  // Convierte la respuesta a JSON
+                }).then(function(data){
+                    location.reload()
+                   
+        
+                });
+            }
   </script>
   {% endblock %}
 </html>

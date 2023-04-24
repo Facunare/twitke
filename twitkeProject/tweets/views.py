@@ -3,41 +3,41 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
+from django.http import JsonResponse
 from .models import Tweet
 from profiles.models import Profiles
 # Create your views here.
 
 
-# 1. Profiles (in process).
 
-# 2. Edit tweets (in process)
+# 1. Edit tweets (in process)
 
-# 3. Ajax en botones (in process)
+# 2. Ajax en botones (in process)
 
-# 4. Despues de registrarte tener la posibilidad de modificar tu arroba, foto de perfil, biografia, etc. (casi terminado)
+# 3. Retweet
 
-# 5. Retweet
-
-# 6. Function for the post of tweets. (add images, emojis, self location, pools)
+# 4. Function for the post of tweets. (add images, emojis, self location, pools)
 
 # 5. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 7. Buscar usuarios en los seguidos y seguidores.
+# 6. Profile sections (answers, retweets, etc).
 
-# 9. Twitter design
+# 7. Twitter design
 
 # Errores boludos:
-# 1. Arreglar cuando se crea un usuario con gmail.
+# 1. Arreglar gmail.
+# 2. Ver fotos de perfil en globalFeed
 
 
 def globalFeed(request):
-    profile = None
+    # Si hay error seguro es esta linea
+    current_profile = Profiles.objects.get(user__id = request.user.id)
     tweets = Tweet.objects.all().filter(parent_tweet = None)
-    # profile = Profiles.objects.get(user=request.user)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
-            # 'profile': profile
+            'profile': current_profile,
+            
     })
     
 @login_required
@@ -54,18 +54,24 @@ def postTweet(request):
 
 @login_required
 def like(request, id):
-    tweet = Tweet.objects.get(id = id)
-    user = request.user
-    if user not in tweet.likes_users.all():
-        tweet.likes += 1
-        tweet.likes_users.add(user)
-        tweet.save()
-    else:
-        tweet.likes -= 1
-        tweet.likes_users.remove(user)
-        tweet.save()
-    
-    return redirect(request.META.get('HTTP_REFERER', '/'))
+    try:
+        tweet = Tweet.objects.get(id=id)
+        user = request.user
+        if user not in tweet.likes_users.all():
+            tweet.likes += 1
+            tweet.likes_users.add(user)
+            tweet.save()
+            is_liked = True
+        else:
+            tweet.likes -= 1
+            tweet.likes_users.remove(user)
+            tweet.save()
+            is_liked = False
+        return JsonResponse({'is_liked': is_liked, 'likes': tweet.likes, 'id': id})
+    except Exception as e:
+        print(f"Error: {e}")
+        return JsonResponse({'error': str(e)})
+    # return redirect(request.META.get('HTTP_REFERER', '/'))
 
 @login_required
 def deleteTweet(request, id):
@@ -84,7 +90,7 @@ def responseTweet(request, id):
 def tweetDetails(request, id):
     tweet = Tweet.objects.all().filter(parent_tweet = id)
     parent_tweet = Tweet.objects.get(id = id)
-    profile = Profiles.objects.get(username=parent_tweet.user.username)
+    profile = Profiles.objects.get(id=parent_tweet.user.id)
     return render(request, 'tweetDetail.html',{
         'tweets': tweet,
         'parent_tweet': parent_tweet,
@@ -126,12 +132,14 @@ def keepTweets(request, tweetId):
     
     
     
-    return redirect(request.META.get('HTTP_REFERER', '/'), {'kept': kept})
+    return JsonResponse({'is_kept': kept, 'id': tweetId})
 @login_required    
-def keeped(request, account):
-    profile = Profiles.objects.get(username=account)
+def keeped(request, id):
+    profile = Profiles.objects.get(id=id)
     keptTweets = profile.keeps.all()
     return render(request, 'keptTweets.html', {
         'keeps': keptTweets,
         'profile': profile
     })
+    
+    

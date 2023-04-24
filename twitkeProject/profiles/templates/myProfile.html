@@ -56,18 +56,18 @@
                                             id="input-photo"
                                             class="input-file"
                                             />
-        
+                                            <label style="color: black">Banner:</label>
+                                            <div class="uploadBanner">
+                                                <input
+                                                    type="file"
+                                                    name="input-banner"
+                                                    accept="image/*"                              
+                                                    id="input-banner"
+                                                    class="input-file"
+                                                    />
+                                            </div>
                                     </div>
 
-                                    <div class="uploadBanner">
-                                        <input
-                                            type="file"
-                                            name="input-banner"
-                                            accept="image/*"                              
-                                            id="input-banner"
-                                            class="input-file"
-                                            />
-                                    </div>
 
 
                                     <input type="text" class="updateName" placeholder="Nombre..." name="input-name">
@@ -136,6 +136,7 @@
                     <button href="#" class="modal_close">X</button>
                     <h1>Seguidores</h1>
                     <div class="seguidores">
+            
                         {% for follower in followers %}
                             <div class="seguidor2">
                                 <div class="username">
@@ -173,7 +174,7 @@
                         {% for follow in following %}
                             <div class="seguidor">
                                 <div class="username">
-                                    <form action="{% url 'myProfile' follow.user.username %}">
+                                    <form action="{% url 'myProfile' follow.user.id %}">
                                         <button class="usernameTweet">{{follow.user.username}}</button>
                                     </form>
                                     <p>@{{follow.username}}</p>
@@ -208,7 +209,6 @@
     
             </div>
         <script>
-
 
             const regexWebSite = /www\.\w+\.\w{2,}/
             const inputWebSite = document.querySelector('.webSite')

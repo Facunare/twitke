@@ -1,6 +1,6 @@
 <div class="profile-card">
     <img src="{{profile.profileImage}}" alt="">
-    <form action="{% url 'myProfile' profile.user.username %}">
+    <form action="{% url 'myProfile' profile.user.id %}">
         <button class="usernameTweet" style="color:white"><p>{{profile.user.username}}</p></button>
     </form>
     <p class="atName" >@{{profile.username}}</p>

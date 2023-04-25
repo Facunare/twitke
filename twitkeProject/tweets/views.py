@@ -24,7 +24,6 @@ from profiles.models import Profiles
 
 # 7. Twitter design
 
-
 # Errores boludos:
 # 1. Arreglar gmail.
 # 2. Ver fotos de perfil en globalFeed

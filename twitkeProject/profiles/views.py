@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import Profiles, Tweet
 from datetime import datetime
 # Create your views here.
+from django.http import JsonResponse
 
 def myProfile(request, id):
     cant_followers = 0
@@ -40,19 +41,17 @@ def follow(request, id):
         current_profile.followed_users.remove(profile)
         profile.followers_users.remove(current_profile)
         profile.followers -= 1
+        follow = False
     else:
         current_profile.followed_users.add(profile)
         profile.followers_users.add(current_profile)
         profile.followers += 1
-    
+        follow = True
     profile.save()
     current_profile.save()
 
 
-    return_url = request.GET.get('return_url')
-    if return_url:
-        return redirect(return_url)
-    return redirect('myProfile', id=id)
+    return JsonResponse({'is_follow': follow, 'cant_followers': profile.followers})
 
 
 def updateProfile(request, id):

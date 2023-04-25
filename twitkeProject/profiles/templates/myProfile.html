@@ -84,17 +84,16 @@
 
                     <h3 class="username">{{usuario.user.username}}</h3>
                     {% if not is_self %}
-                        {% if current_user not in usuario.followers_users.all %}
-                            <form action="{% url 'follow' id=usuario.id %}?return_url={{ request.path }}" method="POST">
+                        
+                            <form action="{% url 'follow' id=usuario.id %}" method="POST" id="followForm">
                                 {% csrf_token %}
-                                <button type="submit" class="followButton">Follow</button>
+                                <button class="followButton" id="button1" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" >
+                                    <p class="followP">{% if current_user not in usuario.followers_users.all %} Follow {% else %} Unfollow {% endif %}
+                                    </p>
+                                    
+                                </button>
                             </form>
-                        {% else %}
-                            <form action="{% url 'follow' id=usuario.id %}?return_url={{ request.path }}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" class="followButton">Unfollow</button>
-                            </form>
-                        {% endif %}
+                        
                     
                             
                     {% endif %}
@@ -122,11 +121,9 @@
                 </div>
 
                 <div class="followers-info">
-                    {% if cant_followers == 1 %}
-                        <a href="#" class="cant_followers">{{cant_followers}} <span>seguidor</span></a>
-                    {% else %}
-                        <a href="#" class="cant_followers">{{cant_followers}} <span>seguidores</span></a>
-                    {% endif %}
+                  
+                    <a href="#" class="cant_followers">{{cant_followers}} <span>seguidores</span></a>
+                    
                     <a href="#" class="following">{{cant_following}}<span  class="cant_following">siguiendo</span></a>
                 </div>
                 <h1 class="myTweets">Mis tweets</h1>
@@ -145,21 +142,19 @@
                                     </form>
                                     <p>@{{follower.username}}</p>
                                 </div>
-                                {% if current_user not in follower.followers_users.all %}
-                                    {% if follower.user != request.user %}
-                                        <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="followButton follow">Follow</button>
-                                        </form>
-                                    {% endif %}
-                                    {% else %}
-                                        
-                                        <form action="{% url 'follow' id=follower.id %}?return_url={{ request.path }}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="followButton unfollowButton">Unfollow</button>
-                                        </form>
-                                        
+                                
+                                {% if follower.user != request.user %}
+                                    <form action="{% url 'follow' id=follower.id %}" method="POST" id="followForm2">
+                                        {% csrf_token %}
+                                        <button class="button2 followButton {% if current_user not in follower.followers_users.all %} follow {% else %} unfollowButton {% endif %}" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" id="button2" >
+                                            <p>{% if current_user not in follower.followers_users.all %} Follow {% else %} Unfollow {% endif %}</p>
+                                        </button>
+                                    </form>
                                 {% endif %}
+                            
+                                        
+                                        
+                                        
                             </div>
                         {% endfor %}
 
@@ -180,18 +175,19 @@
                                     <p>@{{follow.username}}</p>
 
                                 </div>
+                            
+                                              
                                 
-                                    {% if current_user not in follow.followers_users.all %}
-                                        <form action="{% url 'follow' id=follow.id %}?return_url={{ request.path }}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="followButton follow">Follow</button>
-                                        </form>
-                                    {% else %}
-                                        <form action="{% url 'follow' id=follow.id %}?return_url={{ request.path }}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="followButton unfollowButton">Unfollow</button>
-                                        </form>
-                                    {% endif %}                                                       
+                               
+                               
+                                          <form action="{% url 'follow' id=follow.id %}" method="POST" id="followForm3">
+                                    {% csrf_token %}
+                                    <button id="button3"onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" type="submit" class="followButton {% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif %}">
+                                        <p>{% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif%}</p>
+                                    </button>
+                                </form> 
+                                  
+                              
                                 
                             </div>
                         {% endfor %}
@@ -208,6 +204,7 @@
                 </div>
     
             </div>
+            <script src="{% static 'ajaxFollow.js' %}"></script>
         <script>
 
             const regexWebSite = /www\.\w+\.\w{2,}/

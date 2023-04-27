@@ -12,17 +12,15 @@ from profiles.models import Profiles
 
 # 1. Edit tweets (in process)
 
-# 2. Ajax en botones (in process)
+# 2. Retweet
 
-# 3. Retweet
+# 3. Function for the post of tweets. (add images, emojis, self location, pools)
 
-# 4. Function for the post of tweets. (add images, emojis, self location, pools)
+# 4. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 5. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
+# 5. Profile sections (answers, retweets, etc).
 
-# 6. Profile sections (answers, retweets, etc).
-
-# 7. Twitter design
+# 6. Twitter design
 
 # Errores boludos:
 # 1. Arreglar gmail.

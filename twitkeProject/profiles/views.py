@@ -36,7 +36,8 @@ def myProfile(request, id):
 def follow(request, id):
     profile = Profiles.objects.get(id=id)
     current_profile = Profiles.objects.get(user__username=request.user.username)
-    
+    print("Perfil", profile)
+    print("User actual", current_profile)
     if current_profile in profile.followers_users.all():
         current_profile.followed_users.remove(profile)
         profile.followers_users.remove(current_profile)
@@ -52,6 +53,7 @@ def follow(request, id):
 
 
     return JsonResponse({'is_follow': follow, 'cant_followers': profile.followers})
+
 
 
 def updateProfile(request, id):

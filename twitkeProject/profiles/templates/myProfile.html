@@ -174,21 +174,13 @@
                                     </form>
                                     <p>@{{follow.username}}</p>
 
-                                </div>
-                            
-                                              
-                                
-                               
-                               
-                                          <form action="{% url 'follow' id=follow.id %}" method="POST" id="followForm3">
+                                </div>                       
+                               <form action="{% url 'follow' id=follow.user.id %}" method="POST" id="followForm3">
                                     {% csrf_token %}
-                                    <button id="button3"onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" type="submit" class="followButton {% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif %}">
+                                    <button id="button3"onclick="follow(event, this)" tweet-id="{{follow.user.id}}" type="submit" class="followButton {% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif %}">
                                         <p>{% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif%}</p>
                                     </button>
                                 </form> 
-                                  
-                              
-                                
                             </div>
                         {% endfor %}
 

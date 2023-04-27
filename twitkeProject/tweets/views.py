@@ -88,9 +88,8 @@ def responseTweet(request, id):
 
 def tweetDetails(request, id):
     tweet = Tweet.objects.all().filter(parent_tweet = id)
-    parent_tweet = Tweet.objects.get(id = id)
-    
-    profile = Profiles.objects.get(id=parent_tweet.user.id)
+    parent_tweet = Tweet_profile.objects.get(tweet_id = id)
+    profile = Profiles.objects.get(id=parent_tweet.profile.user.id)
     return render(request, 'tweetDetail.html',{
         'tweets': tweet,
         'parent_tweet': parent_tweet,

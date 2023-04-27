@@ -33,15 +33,15 @@
                     <section class="modal2">
                         <div class="modal_container_editProfile">
                             <div class="editImage">         
-                                <form action="{% url 'updateProfile' usuario.id %}?return_url={{ request.path }}" method="POST"  enctype="multipart/form-data" class="editFrom"> 
+                                <form id="updateForm"  action="{% url 'updateProfile' usuario.id %}" method="POST"  enctype="multipart/form-data" class="editFrom"> 
                                     <div class="buttonsEdit">
+                                        {% csrf_token %}
 
                                         <button href="#" class="modal_close">X</button>
-                                        <button class="saveButton">
+                                        <button class="saveButton" onclick="update(event, this)" tweet-id="{{usuario.id}}">
                                             Guardar
                                         </button>
                                     </div>
-                                    {% csrf_token %}
                                     <div class="updateImage">
 
                                         {% if usuario.profileImage %}
@@ -75,6 +75,7 @@
                                     <input type="date" name="birthday">
 
                                     <input type="text" value="" placeholder="Sitio web" name="webSite" class="webSite">
+                                    <p class="error" style="color: black"></p>
                                 </form>                     
                             </div>
                         </div>
@@ -299,7 +300,7 @@
         
 
         </script>
-            
+        <script src="{% static 'ajaxUpdate.js' %}"></script>
     {% endblock content %}
 
         

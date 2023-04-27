@@ -61,12 +61,19 @@ def updateProfile(request, id):
     
     profile = Profiles.objects.get(id=id)
     profiles = Profiles.objects.all()
+
     if request.POST['input-name']:
-        for profile in profiles:
-            if profile.username == str(request.POST['input-name']):
+        print(request.POST['input-name'])
+        for perfil in profiles:
+            if perfil.username == str(request.POST['input-name']):
                 print('Ese nombre esta en uso')
+                used = True
+                return JsonResponse({'is_used': used})
             else:
                 profile.username = str(request.POST['input-name'])
+                
+            
+                
     if request.POST['input-biography']:
         profile.biography = str(request.POST['input-biography'])
     
@@ -84,7 +91,5 @@ def updateProfile(request, id):
         profile.birthday = birthday
         
     profile.save()    
-    return_url = request.GET.get('return_url')
-    if return_url:
-        return redirect(return_url)
-    return redirect('myProfile', id=id)
+    
+    return JsonResponse({'is_used': used})

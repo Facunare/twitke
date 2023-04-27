@@ -25,9 +25,7 @@ from tweet_profiles.models import Tweet_profile
 
 # Errores boludos:
 # 1. Arreglar gmail.
-# 2. Ver fotos de perfil en globalFeed
-# 3. Que no te permita ponerte cualquier nombre
-# 4. Cuando arregle lo de profiles en el globalFeed, mostrar nombre de usuario en cada tweet.
+
 
 def globalFeed(request):
     # Si hay error seguro es esta linea

@@ -6,6 +6,7 @@ from . import forms
 from django.http import JsonResponse
 from .models import Tweet
 from profiles.models import Profiles
+from tweet_profiles.models import Tweet_profile
 # Create your views here.
 
 
@@ -32,7 +33,7 @@ def globalFeed(request):
     # Si hay error seguro es esta linea
     
     # current_profile = Profiles.objects.get(user__id = request.user.id)
-    tweets = Tweet.objects.all().filter(parent_tweet = None)
+    tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
@@ -49,7 +50,8 @@ def postTweet(request):
             'form': forms.postTweet
         })
     else:
-        Tweet.objects.create(user = request.user, content = request.POST['content'])
+        tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
         return redirect('/')
 
 @login_required
@@ -89,6 +91,7 @@ def responseTweet(request, id):
 def tweetDetails(request, id):
     tweet = Tweet.objects.all().filter(parent_tweet = id)
     parent_tweet = Tweet.objects.get(id = id)
+    
     profile = Profiles.objects.get(id=parent_tweet.user.id)
     return render(request, 'tweetDetail.html',{
         'tweets': tweet,

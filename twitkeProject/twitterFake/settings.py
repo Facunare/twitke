@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'autentication',
     'tweets',
     'profiles',
+    'tweet_profiles'
 ]
 
 MIDDLEWARE = [

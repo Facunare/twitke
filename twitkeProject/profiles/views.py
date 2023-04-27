@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from .models import Profiles, Tweet
 from datetime import datetime
+from tweet_profiles.models import Tweet_profile
 # Create your views here.
 from django.http import JsonResponse
 
@@ -18,7 +19,7 @@ def myProfile(request, id):
     following = user.followed_users.all()
     cant_following = user.followed_users.all().count()
     cant_followers = int(user.followers)
-    tweets = Tweet.objects.filter(user__id=id).all()
+    tweets = Tweet_profile.objects.filter(profile__user__id=id).all()
     print(cant_followers)
     print(cant_following)
     cant_following = user.followed_users.all().count()

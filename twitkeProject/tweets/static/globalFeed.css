@@ -71,6 +71,9 @@ main{
 .postTweetForm{
     width: 100%;
 }
+.postTweetForm textarea{
+    border-bottom: none;
+}
 #id_content{
     width: 100%;
     outline: none;
@@ -397,4 +400,23 @@ textarea{
     padding: 0;    
     
 }
+.updateButtons{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+.modalUpdate .update{
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color:#368a8e;
+    color: white;
+    padding: 3px;
+    border: none;
+    cursor: pointer;
+    transition: .3s ease background-color;
+}
 
+.modalUpdate .update:hover{
+    background-color: #41aaaf;
+}

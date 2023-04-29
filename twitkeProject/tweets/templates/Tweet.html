@@ -16,20 +16,23 @@
                     <p style="font-size: 12px">{% if tweet.tweet %} @{{tweet.profile.username}}{% else %}{{profile.username}}{% endif %}</p>
                 </form>
             </div>
-            <div class="tweetOptions">                         
+            <div class="tweetOptions" style="z-index: 0">                         
                 <button  class="optionButtons" data="true"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M479.858 896Q460 896 446 881.858q-14-14.141-14-34Q432 828 446.142 814q14.141-14 34-14Q500 800 514 814.142q14 14.141 14 34Q528 868 513.858 882q-14.141 14-34 14Zm0-272Q460 624 446 609.858q-14-14.141-14-34Q432 556 446.142 542q14.141-14 34-14Q500 528 514 542.142q14 14.141 14 34Q528 596 513.858 610q-14.141 14-34 14Zm0-272Q460 352 446 337.858q-14-14.141-14-34Q432 284 446.142 270q14.141-14 34-14Q500 256 514 270.142q14 14.141 14 34Q528 324 513.858 338q-14.141 14-34 14Z"/></svg></button>
                 <div class="options" optionsId="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
                     <ul>
                         {% if tweet.profile %}
                             {% if  tweet.profile.user.username == user.username %}
                                 <form action="{% url 'deleteTweet' tweet.tweet.id %}" class="deleteForm">
+                                    {% csrf_token %}
                                     <button>
                                         Delete
                                     </button>
                                 </form>
-                                
-                                
-                                <button class="edits">Editar</button>
+                               
+                                <form action="{% url 'updateTweet' tweet.tweet.id %}" method="GET" id="editTweetForm">
+                                    {% csrf_token %}
+                                    <button class="edits" onclick="edit(event, this)" tweet-id="{{tweet.tweet.id}}">Editar</button>
+                                </form>
                                 {% else %}
 
                                     {% if current_user not in usuario.followers_users.all %}
@@ -48,13 +51,17 @@
                         {% else %}
                             {% if usuario.username == user.username %}
                                     <form action="{% url 'deleteTweet' tweet.id %}" class="deleteForm">
+                                        {% csrf_token %}
                                         <button>
                                             Delete
                                         </button>
                                     </form>
                                     
                                     
-                                    <button class="edits">Editar</button>
+                                    <form action="{% url 'updateTweet' tweet.id %}" method="GET" id="editTweetForm">
+                                        {% csrf_token %}
+                                        <button class="edits" onclick="edit(event, this)" tweet-id="{{tweet.tweet.id}}">Editar</button>
+                                    </form>
                                     {% else %}
 
                                         {% if current_user not in usuario.followers_users.all %}
@@ -146,15 +153,18 @@
             </form>
         </div>
     </section>
-    <section class="modalUpdate">
-        <div class="modal_container_update">
-            <button href="#" class="modal_close">X</button>
-            <form method="POST" class="formResponse" >  
-                {% csrf_token %}
-                <input type="text" class="tweetContent" name="contentResponse" autocomplete="off">
-                <button class="responseButton">
-                    Actualizar
-                </button>
+    <section class="modalUpdate" style="z-index: 1000">
+        <div class="modal_container_update" style="z-index: 1000">
+            <form method="POST" class="formResponse" action="{% if tweet.tweet %}{% url 'updateTweet' tweet.tweet.id %}{% else %}{% url 'updateTweet' tweet.id %}{% endif %}">  
+                <div class="updateButtons">
+                    {% csrf_token %}
+                    <button href="#" class="modal_close">X</button>
+                    <button class="update">
+                        Actualizar
+                    </button>
+                    
+                </div>
+                <textarea name="content" cols="57" rows="10" required="" id="textArea" spellcheck="false"></textarea>
             </form>   
         </div>
     </section>

@@ -19,7 +19,7 @@
         <h1 class="feedTitle">Inicio</h1>
         <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm">
             {% csrf_token %}
-            <textarea name="content" cols="57" rows="10" required="" id="id_content" spellcheck="false"></textarea>
+            <textarea name="content" cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
             <button>
                 Twittear
             </button>
@@ -51,6 +51,8 @@
         
 
         <script>
+                        
+            
             const msgButtons = document.querySelectorAll('.msgButton')
             const modal = document.querySelector('.modal')
             const cerrarModales = document.querySelectorAll('.modal_close')
@@ -75,9 +77,7 @@
             const edits = document.querySelectorAll('.edits')
             for(let edit of edits){
                 edit.addEventListener('click', (e)=>{
-                    e.preventDefault()  
-                    e.stopPropagation()
-                    console.log(1)
+                    
                     updateForm.classList.add('modalUpdate--show')
 
                 })
@@ -115,6 +115,7 @@
 
            
         </script>
+        <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
 
 
 {% endblock content %}

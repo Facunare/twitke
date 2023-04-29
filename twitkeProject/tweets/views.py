@@ -11,27 +11,28 @@ from tweet_profiles.models import Tweet_profile
 
 
 
-# 1. Edit tweets (in process)
+# 1. Retweet
 
-# 2. Retweet
+# 2. Function for the post of tweets. (add images, emojis, self location, pools)
 
-# 3. Function for the post of tweets. (add images, emojis, self location, pools)
+# 3. Admin view (verificate accounts, Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 4. Admin view (Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
+# 4. Profile sections (answers, retweets, etc).
 
-# 5. Profile sections (answers, retweets, etc).
+# 5. Twitter design
 
-# 6. Twitter design
+# 6. IA 
 
 # Errores boludos:
 # 1. Arreglar gmail.
-
+# 2. Color tweet in profiles, double line, etc.
 
 def globalFeed(request):
     # Si hay error seguro es esta linea
     
     # current_profile = Profiles.objects.get(user__id = request.user.id)
     tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
+    
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,
@@ -39,18 +40,6 @@ def globalFeed(request):
             
     })
     
-@login_required
-def postTweet(request):
-
-    current_profile = Profiles.objects.get(user__username = request.user.username)
-    if request.method == 'GET':
-        return render(request, 'globalFeed.html',{
-            'form': forms.postTweet
-        })
-    else:
-        tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
-        return redirect('/')
 
 @login_required
 def like(request, id):
@@ -80,15 +69,29 @@ def deleteTweet(request, id):
     return redirect('globalFeed')
 
 @login_required
+def postTweet(request):
+
+    current_profile = Profiles.objects.get(user__username = request.user.username)
+    if request.method == 'GET':
+        return render(request, 'globalFeed.html',{
+            'form': forms.postTweet
+        })
+    else:
+        tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+        return redirect('/')
+    
+@login_required
 def responseTweet(request, id):
+    current_profile = Profiles.objects.get(user__username = request.user.username)
     if request.method == "POST":
-        print(id)
-        Tweet.objects.create(user = request.user, content = request.POST['contentResponse'], parent_tweet = id)
+        tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'], parent_tweet = id)
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
         return redirect(f'/tweet/detail/{id}')
     
 
 def tweetDetails(request, id):
-    tweet = Tweet.objects.all().filter(parent_tweet = id)
+    tweet = Tweet_profile.objects.all().filter(tweet__parent_tweet = id)
     parent_tweet = Tweet_profile.objects.get(tweet_id = id)
     profile = Profiles.objects.get(id=parent_tweet.profile.user.id)
     return render(request, 'tweetDetail.html',{
@@ -141,5 +144,16 @@ def keeped(request, id):
         'keeps': keptTweets,
         'profile': profile
     })
+
+def updateTweet(request, id):
+    tweet_to_update = Tweet.objects.get(id = id)
+       
+    if request.method == 'GET':       
+        return JsonResponse({'tweetContent': str(tweet_to_update.content)})
+    
+    else: 
+        tweet_to_update.content = request.POST['content']
+        tweet_to_update.save()
+        return redirect('/')
     
     

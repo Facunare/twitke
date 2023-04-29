@@ -123,9 +123,9 @@
 
                 <div class="followers-info">
                   
-                    <a href="#" class="cant_followers">{{cant_followers}} <span>seguidores</span></a>
+                    <a href="#" class="cant_followers">{{cant_followers}} <span class="followSpan">seguidores</span></a>
                     
-                    <a href="#" class="following">{{cant_following}}<span  class="cant_following">siguiendo</span></a>
+                    <a href="#" class="following">{{cant_following}}<span  class="followSpan">siguiendo</span></a>
                 </div>
                 <h1 class="myTweets">Mis tweets</h1>
             </div>
@@ -227,6 +227,15 @@
             const cerrarModales = document.querySelectorAll('.modal_close')
             const button = document.querySelector('.cant_followers')
             const following = document.querySelector('.following')
+            const edits = document.querySelectorAll('.edits')
+            const updateForm = document.querySelector('.modalUpdate')
+            for(let edit of edits){
+                edit.addEventListener('click', (e)=>{
+                    console.log(1)
+                    updateForm.classList.add('modalUpdate--show')
+
+                })
+            }
             button.addEventListener('click', (e)=>{
                 e.preventDefault()  
                 modal.classList.add('modal--show')
@@ -249,6 +258,7 @@
                     modal2.classList.remove('modal--show')
                     modal3.classList.remove('modal--show')
                     modalMsg.classList.remove('modal--show')
+                    updateForm.classList.remove('modalUpdate--show')
                 })
             }
             
@@ -301,6 +311,7 @@
 
         </script>
         <script src="{% static 'ajaxUpdate.js' %}"></script>
+        <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
     {% endblock content %}
 
         

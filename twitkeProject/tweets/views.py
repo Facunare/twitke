@@ -74,6 +74,7 @@ def like(request, id):
 
 @login_required
 def deleteTweet(request, id):
+    print(id)
     tweet = Tweet.objects.get(id = id)
     tweet.delete()
     return redirect('globalFeed')

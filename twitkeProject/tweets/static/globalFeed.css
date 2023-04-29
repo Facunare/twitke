@@ -1,7 +1,11 @@
-
+*{
+    padding: 0;
+    margin: 0;
+}
 .container-1{
     width: 100%;
-  
+    padding: 0;
+    margin: 0;
 }
 .containerKept{
     display: flex;
@@ -53,12 +57,6 @@
     font-weight: bold;
 }
 
-
-
-.tweetMessage{
-    z-index: 1000000000000;
-    cursor: default;
-}
 main{
     display: flex;
     flex-direction: column;
@@ -76,26 +74,25 @@ main{
 #id_content{
     width: 100%;
     outline: none;
+
 }
 
 .postTweetForm button{
     color: white;
     cursor: pointer;
-    margin-left: 5px;
     border-radius: 20px;
     padding: 5px;
     border: none;
     background-color: #368a8e;
+    position: absolute;
     transform: translate(20px, -50px);
 }
-
 .postTweetForm button:hover{
     background-color: #41aaaf;
 }
 .tweet{
     text-decoration: none;
     color: black;
-    z-index: 0;
 }
 
 .tweets{
@@ -107,11 +104,10 @@ main{
 .div-content{
     display: flex;
     flex-direction: column;
-    margin: 0 10px 10px 0;
+    margin: 0 10px 0 0;
     height: auto;
     padding-left: 15px;
     width: 100%;
-    border-bottom: 1px solid black;
 }
 
 
@@ -174,7 +170,7 @@ main{
     text-decoration: underline black 2px;
 }
 
-.div-content:last-child{
+.tweet .div-content:last-child{
     border: 1px solid black;
 }
 
@@ -284,7 +280,6 @@ textarea{
     flex-direction: column;
     align-items: center;
 }
-
 
 .modal_container .response, .modal_container_update input{
     padding: 10px 0 150px 10px;

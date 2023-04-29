@@ -20,29 +20,56 @@
                 <button  class="optionButtons" data="true"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M479.858 896Q460 896 446 881.858q-14-14.141-14-34Q432 828 446.142 814q14.141-14 34-14Q500 800 514 814.142q14 14.141 14 34Q528 868 513.858 882q-14.141 14-34 14Zm0-272Q460 624 446 609.858q-14-14.141-14-34Q432 556 446.142 542q14.141-14 34-14Q500 528 514 542.142q14 14.141 14 34Q528 596 513.858 610q-14.141 14-34 14Zm0-272Q460 352 446 337.858q-14-14.141-14-34Q432 284 446.142 270q14.141-14 34-14Q500 256 514 270.142q14 14.141 14 34Q528 324 513.858 338q-14.141 14-34 14Z"/></svg></button>
                 <div class="options" optionsId="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
                     <ul>
-                        {% if  tweet.profile.username or usuario.username == user.username %}
-                            <form action="{% if tweet.tweet %}{% url 'deleteTweet' tweet.tweet.id %}{% else %}{% url 'deleteTweet' tweet.id %}{% endif %}" class="deleteForm">
-                                <button>
-                                    Delete
-                                </button>
-                            </form>
-                            
-                            
-                            <button class="edits">Editar</button>
-                            {% else %}
-
-                                {% if current_user not in usuario.followers_users.all %}
-                                    <form action="{% if tweet.profile %}{% url 'follow' id=tweet.profile.user.id %}{% url 'follow' id=tweet.user.id %}{% else %}{% endif %}?return_url={{ request.path }}" method="POST">
-                                        {% csrf_token %}
-                                        <button type="submit" class="followButton">Follow</button>
-                                    </form>
+                        {% if tweet.profile %}
+                            {% if  tweet.profile.user.username == user.username %}
+                                <form action="{% url 'deleteTweet' tweet.tweet.id %}" class="deleteForm">
+                                    <button>
+                                        Delete
+                                    </button>
+                                </form>
+                                
+                                
+                                <button class="edits">Editar</button>
                                 {% else %}
-                                    <form action="{% if tweet.profile %}{% url 'follow' id=tweet.profile.user.id %}{% url 'follow' id=tweet.user.id %}{% else %}{% endif %}?return_url={{ request.path }}" method="POST">
-                                        {% csrf_token %}
-                                        <button type="submit" class="followButton">Unfollow</button>
+
+                                    {% if current_user not in usuario.followers_users.all %}
+                                        <form action="{% url 'follow' id=tweet.profile.user.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton">Follow</button>
+                                        </form>
+                                    {% else %}
+                                        <form action="{% url 'follow' id=tweet.profile.user.id %}?return_url={{ request.path }}" method="POST">
+                                            {% csrf_token %}
+                                            <button type="submit" class="followButton">Unfollow</button>
+                                        </form>
+                                    {% endif %} 
+                                
+                            {% endif %}
+                        {% else %}
+                            {% if usuario.username == user.username %}
+                                    <form action="{% url 'deleteTweet' tweet.id %}" class="deleteForm">
+                                        <button>
+                                            Delete
+                                        </button>
                                     </form>
-                                {% endif %} 
-                            
+                                    
+                                    
+                                    <button class="edits">Editar</button>
+                                    {% else %}
+
+                                        {% if current_user not in usuario.followers_users.all %}
+                                            <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="followButton">Follow</button>
+                                            </form>
+                                        {% else %}
+                                            <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
+                                                {% csrf_token %}
+                                                <button type="submit" class="followButton">Unfollow</button>
+                                            </form>
+                                        {% endif %} 
+                                    
+                                {% endif %}
                         {% endif %}
                     </ul>
                 </div>
@@ -106,6 +133,7 @@
             
         </div>
     </div>        
+</a>
     <section class="modal modalMsg">
         <div class="modal_container">
             <button href="#" class="modal_close">X</button>

@@ -19,19 +19,22 @@
         <h1 class="feedTitle">Inicio</h1>
         <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm">
             {% csrf_token %}
-            <textarea name="content" cols="55" rows="10" required="" id="id_content" spellcheck="false"></textarea>
+            <textarea name="content" cols="57" rows="10" required="" id="id_content" spellcheck="false"></textarea>
             <button>
                 Twittear
             </button>
         </form>
     </div>
     
-        <div class="users"> 
+        {% if profilesSearched %}
 
-            {% for profile in profilesSearched %}
-                {% include 'User.html' %}
-            {% endfor %}
-        </div>
+            <div class="users"> 
+
+                {% for profile in profilesSearched %}
+                    {% include 'User.html' %}
+                {% endfor %}
+            </div>
+        {% endif %}
         <div class="tweets">
             {% for tweet in tweets %}
                 {% include 'Tweet.html' %}

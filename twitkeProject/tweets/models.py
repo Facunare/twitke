@@ -10,6 +10,8 @@ class Tweet(models.Model):
     likes = models.IntegerField(default=0)
     likes_users = models.ManyToManyField(User, related_name="likes_tweets")
     retweets = models.IntegerField(default=0)
+    edited = models.BooleanField(default=False)
+    is_retwitted = models.BooleanField(default=False)
     parent_tweet = models.IntegerField(null=True)
     
     

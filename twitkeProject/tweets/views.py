@@ -13,31 +13,28 @@ from tweet_profiles.models import Tweet_profile
 
 # 1. Retweet
 
-# 2. Function for the post of tweets. (add images, emojis, self location, pools)
+# 2. Function for the post of tweets. (add images, emojis, videos)
 
 # 3. Admin view (verificate accounts, Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
 # 4. Profile sections (answers, retweets, etc).
 
-# 5. Twitter design
+# 5. IA 
 
-# 6. IA 
+# 6. Twitter design
+
+# 7. Ver lo que retwiteen o lo que le dan like los que sigo.
+
 
 # Errores boludos:
 # 1. Arreglar gmail.
-# 2. Color tweet in profiles, double line, etc.
 
 def globalFeed(request):
-    # Si hay error seguro es esta linea
-    
-    # current_profile = Profiles.objects.get(user__id = request.user.id)
     tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
     
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
-            'tweets': tweets,
-            # 'profile': current_profile,
-            
+            'tweets': tweets,        
     })
     
 
@@ -145,15 +142,22 @@ def keeped(request, id):
         'profile': profile
     })
 
+@login_required
 def updateTweet(request, id):
     tweet_to_update = Tweet.objects.get(id = id)
-       
-    if request.method == 'GET':       
-        return JsonResponse({'tweetContent': str(tweet_to_update.content)})
-    
-    else: 
+    if request.method == 'POST':      
         tweet_to_update.content = request.POST['content']
+        tweet_to_update.edited = True
         tweet_to_update.save()
-        return redirect('/')
+        return JsonResponse({'tweetContent': str(tweet_to_update.content), 'tweetId': id}) 
     
     
+    return JsonResponse({'tweetContent': str(tweet_to_update.content), 'tweetId': id})
+
+@login_required
+def retweet(request, id):
+    tweet_to_retweet = Tweet.objects.get(id = id)
+    current_profile = Profiles.objects.get(user__username = request.user.username)
+    tweet = Tweet.objects.create(user = tweet_to_retweet.user, content = tweet_to_retweet.content, is_retwitted = True)
+    Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+    return redirect('/')

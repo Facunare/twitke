@@ -12,5 +12,6 @@ urlpatterns = [
     path('search/', views.searchTweet, name="search"),
     path('keep/<int:tweetId>', views.keepTweets, name="keepTweets"),
     path('keepTweets/<int:id>', views.keeped, name="keeped"),
-    path('update/tweet/<int:id>', views.updateTweet, name="updateTweet")
+    path('update/tweet/<int:id>', views.updateTweet, name="updateTweet"),
+    path('retweet/<int:id>', views.retweet, name="retweet")
 ]

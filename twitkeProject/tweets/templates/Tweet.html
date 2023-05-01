@@ -1,17 +1,24 @@
+{% load static %}
 <a href="{% if tweet.tweet %}{% url 'tweetDetails' tweet.tweet.id %}{% else %}{% url 'tweetDetails' tweet.id %}{% endif %}" class="tweet">
     <div class="div-content" id="{{tweet.id}}">
         <div class="tweetHead">
             <div class="fotoPerfil">
                 {% if tweet.profile.profileImage %}
-                <img src="{{tweet.profile.profileImage.url}} " alt="" class="fotito">
+                <img src="{{tweet.profile.profileImage.url}} " alt="" class="fotito profilePhoto">
                 {% else %}
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>
+                <svg class="profilePhoto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>
                 {% endif %}
                 <form action="{% if tweet.tweet %}{% url 'myProfile' tweet.profile.user.id %}{% else %}{% url 'myProfile' tweet.user.id %}{% endif %}" class="formName">
                     
                     <div class="username">
                         <button class="usernameTweet">{% if tweet.tweet %}{{tweet.tweet.user.username}}{% else %}{{tweet.user.username}}{% endif %}</button>
-    
+                        
+                        {% if tweet.tweet.edited %}
+                            <p>- edited</p>
+                        {% endif %}
+                        {% if tweet.tweet.is_retwitted %}
+                            <p>Retwitted by {{tweet.profile.username}}</p>
+                        {% endif %}
                     </div>
                     <p style="font-size: 12px">{% if tweet.tweet %} @{{tweet.profile.username}}{% else %}{{profile.username}}{% endif %}</p>
                 </form>
@@ -29,9 +36,11 @@
                                     </button>
                                 </form>
                                
-                                <form action="{% url 'updateTweet' tweet.tweet.id %}" method="GET" id="editTweetForm">
+                                <form action="{% url 'updateTweet' tweet.tweet.id %}" method="POST" id="editTweetForm">
                                     {% csrf_token %}
-                                    <button class="edits" onclick="edit(event, this)" tweet-id="{{tweet.tweet.id}}">Editar</button>
+                                    <button class="edits" onclick="edit(event, this, 'GET')" tweet-id="{{tweet.tweet.id}}">Editar</button>
+
+                                    <input type="hidden" name="tweet_id" value="{{tweet.tweet.id}}">
                                 </form>
                                 {% else %}
 
@@ -110,7 +119,7 @@
                     {% endif %}
                 </form>
                 
-                <form>
+                <form action="{% url 'retweet' tweet.tweet.id %}"> 
                     <button>
                         <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
                     </button>
@@ -141,33 +150,33 @@
         </div>
     </div>        
 </a>
-    <section class="modal modalMsg">
-        <div class="modal_container">
-            <button href="#" class="modal_close">X</button>
-            <form action="{% if tweet.tweet %}{% url 'responseTweet' tweet.tweet.id %}{% else %}{% url 'responseTweet' tweet.id %}{% endif %}" method="POST" class="formResponse" > 
+<section class="modal modalMsg">
+    <div class="modal_container">
+        <button href="#" class="modal_close">X</button>
+        <form action="{% if tweet.tweet %}{% url 'responseTweet' tweet.tweet.id %}{% else %}{% url 'responseTweet' tweet.id %}{% endif %}" method="POST" class="formResponse" > 
+            {% csrf_token %}
+            <input type="text" class="response" name="contentResponse" placeholder="Twittea tu respuesta..." autocomplete="off">
+            <button class="responseButton">
+                Twittear
+            </button>
+        </form>
+    </div>
+</section>
+<section class="modalUpdate" style="z-index: 1000">
+    <div class="modal_container_update" style="z-index: 1000">
+        <form method="POST" class="formResponse" id="updateTweetForm">  
+            <div class="updateButtons">
                 {% csrf_token %}
-                <input type="text" class="response" name="contentResponse" placeholder="Twittea tu respuesta..." autocomplete="off">
-                <button class="responseButton">
-                    Twittear
+                <button href="#" class="modal_close">X</button>
+                <button class="update" onclick="edit(event, this, 'POST')" tweet-id="{{tweet.tweet.id}}" id="">
+                    Actualizar
                 </button>
-            </form>
-        </div>
-    </section>
-    <section class="modalUpdate" style="z-index: 1000">
-        <div class="modal_container_update" style="z-index: 1000">
-            <form method="POST" class="formResponse" action="{% if tweet.tweet %}{% url 'updateTweet' tweet.tweet.id %}{% else %}{% url 'updateTweet' tweet.id %}{% endif %}">  
-                <div class="updateButtons">
-                    {% csrf_token %}
-                    <button href="#" class="modal_close">X</button>
-                    <button class="update">
-                        Actualizar
-                    </button>
-                    
-                </div>
-                <textarea name="content" cols="57" rows="10" required="" id="textArea" spellcheck="false"></textarea>
-            </form>   
-        </div>
-    </section>
+                
+            </div>
+            <textarea name="content" cols="57" rows="10" required="" id="textArea" spellcheck="false"></textarea>
+        </form>   
+    </div>
+</section>
     <script>
     function getCookie(name) {
         var cookieValue = null;
@@ -249,7 +258,7 @@
     }
      
 </script>
-
+<script src="{% static 'ajaxUpdateTweet.js' %}"></script>
 <style>
     .username{
     display: flex;
@@ -257,6 +266,7 @@
     gap: 15px;
     align-items: center;
 }
+
 
 .usernameTweet{
     margin: 0;
@@ -275,4 +285,22 @@
     height: 35px;
     border-radius: 50%;
 }
+
+.tweet:hover{
+    background-color: rgba(253, 249, 249, 0.795);
+}
+
+.profilePhoto:hover{
+    filter: grayscale(.3);
+    transition: filter ease .3s;
+}
+
+.fotito{
+    margin: 0;
+}
+
+.username p{
+    font-size: 11px;
+}
+
 </style>

@@ -64,7 +64,7 @@ main{
     display: inline-block;
 }
 
-span{
+.followSpan{
     color: rgba(113, 118, 123, 1);
     font-weight: 100;
 }
@@ -161,9 +161,6 @@ span{
     font-weight: bolder;
 }
 
-.username p:last-child{
-    font-size: 13px;
-}
 
 .seguidor:first-child{
     margin-top: 20px;

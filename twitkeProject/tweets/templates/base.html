@@ -14,7 +14,7 @@
 
       <nav class="navbar-1">
           <ul>
-            <img src="{% static 'logo.png' %}" class="logo">
+            <h1 style="font-size: 50px">Twitke</h1>
             <li><a href="{% url 'globalFeed' %}"><img  class="img-ul" src="{% static 'home_FILL0_wght400_GRAD0_opsz48.svg' %}"></a><li>
             {% if user.is_authenticated %}
             <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>

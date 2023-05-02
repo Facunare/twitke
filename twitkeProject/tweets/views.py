@@ -31,10 +31,11 @@ from tweet_profiles.models import Tweet_profile
 
 def globalFeed(request):
     tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
-    
+    current_profile = Profiles.objects.get(user__username = request.user.username)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
+            'current_profile': current_profile
     })
     
 
@@ -156,8 +157,23 @@ def updateTweet(request, id):
 
 @login_required
 def retweet(request, id):
-    tweet_to_retweet = Tweet.objects.get(id = id)
-    current_profile = Profiles.objects.get(user__username = request.user.username)
-    tweet = Tweet.objects.create(user = tweet_to_retweet.user, content = tweet_to_retweet.content, is_retwitted = True)
-    Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+   
+
+    tweet= Tweet.objects.get(id=id)
+    tweet_to_retweet = Tweet_profile.objects.get(tweet = tweet)
+    current_profile = Profiles.objects.get(user__username=request.user.username)
+
+    if tweet_to_retweet.tweet in current_profile.retweets.all():
+        print("estoy")
+        current_profile.retweets.remove(tweet_to_retweet.tweet)
+        tweet_to_retweet.retwitted_by.remove(current_profile)
+        tweet_to_delete = Tweet_profile.objects.get(tweet = tweet)
+        tweet_to_delete.delete()
+    else:
+        print("no estoy")
+        current_profile.retweets.add(tweet_to_retweet.tweet)
+        tweet_to_retweet.retwitted_by.add(current_profile)       
+        tweet = Tweet.objects.create(user = tweet_to_retweet.profile.user, content = tweet_to_retweet.tweet.content)
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+    
     return redirect('/')

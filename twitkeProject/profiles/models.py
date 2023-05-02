@@ -8,6 +8,7 @@ class Profiles(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE )
     username = models.CharField(max_length=30, null=True, default="")
     keeps = models.ManyToManyField(Tweet, related_name='kept_by_profiles', blank=True)
+    retweets = models.ManyToManyField(Tweet, related_name='retweets_by_profiles', blank=True)
     biography = models.TextField(max_length=250,  null=True, default="", blank=True)
     profileImage = models.ImageField(null=True, blank=True, upload_to='profileImages')
     profileBanner = models.ImageField(null=True, blank=True, upload_to='profileBanners')

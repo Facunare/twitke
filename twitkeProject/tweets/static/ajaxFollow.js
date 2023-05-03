@@ -50,10 +50,10 @@ function follow(e, btn){
             }
     
             if(data.cant_followers == 1){
-                cant_followers.innerHTML = data.cant_followers + "<span> seguidor</span>"
+                cant_followers.innerHTML = data.cant_followers + "<span class='followSpan'> seguidor</span>"
     
             }else{
-                cant_followers.innerHTML = data.cant_followers + "<span> seguidores</span>"
+                cant_followers.innerHTML = data.cant_followers + "<span class='followSpan'> seguidores</span>"
             }
 
             
@@ -78,8 +78,9 @@ function follow(e, btn){
             //     btn.classList.add('follow')
             //     btn.classList.remove('unfollowButton')
             // } 
-            location.reload()
+            
         }
+        location.reload()
     }
         
     );

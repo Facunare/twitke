@@ -25,17 +25,23 @@ from tweet_profiles.models import Tweet_profile
 
 # 7. Ver lo que retwiteen o lo que le dan like los que sigo.
 
+# 8. Cambiar contraseña.
 
-# Errores boludos:
-# 1. Arreglar gmail.
+# Errores a solucionar:
+# 1. Arreglar gmail (importante).
+# 2. Lo de ir para atras
+# 3. Arreglar tweets guardados
+# 4. Solo poder ver los tweet de mis seguidores
 
 def globalFeed(request):
     tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
-    current_profile = Profiles.objects.get(user__username = request.user.username)
+    # current_user = ""
+    # if request.user:
+    #     current_profile = Profiles.objects.get(user__username = request.user.username)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
-            'current_profile': current_profile
+            # 'current_profile': current_profile
     })
     
 
@@ -121,14 +127,14 @@ def searchTweet(request):
 
 @login_required
 def keepTweets(request, tweetId):
-    tweet = Tweet.objects.get(id=tweetId)
+    tweet = Tweet_profile.objects.get(tweet_id=tweetId)
     profile = Profiles.objects.get(user=request.user)
 
-    if tweet in profile.keeps.all():
-        profile.keeps.remove(tweet)
+    if tweet.tweet in profile.keeps.all():
+        profile.keeps.remove(tweet.tweet)
         kept = False
     else:
-        profile.keeps.add(tweet) 
+        profile.keeps.add(tweet.tweet) 
         kept = True
     
     
@@ -136,10 +142,10 @@ def keepTweets(request, tweetId):
     return JsonResponse({'is_kept': kept, 'id': tweetId})
 @login_required    
 def keeped(request, id):
-    profile = Profiles.objects.get(id=id)
-    keptTweets = profile.keeps.all()
+    tweet = Tweet_profile.objects.filter(profile__user__id = id).all()
+    profile = tweet[0].profile
     return render(request, 'keptTweets.html', {
-        'keeps': keptTweets,
+        'keeps': tweet[0].profile.keeps.all(),
         'profile': profile
     })
 

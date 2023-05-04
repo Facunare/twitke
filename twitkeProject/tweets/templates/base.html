@@ -19,12 +19,14 @@
             {% if user.is_authenticated %}
             <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
             <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
+            {% if user.is_staff %}
+            <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
+            {% endif %}
             <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
-            
             {% else %}
           
-            <li class="signupButton"><a href="{% url 'signup' %}" >SIGN UP</a></li>
-            <li class="signinButton"><a href="{% url 'signin' %}">SIGN IN</a></li>
+            <li class="signupButton"><a href="{% url 'signup' %}" ><img  class="img-ul" src="{% static 'register-14.svg' %}"></a></li>
+            <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
           
             {% endif %}
           </ul>

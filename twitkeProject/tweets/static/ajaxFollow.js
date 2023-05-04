@@ -18,15 +18,19 @@ function getCookie(name) {
 
 function follow(e, btn){
     e.preventDefault();
+   
     if(btn.id == 'button1'){
 
         followForm = new FormData(document.getElementById('followForm'));
     }else if(btn.id == "button2"){
 
         followForm = new FormData(document.getElementById('followForm2'));
-    }else if(btn.id == "button3")
-         followForm = new FormData(document.getElementById('followForm3'));
-
+    }else if(btn.id == "button3"){
+        followForm = new FormData(document.getElementById('followForm3'));
+    }else if(btn.id == "button4"){
+        
+        followForm = new FormData(document.getElementById('followForm4'));
+    }
     var id = btn.getAttribute('tweet-id');
     
     fetch(`/follow/${id}`, {
@@ -68,19 +72,19 @@ function follow(e, btn){
                 btn.classList.add('follow')
                 btn.classList.remove('unfollowButton')
             }
-        }else if(btn.id == "button3"){
-            // if(data.is_follow){
-            //     btn.querySelector('p').innerHTML = "Unfollow"
-            //     btn.classList.add('unfollowButton')
-            //     btn.classList.remove('follow')
-            // }else{
-            //     btn.querySelector('p').innerHTML = "Follow"
-            //     btn.classList.add('follow')
-            //     btn.classList.remove('unfollowButton')
-            // } 
+        }else if(btn.id == "button4"){
+            if(data.is_follow){
+                btn.querySelector('p').innerHTML = "Unfollow"
+                btn.classList.add('unfollowButton')
+                btn.classList.remove('follow')
+            }else{
+                btn.querySelector('p').innerHTML = "Follow"
+                btn.classList.add('follow')
+                btn.classList.remove('unfollowButton')
+            }
             
         }
-        location.reload()
+        
     }
         
     );

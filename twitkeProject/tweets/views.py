@@ -14,9 +14,9 @@ from django.db.models import Q
 
 # 1. Retweet
 
-# 2. Function for the post of tweets. (add images, emojis, videos)
+# 2. Functions for the post of tweets. (add images, emojis, videos)
 
-# 3. Admin view (verificate accounts, Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
+# 3. Admin view (verificate accounts, Data analytics))
 
 # 4. IA 
 
@@ -24,8 +24,6 @@ from django.db.models import Q
 
 # Errores a solucionar:
 # 1. Arreglar gmail (importante).
-# 2. Arreglar tweets guardados (lo de la estrellita ocurre solo si no es mi tweet)
-# 3. Followage search and options
 
 def globalFeed(request):
     current_profile = ""
@@ -107,9 +105,11 @@ def searchTweet(request):
     search = request.GET.get("search")
     tweets = ""
     profiles= ""
-    current_profile = Profiles.objects.get(user=request.user)
+    current_profile = ""
+    if request.user.is_authenticated:
+        current_profile = Profiles.objects.get(user__username = request.user.username)
     if search:
-        tweets = Tweet.objects.filter(content__icontains = search)
+        tweets = Tweet_profile.objects.filter(tweet__content__icontains = search)
         profiles = Profiles.objects.filter(user__username__icontains = search)
         if tweets.count() == 0 and profiles.count() == 0:
              return render(request, 'globalFeed.html',{
@@ -139,11 +139,16 @@ def keepTweets(request, tweetId):
     return JsonResponse({'is_kept': kept, 'id': tweetId})
 @login_required    
 def keeped(request, id):
-    tweet = Tweet_profile.objects.filter(profile__user__id = id).all()
-    profile = tweet[0].profile
+    current_profile = Profiles.objects.get(user__username = request.user.username)
+    keeps = current_profile.keeps.all()
+    tweets = Tweet_profile.objects.filter(tweet_id__in=[keep.id for keep in keeps])
+    print(tweets)
+
+
+
     return render(request, 'keptTweets.html', {
-        'keeps': tweet[0].profile.keeps.all(),
-        'profile': profile
+        'keeps': tweets,
+        'profile': current_profile
     })
 
 @login_required

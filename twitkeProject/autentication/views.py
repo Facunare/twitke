@@ -7,8 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from profiles.models import Profiles
 # Create your views here.
-
 def signup(request):
+    
     if request.method == 'GET':
         return render(request, 'signup.html',{
             'form' : UserCreationForm
@@ -17,9 +17,10 @@ def signup(request):
         
         if request.POST['password1'] == request.POST['password2']:
             try:
+                
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 user.save()
-            
+                
                 try:
                     Profiles.objects.create(id = user.id, user = user, username = user.username)
                 except Exception as e:

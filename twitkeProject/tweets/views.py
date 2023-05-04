@@ -7,6 +7,7 @@ from django.http import JsonResponse
 from .models import Tweet
 from profiles.models import Profiles
 from tweet_profiles.models import Tweet_profile
+from django.db.models import Q
 # Create your views here.
 
 
@@ -17,31 +18,27 @@ from tweet_profiles.models import Tweet_profile
 
 # 3. Admin view (verificate accounts, Data analytics, moderate content (ban and delete accounts and tweets that are breaking the rules ))
 
-# 4. Profile sections (answers, retweets, etc).
+# 4. IA 
 
-# 5. IA 
-
-# 6. Twitter design
-
-# 7. Ver lo que retwiteen o lo que le dan like los que sigo.
-
-# 8. Cambiar contraseña.
+# 6. Cambiar contraseña.
 
 # Errores a solucionar:
 # 1. Arreglar gmail (importante).
-# 2. Lo de ir para atras
-# 3. Arreglar tweets guardados
-# 4. Solo poder ver los tweet de mis seguidores
+# 2. Arreglar tweets guardados (lo de la estrellita ocurre solo si no es mi tweet)
+# 3. Followage search and options
 
 def globalFeed(request):
-    tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
-    # current_user = ""
-    # if request.user:
-    #     current_profile = Profiles.objects.get(user__username = request.user.username)
+    current_profile = ""
+    if request.user.is_authenticated:
+        current_profile = Profiles.objects.get(user__username = request.user.username)
+        followers = current_profile.followed_users.all()
+        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
+    else:
+        tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
-            # 'current_profile': current_profile
+            'current_profile': current_profile
     })
     
 

@@ -5,9 +5,10 @@ from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
 from django.http import JsonResponse
 from .models import Tweet
-from profiles.models import Profiles
+from profiles.models import Profiles, verfifyRequests
 from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
+from django.contrib import messages
 # Create your views here.
 
 
@@ -16,17 +17,24 @@ from django.db.models import Q
 
 # 2. Functions for the post of tweets. (add images, emojis, videos)
 
-# 3. Admin view (verificate accounts, Data analytics))
+# 3. Admin view (data analytics)
 
 # 4. IA 
 
-# 6. Cambiar contraseña.
+# 5. Cambiar contraseña.
+
+# 6. Sweet alerts (in progress)
 
 # Errores a solucionar:
-# 1. Arreglar gmail (importante).
+# 1. Normalizar
 
 def globalFeed(request):
     current_profile = ""
+    search = request.GET.get("searchUser")
+    if search:
+        users = Profiles.objects.filter(username__icontains = search).all()
+    else:
+        users = Profiles.objects.all()
     if request.user.is_authenticated:
         current_profile = Profiles.objects.get(user__username = request.user.username)
         followers = current_profile.followed_users.all()
@@ -36,7 +44,8 @@ def globalFeed(request):
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
-            'current_profile': current_profile
+            'current_profile': current_profile,
+            'users': users
     })
     
 
@@ -185,3 +194,29 @@ def retweet(request, id):
         Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
     
     return redirect('/')
+
+
+from django.contrib.auth.models import User
+
+@staff_member_required
+def verificate(request):
+    searchUsers = request.GET.get("searchUsers")
+    if searchUsers:
+        users = verfifyRequests.objects.filter(profile__username__icontains = searchUsers).all()
+    else:
+        users = verfifyRequests.objects.all()
+    return render(request, 'verificate.html',{
+        'users': users
+    })
+    
+@staff_member_required
+def verificateUser(request, id):
+    
+    user = Profiles.objects.get(id = id)
+    if user.is_verified:
+        user.is_verified = False
+    else:
+        user.is_verified = True
+    user.save()
+    messages.success(request, 'El objeto ha sido eliminado.')
+    return redirect('verificate')

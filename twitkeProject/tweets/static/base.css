@@ -82,3 +82,78 @@ ul li a{
     margin-bottom: 20px;
 }
 
+
+.modalVerificate{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    z-index: 10000;
+    background-color: #0000003f;
+    opacity: 0;
+    transition: opacity .1s;
+    pointer-events: none;
+}
+
+.modal_container_verificate{
+    width: 90%;
+    background-color: white;
+    margin: auto;
+    max-width: 600px;
+    max-height: 90%;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 2em;
+
+}
+
+.modal_close{
+    text-decoration: none;
+    color: black;
+    display: inline;
+    cursor: pointer;
+    border-radius: 6px;
+    align-self: flex-start;
+    font-weight: 300;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border: none;
+    background-color: transparent;
+    padding: 0 2px;
+}
+
+
+.modalVerificate--show{
+    opacity: 1;
+    pointer-events: unset;
+    transition: opacity .1s;
+}
+
+.verificateNav{
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+.modalIcon{
+    width: 20px;
+    height: 20px;
+
+}
+
+
+
+.modalUserDiv{
+    display: flex;
+    gap: 5px;
+}
+
+
+
+#userContainer{
+    margin-bottom: 20px;
+}

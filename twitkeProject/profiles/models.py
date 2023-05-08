@@ -18,5 +18,10 @@ class Profiles(models.Model):
     birthday = models.DateField(null=True)
     webSite = models.CharField(null=True, max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False)
     def __str__(self):
         return self.username
+
+class verfifyRequests(models.Model):
+    profile = models.ForeignKey(Profiles, null=True, on_delete=models.CASCADE)
+    

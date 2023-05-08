@@ -20,7 +20,7 @@
             <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
             <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             {% if user.is_staff %}
-            <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
+            <li><a class="verificateNav" href="{% url 'verificate' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
             {% endif %}
             <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             {% else %}
@@ -29,6 +29,7 @@
             <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
           
             {% endif %}
+           
           </ul>
         </nav>
         
@@ -51,5 +52,25 @@
       </nav>
     </div>
   </body>
+  <script>
+    
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  </script>
 </html>
 

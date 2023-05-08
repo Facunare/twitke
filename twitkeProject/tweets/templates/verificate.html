@@ -1,0 +1,93 @@
+{% extends 'base.html' %}{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy</title>
+    
+</head>
+{% block content %}
+<body >
+    <link rel="stylesheet" href="{% static 'verificate.css' %}">
+    <div class="users">
+        <h1>Verificate users</h1>
+        <form action="" class="searchForm">
+            <input type="text" name="searchUsers">
+            <button><img src="{% static 'search-icon.svg' %}" alt=""></button>
+        </form>
+        {% if not users %}
+        <img src="{% static 'House searching-rafiki.svg' %}" alt="" class="notCoincidenceImg">
+        <p class="notCoincidence">No hay solicitudes</p>
+        {% endif %}
+        {% for profile in users %}  
+            <div class="user">
+
+                <div class="usernameDiv">
+                    <img style="width: 20px; height: 20px" src="{{profile.profile.profileImage.url}}" alt="">
+                    <div class="username">
+
+                        <p>{{profile.profile.user.username}}</p>
+                        <p>@{{profile.profile.username}}</p>
+                    </div>
+                </div>
+                <div class="buttons">
+
+                    <form action="{% url 'verificateUser' profile.profile.id %}">
+                        {% if profile.profile.is_verified %}
+                            <button class="button">Desverificar</button>
+                        {% else %}
+                            <button class="button">Verificar</button>
+                        {% endif%}
+                    </form>
+                    <form class="form"action="{% url 'deleteVerifyRequest' profile.profile.id %}">                      
+                        <button class="buttonTrash"><img src="{% static 'delete_FILL0_wght400_GRAD0_opsz48.svg' %}"></button>
+                    </form>
+                </div>
+            </div>
+
+        {% endfor %}
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const verificateButton = document.querySelectorAll('.buttonTrash');
+        console.log(verificateButton)
+        verificateButton.forEach(function(button) {
+          button.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-right',
+              iconColor: 'white',
+              customClass: {
+                popup: 'colored-toast'
+              },
+              showConfirmButton: false,
+              timer: 2500, // 2.5 segundos
+              timerProgressBar: true
+            })
+            Toast.fire({
+              icon: 'success',
+              title: 'Deleted'
+            }).then(function(result) {
+              setTimeout(function() {
+                if (result.isConfirmed) {
+                  window.location.href = url;
+                }
+              }, 1000);
+            });
+          });
+        });
+      });
+      
+</script> -->
+<style>
+    .colored-toast.swal2-icon-success {
+        background-color: red !important;
+        color: white;
+      }
+</style>
+{% endblock content %}

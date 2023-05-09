@@ -23,10 +23,9 @@ from django.contrib import messages
 
 # 5. Cambiar contraseña.
 
-# 6. Botoncito
+# 6. Diseño update photo
 
-
-
+# 7. 
 # Errores a solucionar:
 # 1. Normalizar
 

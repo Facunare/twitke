@@ -31,9 +31,10 @@ function update(e, btn){
         return res.json()
     }).then(function(data){
         const error = document.querySelector('.error')
-        console.log(data)
         if(data.is_used){
             error.innerHTML = "Ese nombre ya esta en uso"
+        }else{
+            error.innerHTML = "Actualizado correctamente"
         }
     })
 }

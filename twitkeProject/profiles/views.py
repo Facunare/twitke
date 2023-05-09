@@ -68,7 +68,7 @@ def follow(request, id):
 
 
 def updateProfile(request, id):
-    
+    used = False
     profile = Profiles.objects.get(id=id)
     profiles = Profiles.objects.all()
     if request.method == "POST":

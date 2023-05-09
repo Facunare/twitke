@@ -23,7 +23,9 @@ from django.contrib import messages
 
 # 5. Cambiar contraseña.
 
-# 6. Sweet alerts (in progress)
+# 6. Botoncito
+
+
 
 # Errores a solucionar:
 # 1. Normalizar
@@ -218,5 +220,4 @@ def verificateUser(request, id):
     else:
         user.is_verified = True
     user.save()
-    messages.success(request, 'El objeto ha sido eliminado.')
     return redirect('verificate')

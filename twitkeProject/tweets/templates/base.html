@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'base.css' %}" />
     <title>Buy</title>
-
   </head>
   <body>
     <div class="container">
@@ -21,6 +20,7 @@
             <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             {% if user.is_staff %}
             <li><a class="verificateNav" href="{% url 'verificate' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
+            <li><a class="verificateNav" href="{% url 'analytics' %}"><img  class="img-ul" src="{% static 'Analytics-Icon-SVG-sfp3df.svg' %}"></a></li>
             {% endif %}
             <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
             {% else %}

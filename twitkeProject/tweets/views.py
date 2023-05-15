@@ -9,6 +9,9 @@ from profiles.models import Profiles, verfifyRequests
 from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
 from django.contrib import messages
+from datetime import datetime
+from django.utils import timezone
+from datetime import timedelta
 # Create your views here.
 
 
@@ -210,6 +213,30 @@ def verificate(request):
         users = verfifyRequests.objects.all()
     return render(request, 'verificate.html',{
         'users': users
+    })
+
+def analytics(request):
+    today = timezone.now().date()
+    one_week_ago = today - timedelta(days=7)
+    users = User.objects.filter(date_joined__date__gte=one_week_ago, date_joined__date__lte=today)
+    print(users)
+    user_counts = []
+    days_of_week = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+    
+    for day in days_of_week:
+        count = users.filter(date_joined__week_day=days_of_week.index(day)).count()
+
+        user_counts.append(count)
+        last_week_dates = []
+    date = today - timedelta(days=6)
+    for _ in range(7):
+        last_week_dates.append(date.strftime("%Y-%m-%d"))
+        date += timedelta(days=1)
+    
+    print(user_counts[2])
+    return render(request, 'Analytics.html', {
+        'user_counts': user_counts,
+        'last_week_dates': last_week_dates
     })
     
 @staff_member_required

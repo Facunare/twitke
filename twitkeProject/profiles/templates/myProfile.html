@@ -60,6 +60,24 @@
                                         </button>
                                     </div>
                                     <div class="updateImage" style="display: flex; flex-direction: column">
+                                        <label for="input-banner">
+                                            {% if usuario.profileBanner %}
+                                            
+                                                <img src="{{usuario.profileBanner.url}}" alt="" class="profileBannerForm bannerToEdit">
+                                            {% else %}
+                                                <img src="{% static 'banner.jpg' %}" alt="" class="profileBannerForm bannerToEdit bannerDefault">
+                                            {% endif %}
+                                        </label>
+                                        <div class="uploadBanner">
+                                            <input
+                                                type="file"
+                                                name="input-banner"
+                                                accept="image/*"                              
+                                                id="input-banner"
+                                                class="input-file"
+                                                hidden
+                                                />
+                                        </div>
                                         <label for="input-photo" >
                                         
                                             {% if usuario.profileImage %}
@@ -76,17 +94,7 @@
                                             id="input-photo"
                                             class="input-file"
                                             hidden
-                                            />
-                                            <label style="color: black">Banner:</label>
-                                            <div class="uploadBanner">
-                                                <input
-                                                    type="file"
-                                                    name="input-banner"
-                                                    accept="image/*"                              
-                                                    id="input-banner"
-                                                    class="input-file"
-                                                    />
-                                            </div>
+                                        />
                                     </div>
 
 
@@ -400,7 +408,7 @@
                 background-color: rgb(17, 121, 206);
             }
 
-            .imgToEdit:hover{
+            .imgToEdit:hover, .profileBannerForm:hover{
                 
                 filter: brightness(.4);
                 cursor: pointer;
@@ -412,6 +420,17 @@
                 left: 0;
                 cursor: pointer;
               }
+
+
+            .profileBannerForm{
+                width: 100%;
+                border-radius: 20px;
+                transition: all ease .3s;
+            }
+
+            .bannerDefault{
+                height: 20vh;
+            }
            
               
         </style>

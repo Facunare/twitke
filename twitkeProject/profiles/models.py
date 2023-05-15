@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from tweets.models import Tweet
+
 # Create your models here.
 
 class Profiles(models.Model):

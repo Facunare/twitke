@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
 from django.http import JsonResponse
-from .models import Tweet
+from .models import Tweet, TweetImage
 from profiles.models import Profiles, verfifyRequests
 from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
@@ -23,15 +23,13 @@ from django.contrib import messages
 
 # 5. Cambiar contraseña.
 
-# 6. Diseño update photo
-
-# 7. 
 # Errores a solucionar:
-# 1. Normalizar
+# 1. Repensar el tema de los likes y keeps tweets con respecto de la tabla intermedia Tweet_profiles
 
 def globalFeed(request):
     current_profile = ""
     search = request.GET.get("searchUser")
+    images = TweetImage.objects.all()
     if search:
         users = Profiles.objects.filter(username__icontains = search).all()
     else:
@@ -46,7 +44,8 @@ def globalFeed(request):
             'form': forms.postTweet,
             'tweets': tweets,        
             'current_profile': current_profile,
-            'users': users
+            'users': users,
+            'images': images
     })
     
 
@@ -86,8 +85,11 @@ def postTweet(request):
             'form': forms.postTweet
         })
     else:
+        
         tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+        for image in request.FILES.getlist('tweetImage'):
+            TweetImage.objects.create(tweet=tweet, image=image)
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile, images = request.FILES.getlist('tweetImage'))
         return redirect('/')
     
 @login_required

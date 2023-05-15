@@ -5,15 +5,15 @@ from datetime import datetime
 from tweet_profiles.models import Tweet_profile
 # Create your views here.
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
-
-
+@login_required
 def myProfile(request, id):
     cant_followers = 0
     cant_following = 0
     current_profile = ""
-    
-    current_profile = Profiles.objects.get(user__username = request.user.username)
+    if request.user.is_authenticated:
+        current_profile = Profiles.objects.get(user__username = request.user.username)
     if request.user.is_authenticated and request.user.id == id:
         current_profile = Profiles.objects.get(user__username = request.user.username)
     user = Profiles.objects.get(id=id)
@@ -44,6 +44,8 @@ def myProfile(request, id):
         
     })
     
+    
+@login_required
 def follow(request, id):
     profile = Profiles.objects.get(id=id)
     current_profile = Profiles.objects.get(user__username=request.user.username)
@@ -66,7 +68,7 @@ def follow(request, id):
     return JsonResponse({'is_follow': follow, 'cant_followers': profile.followers})
 
 
-
+@login_required
 def updateProfile(request, id):
     used = False
     profile = Profiles.objects.get(id=id)
@@ -105,6 +107,7 @@ def updateProfile(request, id):
     
     return JsonResponse({'is_used': used})
 
+@login_required
 def verifyRequest(request, id):
     profile = Profiles.objects.get(id = id)
     verfifyRequests.objects.create(profile = profile)
@@ -113,6 +116,7 @@ def verifyRequest(request, id):
         return redirect(return_url)
     return redirect('myProfile', id=id)
 
+@login_required
 def deleteVerifyRequest(request, id):
     verify_req = verfifyRequests.objects.get(profile_id = id)
     verify_req.delete()

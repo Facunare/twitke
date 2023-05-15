@@ -143,6 +143,10 @@
             <p class="timeAgo">{% if tweet.tweet %}{{tweet.tweet.created_at|timesince}} ago {% else %}{{tweet.created_at|timesince}}{% endif %}</p>                       
 
             
+            {% for image in tweet.images.all %}
+                hola
+            {% endfor %}
+            
         </div>
     </div>        
 </a>

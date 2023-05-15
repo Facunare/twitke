@@ -14,3 +14,6 @@ class Tweet(models.Model):
     parent_tweet = models.IntegerField(null=True)
     
     
+class TweetImage(models.Model):
+    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True, upload_to='tweetImages')

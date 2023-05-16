@@ -24,15 +24,8 @@ from datetime import timedelta
 
 # 4. Cambiar contraseña.
 
-# 5. Ver usuarios que likearon
-
-
-
-
 # Errores a solucionar:
-# 1. Repensar el tema de los likes y keeps tweets con respecto de la tabla intermedia Tweet_profiles
-# 2. Que quede guardado el color rojo del like
-
+# 1. Que no aparezca el boton "follow" si soy yo mismo
 
 
 def globalFeed(request):
@@ -49,6 +42,8 @@ def globalFeed(request):
         tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
     else:
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
+
+    
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
@@ -100,15 +95,22 @@ def postTweet(request):
         tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
         for image in request.FILES.getlist('tweetImage'):
             TweetImage.objects.create(tweet=tweet, image=image)
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile, images = request.FILES.getlist('tweetImage'))
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+        # , images = request.FILES.getlist('tweetImage')
         return redirect('/')
     
 @login_required
 def responseTweet(request, id):
     current_profile = Profiles.objects.get(user__username = request.user.username)
+    tweetOriginal = Tweet_profile.objects.get(tweet_id = id)
+    print("-----------------")
+    print(tweetOriginal)
     if request.method == "POST":
         tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'], parent_tweet = id)
         Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+        tweetOriginal.tweet.responses += 1
+        tweetOriginal.save()
+        tweetOriginal.tweet.save()
         return redirect(f'/tweet/detail/{id}')
     
 
@@ -116,11 +118,16 @@ def tweetDetails(request, id):
     tweet = Tweet_profile.objects.all().filter(tweet__parent_tweet = id)
     parent_tweet = Tweet_profile.objects.get(tweet_id = id)
     profile = Profiles.objects.get(id=parent_tweet.profile.user.id)
-    print(parent_tweet.likes_users.all().count())
+    likes = parent_tweet.likes_users.all()
+    if request.user.is_authenticated:
+        current_profile = Profiles.objects.get(user__username = request.user.username)
     return render(request, 'tweetDetail.html',{
         'tweets': tweet,
         'parent_tweet': parent_tweet,
-        'profile': profile
+        'profile': profile,
+        'likes': likes,
+        'current_profile': current_profile,
+        'is_self': request.user.is_authenticated and request.user.id == id
     })
     
 

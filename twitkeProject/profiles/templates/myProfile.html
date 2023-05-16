@@ -131,7 +131,7 @@
                             <form action="{% url 'follow' id=usuario.id %}" method="POST" id="followForm">
                                 {% csrf_token %}
                                 <button class="followButton" id="button1" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" >
-                                    <p class="followP">{% if current_user not in usuario.followers_users.all %} Follow {% else %} Unfollow {% endif %}
+                                    <p class="followP">{% if current_profile not in usuario.followers_users.all %} Follow {% else %} Unfollow {% endif %}
                                     </p>
                                     
                                 </button>
@@ -189,8 +189,8 @@
                                 {% if follower.user != request.user %}
                                     <form action="{% url 'follow' id=follower.id %}" method="POST" id="followForm2">
                                         {% csrf_token %}
-                                        <button class="button2 followButton {% if current_user not in follower.followers_users.all %} follow {% else %} unfollowButton {% endif %}" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" id="button2" >
-                                            <p>{% if current_user not in follower.followers_users.all %} Follow {% else %} Unfollow {% endif %}</p>
+                                        <button class="button2 followButton {% if current_profile not in follower.followers_users.all %} follow {% else %} unfollowButton {% endif %}" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" id="button2" >
+                                            <p>{% if current_profile not in follower.followers_users.all %} Follow {% else %} Unfollow {% endif %}</p>
                                         </button>
                                     </form>
                                 {% endif %}
@@ -220,8 +220,8 @@
                                 </div>                       
                                <form action="{% url 'follow' id=follow.user.id %}" method="POST" id="followForm3">
                                     {% csrf_token %}
-                                    <button id="button3"onclick="follow(event, this)" tweet-id="{{follow.user.id}}" type="submit" class="followButton {% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif %}">
-                                        <p>{% if follow in current_user.followed_users.all %} unfollow {% else %} follow {% endif%}</p>
+                                    <button id="button3"onclick="follow(event, this)" tweet-id="{{follow.user.id}}" type="submit" class="followButton {% if follow in current_profile.followed_users.all %} unfollow {% else %} follow {% endif %}">
+                                        <p>{% if follow in current_profile.followed_users.all %} unfollow {% else %} follow {% endif%}</p>
                                     </button>
                                 </form> 
                             </div>

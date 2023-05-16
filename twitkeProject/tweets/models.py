@@ -8,10 +8,10 @@ class Tweet(models.Model):
     content = models.TextField(max_length=180)
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.IntegerField(default=0)
-
     retweets = models.IntegerField(default=0)
     edited = models.BooleanField(default=False)
     parent_tweet = models.IntegerField(null=True)
+    responses = models.IntegerField(null=True, default=0)
     
     
 class TweetImage(models.Model):

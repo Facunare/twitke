@@ -80,7 +80,7 @@
 
 
 
-.modal{
+.modal, .modal_likes{
     position: fixed;
     top: 0;
     left: 0;
@@ -94,7 +94,7 @@
     pointer-events: none;
 }
 
-.modal_container{
+.modal_container, .modal_container_likes{
     width: 90%;
     background-color: white;
     margin: auto;
@@ -325,4 +325,32 @@
     font-size: 15px;
     gap: 15px;
     display: flex;
+}
+
+.likesCounter{
+    cursor: pointer;
+}
+
+.likeDiv{
+    border: 1px solid black;
+    padding: 3px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.likeDiv .usernameDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.likeDiv .username{
+    font-size: 13px;
+}
+
+.likePhoto{
+    width: 30px;
+    object-fit: cover;
+    border-radius: 50%;
+    height: 30px;
 }

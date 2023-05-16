@@ -14,8 +14,6 @@ def myProfile(request, id):
     current_profile = ""
     if request.user.is_authenticated:
         current_profile = Profiles.objects.get(user__username = request.user.username)
-    if request.user.is_authenticated and request.user.id == id:
-        current_profile = Profiles.objects.get(user__username = request.user.username)
     user = Profiles.objects.get(id=id)
     followers = user.followers_users.all()
     following = user.followed_users.all()
@@ -31,7 +29,7 @@ def myProfile(request, id):
             requested = True
     return render(request, 'myProfile.html', {
         'usuario': user,
-        'current_user': current_profile,
+        'current_profile': current_profile,
         'is_self': request.user.is_authenticated and request.user.id == id,
         'followers': followers,
         'cant_followers': cant_followers,

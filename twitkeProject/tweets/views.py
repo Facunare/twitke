@@ -20,14 +20,20 @@ from datetime import timedelta
 
 # 2. Functions for the post of tweets. (add images, emojis, videos)
 
-# 3. Admin view (data analytics)
+# 3. IA 
 
-# 4. IA 
+# 4. Cambiar contraseña.
 
-# 5. Cambiar contraseña.
+# 5. Ver usuarios que likearon
+
+
+
 
 # Errores a solucionar:
 # 1. Repensar el tema de los likes y keeps tweets con respecto de la tabla intermedia Tweet_profiles
+# 2. Que quede guardado el color rojo del like
+
+
 
 def globalFeed(request):
     current_profile = ""
@@ -55,19 +61,21 @@ def globalFeed(request):
 @login_required
 def like(request, id):
     try:
-        tweet = Tweet.objects.get(id=id)
-        user = request.user
-        if user not in tweet.likes_users.all():
-            tweet.likes += 1
-            tweet.likes_users.add(user)
+        tweet = Tweet_profile.objects.get(tweet_id=id)
+        
+        if request.user.is_authenticated:
+            current_profile = Profiles.objects.get(user__username = request.user.username)
+            
+        if current_profile not in tweet.likes_users.all():
+            tweet.likes_users.add(current_profile)
             tweet.save()
             is_liked = True
         else:
-            tweet.likes -= 1
-            tweet.likes_users.remove(user)
+            tweet.likes_users.remove(current_profile)
             tweet.save()
             is_liked = False
-        return JsonResponse({'is_liked': is_liked, 'likes': tweet.likes, 'id': id})
+        likes = tweet.likes_users.all().count()
+        return JsonResponse({'is_liked': is_liked, 'likes': likes, 'id': id})
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({'error': str(e)})
@@ -108,6 +116,7 @@ def tweetDetails(request, id):
     tweet = Tweet_profile.objects.all().filter(tweet__parent_tweet = id)
     parent_tweet = Tweet_profile.objects.get(tweet_id = id)
     profile = Profiles.objects.get(id=parent_tweet.profile.user.id)
+    print(parent_tweet.likes_users.all().count())
     return render(request, 'tweetDetail.html',{
         'tweets': tweet,
         'parent_tweet': parent_tweet,
@@ -215,29 +224,6 @@ def verificate(request):
         'users': users
     })
 
-def analytics(request):
-    today = timezone.now().date()
-    one_week_ago = today - timedelta(days=7)
-    users = User.objects.filter(date_joined__date__gte=one_week_ago, date_joined__date__lte=today)
-    print(users)
-    user_counts = []
-    days_of_week = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-    
-    for day in days_of_week:
-        count = users.filter(date_joined__week_day=days_of_week.index(day)).count()
-
-        user_counts.append(count)
-        last_week_dates = []
-    date = today - timedelta(days=6)
-    for _ in range(7):
-        last_week_dates.append(date.strftime("%Y-%m-%d"))
-        date += timedelta(days=1)
-    
-    print(user_counts[2])
-    return render(request, 'Analytics.html', {
-        'user_counts': user_counts,
-        'last_week_dates': last_week_dates
-    })
     
 @staff_member_required
 def verificateUser(request, id):

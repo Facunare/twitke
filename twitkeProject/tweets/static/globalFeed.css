@@ -66,7 +66,9 @@ main{
 }
 .feedTitle{
     font-size: 23px;
-    margin-left: 25px;
+    background-color: black;
+    color: white;
+    padding-left: 25px;
 }
 .postTweetForm{
     width: 100%;

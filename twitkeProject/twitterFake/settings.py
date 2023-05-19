@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'tweets.context_processors.random_users'
             ],
         },
     },
@@ -125,7 +126,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 SITE_ID=1
-STATIC_URL = 'static/'
+STATIC_URL = '/tweets/static/'
 STATIC_ROOT = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -148,3 +149,4 @@ EMAIL_PORT = 587
 EMAIL_USER_TLS = True
 EMAIL_HOST_USER = 'arechaga.facundoet36@gmail.com'
 EMAIL_HOST_PASSWORD = 'Tolchaga500'
+

@@ -24,9 +24,11 @@ from datetime import timedelta
 
 # 4. Cambiar contraseña.
 
-# Errores a solucionar:
-# 1. Que no aparezca el boton "follow" si soy yo mismo
+# 6. Diseño final
 
+# 7. Optimizar codigo
+
+# 8. Pestañas profile y pestaña "Para ti" y "Siguiendo"
 
 def globalFeed(request):
     current_profile = ""
@@ -43,13 +45,13 @@ def globalFeed(request):
     else:
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
 
-    
+    # random_users = Profiles.objects.exclude(id__in=current_profile.followed_users.values_list('id', flat=True)).exclude(id=request.user.id).order_by('?')[:5]
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
-            'current_profile': current_profile,
             'users': users,
-            'images': images
+            'images': images,
+            # 'random': random_users
     })
     
 
@@ -119,14 +121,11 @@ def tweetDetails(request, id):
     parent_tweet = Tweet_profile.objects.get(tweet_id = id)
     profile = Profiles.objects.get(id=parent_tweet.profile.user.id)
     likes = parent_tweet.likes_users.all()
-    if request.user.is_authenticated:
-        current_profile = Profiles.objects.get(user__username = request.user.username)
     return render(request, 'tweetDetail.html',{
         'tweets': tweet,
         'parent_tweet': parent_tweet,
         'profile': profile,
         'likes': likes,
-        'current_profile': current_profile,
         'is_self': request.user.is_authenticated and request.user.id == id
     })
     
@@ -136,9 +135,6 @@ def searchTweet(request):
     search = request.GET.get("search")
     tweets = ""
     profiles= ""
-    current_profile = ""
-    if request.user.is_authenticated:
-        current_profile = Profiles.objects.get(user__username = request.user.username)
     if search:
         tweets = Tweet_profile.objects.filter(tweet__content__icontains = search)
         profiles = Profiles.objects.filter(user__username__icontains = search)
@@ -150,7 +146,7 @@ def searchTweet(request):
     return render(request, 'globalFeed.html',{
         'tweets': tweets,
         'profilesSearched': profiles,
-        'current_profile': current_profile
+      
     })
 
 @login_required

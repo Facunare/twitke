@@ -69,6 +69,57 @@ ul li a{
     color: white;
 
 }
+.navbar-2{
+    justify-content: start;
+
+}
+
+.navbar-2 .searchForm{
+    margin: 1em;
+    width: 80%;
+}
+.navbar-2 form input{
+    width: 80%;
+}
+
+  
+  .search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .searchbar {
+    width: 70%;
+    padding: 9px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    
+  }
+  
+  .search-button {
+    background-color: white;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    margin-left: -35px; /* Ajusta el valor según sea necesario para alinear el botón */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+   
+  }
+  
+  .search-button img {
+    width: 20px;
+    background-color: transparent;
+    height: 20px;
+    object-fit: cover;
+
+  }
 
 .img-ul{
     width: 50px;
@@ -156,4 +207,70 @@ ul li a{
 
 #userContainer{
     margin-bottom: 20px;
+}
+
+.aQuienSeguir{
+    width: 20rem;
+    height: 27rem;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    background-color: rgb(28, 29, 31);
+    margin: auto;
+    border-radius: 25px;
+    gap: 25px;
+}
+
+.aQuienSeguir h3{
+   align-self: flex-start;
+    padding: 10px 0;
+}
+
+.user_card{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.usernameBase{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.username2{
+    display: flex;
+    gap: 10px;
+}
+
+.atName{
+    color: rgb(113, 118, 123, 1);
+}
+
+.user_card .boton{
+    padding: 5px;
+    border-radius: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+.user_card .boton:hover{
+    background-color: #d4d2d2;
+} 
+
+.usernameTweet{
+    background-color: transparent;
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.usernameTweet:hover{
+    text-decoration: underline white 1px;
+    cursor: pointer;
+    
 }

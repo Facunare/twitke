@@ -11,6 +11,9 @@ def random_users(request):
 
 
 def current_profile(request):
+    current_profile = None  # Valor predeterminado
+
     if request.user.is_authenticated:
-            current_profile = Profiles.objects.get(user__username = request.user.username)
+        current_profile = Profiles.objects.get(user__username=request.user.username)
+
     return {'current_profile': current_profile}

@@ -72,7 +72,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'tweets.context_processors.random_users'
+                'tweets.context_processors.random_users',
+                'tweets.context_processors.current_profile'
             ],
         },
     },
@@ -126,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 SITE_ID=1
-STATIC_URL = '/tweets/static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

@@ -427,3 +427,36 @@ textarea{
 .modalUpdate .update:hover{
     background-color: #41aaaf;
 }
+
+.options{
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    height: 50px;
+}
+
+.options form{
+    width: 100%;
+    height: 100%;
+}
+
+.options button{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(2, 9, 22);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: rgb(153, 159, 165);
+    transition: .3s ease background-color;
+}
+
+
+.options button:hover{
+    background-color: rgb(38, 41, 48);
+}
+
+.active{
+    border-bottom: 2px solid rgb(8, 169, 243);
+}

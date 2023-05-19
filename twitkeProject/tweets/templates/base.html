@@ -18,18 +18,37 @@
             {% if user.is_authenticated %}
             <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
             <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
-            {% if user.is_staff %}
-            <li><a class="verificateNav" href="{% url 'verificate' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
-            {% endif %}
-            <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
-            {% else %}
-          
-            <li class="signupButton"><a href="{% url 'signup' %}" ><img  class="img-ul" src="{% static 'register-14.svg' %}"></a></li>
-            <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
-          
-            {% endif %}
-           
-          </ul>
+              {% if user.is_staff %}
+              <li><a class="verificateNav" href="{% url 'verificate' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
+              {% endif %}
+              <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
+              {% else %}
+              
+              
+              <li class="signupButton"><a href="{% url 'signup' %}" ><img  class="img-ul" src="{% static 'register-14.svg' %}"></a></li>
+              <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
+              
+              {% endif %}
+              
+            </ul>
+            <div class="current">
+              <div class="user_card">
+                <div class="username2">
+
+                  {% if current_profile.profileImage %}
+                    <img src="{{current_profile.profileImage.url}} " alt="" class="fotito profilePhoto" style="width: 40px; border-radius: 50%; height:40px">
+                  {% else %}
+                    <svg class="profilePhoto" style="width: 40px; border-radius: 50%; height:40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>
+                  {% endif %}
+                  <div class="usernameBase">
+                    
+                    <form action="{% url 'myProfile' current_profile.user.id %}">
+                      <button class="usernameTweet" style="color:white"><p>{{current_profile.user.username}}</p></button>
+                    </form>
+                    <p class="atName">@{{current_profile.user.username}}</p>
+                  </div>
+                </div>
+              </div>
         </nav>
         
         <main class="baseMain">
@@ -102,5 +121,31 @@
   }
 
   </script>
+  <style>
+    .current{
+      margin-top: auto;
+      margin-bottom: 20px;
+      padding: 10px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: .3s ease background-color;
+    }
+
+    .current:hover{
+      background-color: rgb(51, 51, 51);
+    }
+
+    .navbar-1{
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .navbar-1 ul{
+      height: 100%;
+    
+    }
+  </style>
 </html>
 

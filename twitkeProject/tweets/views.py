@@ -8,10 +8,6 @@ from .models import Tweet, TweetImage
 from profiles.models import Profiles, verfifyRequests
 from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
-from django.contrib import messages
-from datetime import datetime
-from django.utils import timezone
-from datetime import timedelta
 # Create your views here.
 
 
@@ -24,15 +20,18 @@ from datetime import timedelta
 
 # 4. Cambiar contraseña.
 
+# 5. Pestañas profile
+
 # 6. Diseño final
 
 # 7. Optimizar codigo
 
-# 8. Pestañas profile y pestaña "Para ti" y "Siguiendo"
 
 def globalFeed(request):
     current_profile = ""
     search = request.GET.get("searchUser")
+    foryou = request.GET.get("foryou")
+    print("hola" + str(foryou))
     images = TweetImage.objects.all()
     if search:
         users = Profiles.objects.filter(username__icontains = search).all()
@@ -45,13 +44,13 @@ def globalFeed(request):
     else:
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
 
-    # random_users = Profiles.objects.exclude(id__in=current_profile.followed_users.values_list('id', flat=True)).exclude(id=request.user.id).order_by('?')[:5]
+    if str(foryou) == "":
+        tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
     return render(request, 'globalFeed.html',{
             'form': forms.postTweet,
             'tweets': tweets,        
             'users': users,
-            'images': images,
-            # 'random': random_users
+            'images': images
     })
     
 

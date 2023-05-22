@@ -340,3 +340,13 @@ main{
 .profileOpc{
     display: flex;
 }
+
+.username3{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.atNameProfile{
+    font-size: 13px;
+}

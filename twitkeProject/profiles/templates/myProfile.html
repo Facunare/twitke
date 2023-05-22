@@ -119,7 +119,7 @@
     
                                 <img src="{% static 'Twitter-Verified.svg' %}" alt="" style="width: 30px">
                         {% endif %}
-                        {% if is_self %}
+                        {% if is_staff %}
                             <form action="{% url 'verificateUser' usuario.id %}">
                                 {% if usuario.is_verified %}
                                     <button class="Desverificar">Desverificar</button>
@@ -171,11 +171,11 @@
                     <a href="#" class="following">{{cant_following}} <span  class="followSpan">siguiendo</span></a>
                 </div>
                 <div class="profileOpc">
-                    <form action="{% url 'myProfile' current_profile.id %}">
+                    <form action="{% url 'myProfile' usuario.id %}">
                         <input type="text" hidden name="myTweets">
                         <button class="myTweets">Mis tweets</button>
                     </form>
-                    <form action="{% url 'myProfile' current_profile.id %}">
+                    <form action="{% url 'myProfile' usuario.id %}">
                         <input type="text" hidden name="myLikes">
                         <button class="myLikes">Mis likes</button>
                     </form>
@@ -195,12 +195,12 @@
                                     {% else %}
                                         <svg class="profilePhoto" style="width: 40px; border-radius: 50%; height:40px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>
                                     {% endif %}
-                                    <div class="username2">
+                                    <div class="username3">
 
                                         <form action="{% url 'myProfile' follower.user.id %}">
                                             <button class="usernameTweet">{{follower.user.username}}</button>
                                         </form>
-                                        <p>@{{follower.username}}</p>
+                                        <p class="atNameProfile">@{{follower.username}}</p>
                                     </div>
                                 </div>
                                 
@@ -235,11 +235,11 @@
                                     {% else %}
                                         <svg class="profilePhoto" style="width: 40px; border-radius: 50%; height:40px; align-self: center; " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg>
                                     {% endif %}
-                                    <div class="username2">
+                                    <div class="username3">
                                         <form action="{% url 'myProfile' follow.user.id %}">
                                             <button class="usernameTweet">{{follow.user.username}}</button>
                                         </form>
-                                        <p>@{{follow.username}}</p>
+                                        <p class="atNameProfile">@{{follow.username}}</p>
                                     </div>
 
                                 </div>  

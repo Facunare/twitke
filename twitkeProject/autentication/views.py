@@ -1,3 +1,4 @@
+import email
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -58,7 +59,7 @@ def signup(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'], email=request.POST['email'])
                 user.save()
                 
                 try:

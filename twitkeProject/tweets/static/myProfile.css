@@ -57,13 +57,26 @@ main{
 
 }
 
-.myTweets{
+.myTweets, .myLikes{
     font-size: 15px;
     margin-top: 20px;
+    border: none;
     border-bottom: 3px solid rgb(37, 138, 179);  
     display: inline-block;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+    border-radius: 5px;
+    color: white;
+    padding: 3px;
 }
 
+.myLikes:hover, .myTweets:hover{
+    background-color: rgb(54, 53, 53);
+}
+.myLikes{
+    margin-left: 20px;
+}
 .followSpan{
     color: rgba(113, 118, 123, 1);
     font-weight: 100;
@@ -322,4 +335,8 @@ main{
     height: 100%;
     width: 100%;
     overflow: hidden;
+}
+
+.profileOpc{
+    display: flex;
 }

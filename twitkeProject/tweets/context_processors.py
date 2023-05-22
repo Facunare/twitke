@@ -7,6 +7,9 @@ def random_users(request):
         if request.user.is_authenticated:
             current_profile = Profiles.objects.get(user__username = request.user.username)
         random_users = Profiles.objects.exclude(id__in=current_profile.followed_users.values_list('id', flat=True)).exclude(id=request.user.id).order_by('?')[:5]
+        
+
+        
     return {'random': random_users}
 
 

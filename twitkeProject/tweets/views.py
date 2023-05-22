@@ -14,13 +14,11 @@ from django.db.models import Q
 
 # 1. Retweet
 
-# 2. Functions for the post of tweets. (add images, emojis, videos)
+# 2. Functions for the post of tweets. (add images, emojis, videos) y pestaña profile solo multimedia
 
 # 3. IA 
 
 # 4. Cambiar contraseña.
-
-# 5. Pestañas profile
 
 # 6. Diseño final
 
@@ -64,11 +62,15 @@ def like(request, id):
             
         if current_profile not in tweet.likes_users.all():
             tweet.likes_users.add(current_profile)
+            current_profile.like_tweets.add(tweet.tweet)
             tweet.save()
+            current_profile.save()
             is_liked = True
         else:
             tweet.likes_users.remove(current_profile)
+            current_profile.like_tweets.remove(tweet.tweet)
             tweet.save()
+            current_profile.save()
             is_liked = False
         likes = tweet.likes_users.all().count()
         return JsonResponse({'is_liked': is_liked, 'likes': likes, 'id': id})

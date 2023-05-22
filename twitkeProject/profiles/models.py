@@ -16,6 +16,7 @@ class Profiles(models.Model):
     followers = models.IntegerField(default=0)
     followers_users = models.ManyToManyField('self', symmetrical=False, related_name="followage", blank=True)
     followed_users = models.ManyToManyField('self', symmetrical=False, related_name='following', blank=True)
+    like_tweets = models.ManyToManyField(Tweet, related_name='liked', blank=True)
     birthday = models.DateField(null=True)
     webSite = models.CharField(null=True, max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)

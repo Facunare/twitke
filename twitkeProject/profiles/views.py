@@ -11,25 +11,28 @@ from django.contrib.auth.decorators import login_required
 def myProfile(request, id):
     cant_followers = 0
     cant_following = 0
-    current_profile = ""
-    if request.user.is_authenticated:
-        current_profile = Profiles.objects.get(user__username = request.user.username)
+    myLikes = request.GET.get("myLikes")
+    myTweets = request.GET.get("myTweets")
     user = Profiles.objects.get(id=id)
     followers = user.followers_users.all()
     following = user.followed_users.all()
     cant_following = user.followed_users.all().count()
     cant_followers = int(user.followers)
-    tweets = Tweet_profile.objects.filter(profile__user__id=id).all()
     cant_following = user.followed_users.all().count()
     solicitudes = verfifyRequests.objects.all()
     requested = False
+    tweets = Tweet_profile.objects.filter(profile__user__id=id).all()
+    if myLikes == "":
+        tweetLIKE = user.like_tweets.all()
+        tweets = Tweet_profile.objects.filter(tweet_id__in=[tweet.id for tweet in tweetLIKE])
+    elif myTweets == "":
+        tweets = Tweet_profile.objects.filter(profile__user__id=id).all()
+    
     for soli in solicitudes:
-        print(soli)
         if soli.profile == user:
             requested = True
     return render(request, 'myProfile.html', {
         'usuario': user,
-        'current_profile': current_profile,
         'is_self': request.user.is_authenticated and request.user.id == id,
         'followers': followers,
         'cant_followers': cant_followers,
@@ -37,9 +40,7 @@ def myProfile(request, id):
         'cant_following': cant_following,
         'following': following,
         'solicitudes': solicitudes,
-        'requested': requested
-    
-        
+        'requested': requested,
     })
     
     

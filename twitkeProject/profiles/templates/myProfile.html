@@ -170,7 +170,16 @@
                     
                     <a href="#" class="following">{{cant_following}} <span  class="followSpan">siguiendo</span></a>
                 </div>
-                <h1 class="myTweets">Mis tweets</h1>
+                <div class="profileOpc">
+                    <form action="{% url 'myProfile' current_profile.id %}">
+                        <input type="text" hidden name="myTweets">
+                        <button class="myTweets">Mis tweets</button>
+                    </form>
+                    <form action="{% url 'myProfile' current_profile.id %}">
+                        <input type="text" hidden name="myLikes">
+                        <button class="myLikes">Mis likes</button>
+                    </form>
+                </div>
             </div>
             <section class="modal">
                 <div class="modal_container">

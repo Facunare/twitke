@@ -55,7 +55,7 @@ ul{
     justify-content: center;
 }
 
-ul .img-ul{
+ul img{
     width: 150px;
     border-radius: 10px;
 }
@@ -211,7 +211,7 @@ ul li a{
 
 .aQuienSeguir{
     width: 20rem;
-    height: 27rem;
+    height: auto;
     display: flex;
     flex-direction: column;
     padding-left: 10px;
@@ -219,6 +219,7 @@ ul li a{
     margin: auto;
     border-radius: 25px;
     gap: 25px;
+    padding-bottom: 10px;
 }
 
 .aQuienSeguir h3{
@@ -278,4 +279,15 @@ ul li a{
 .fotoBase{
     width: 40px;
     height: 40px;
+}
+
+.elseSession{
+    color: rgb(126, 124, 124);
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.elseSessionLi{
+    text-decoration: none;
+    list-style: none;
 }

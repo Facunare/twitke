@@ -17,14 +17,35 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.urls import path, re_path, include
+from django.contrib.auth.views import LoginView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
+from django.urls import reverse_lazy
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('autentication.urls')),
     path('', include('tweets.urls')),
     path('', include('profiles.urls')),
-    
+
+    path('password_reset/', PasswordResetView.as_view(
+        template_name='registration/password_reset_forms.html',
+        email_template_name='registration/password_reset_email.html',
+        success_url='/reset/password_reset_done/'
+    ), name='password_reset'),
+    path('password_reset_done/', PasswordResetDoneView.as_view(
+        template_name='registration/password_reset_done.html'
+    ), name='password_reset_done'),
+    path('password_reset_confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(
+        template_name='registration/password_reset_confirms.html',
+        success_url='/reset/password_reset_complete/'
+    ), name='password_reset_confirm'),
+    path('password_reset_complete/', PasswordResetCompleteView.as_view(
+        template_name='registration/password_reset_complete.html'
+    ), name='password_reset_complete'),
 ]
+
+    # path('reset/password_reset/done', PasswordResetCompleteView.as_view(template_name='registration/password_reset_complete.html'), name='password_reset_complete'),
+    
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

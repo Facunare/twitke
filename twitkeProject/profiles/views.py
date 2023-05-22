@@ -7,7 +7,7 @@ from tweet_profiles.models import Tweet_profile
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 
-@login_required
+
 def myProfile(request, id):
     cant_followers = 0
     cant_following = 0

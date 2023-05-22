@@ -32,14 +32,16 @@
                 </button>
             </form>
         </div>
+        {% if not buscado %}
         <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm" enctype="multipart/form-data">
             {% csrf_token %}
-            <textarea name="content" cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
+            <textarea name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
             <!-- <input type="file" name="tweetImage" id="tweetImage" multiple> -->
             <button id="miBoton" onclick="desactivarBoton()">
                 Twittear
             </button>
         </form>
+        {% endif %}
     </div>
     
         {% if profilesSearched %}

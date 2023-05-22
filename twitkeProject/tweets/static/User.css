@@ -1,6 +1,6 @@
 .profile-card{
     width: 200px;
-    height: 150px;
+    height: auto;
     box-shadow: 0 0 5px 1px #999;
     padding: 15px;
     border-radius: 20px;
@@ -10,7 +10,6 @@
 .users{
     display: flex;
     overflow-x: scroll;
-   
 }
 
 .profile-card .followbutton{

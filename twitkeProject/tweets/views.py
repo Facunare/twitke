@@ -147,6 +147,7 @@ def searchTweet(request):
     return render(request, 'globalFeed.html',{
         'tweets': tweets,
         'profilesSearched': profiles,
+        'buscado': True
       
     })
 

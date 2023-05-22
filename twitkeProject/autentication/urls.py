@@ -10,5 +10,6 @@ urlpatterns = [
     path('signin/', views.signin, name='signin'),
     path('accounts/', include('allauth.urls')),
     path('signup-google/', views.signup_google, name='signup_google'),
+    path('changePassword', views.change, name="change")
 ]
     

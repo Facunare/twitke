@@ -106,3 +106,6 @@ def signin(request):
         
 def landingPage(request):
     return render(request, 'landingPage.html')
+
+def change(request):
+    return render(request, 'signin.html')

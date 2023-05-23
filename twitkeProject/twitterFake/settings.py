@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'autentication',
     'tweets',
     'profiles',
-    'tweet_profiles'
+    'tweet_profiles',
+    'emoji_picker'
 ]
 
 MIDDLEWARE = [

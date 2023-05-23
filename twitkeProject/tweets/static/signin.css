@@ -88,3 +88,13 @@
 .dontHaveAccount:hover{
     color: rgb(28, 28, 131);
 }
+
+.forgotPassw{
+    margin-top: 10px;
+    color: rgb(56, 56, 253);
+    text-decoration: none;
+}
+
+.forgotPassw:Hover{
+    text-decoration: underline solid blue;
+}

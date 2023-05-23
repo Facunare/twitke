@@ -18,11 +18,10 @@ from django.db.models import Q
 
 # 3. IA 
 
-# 4. Cambiar contraseña.
-
-# 6. Diseño final
+# 6. Diseño final y poner todo de un idioma
 
 # 7. Optimizar codigo
+
 
 
 def globalFeed(request):

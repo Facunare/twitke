@@ -14,15 +14,11 @@ from django.db.models import Q
 
 # 1. Retweet
 
-# 2. Functions for the post of tweets. (add images, emojis, videos) y pestaña profile solo multimedia
+# 2. IA 
 
-# 3. IA 
+# 3. Diseño final
 
-# 6. Diseño final y poner todo de un idioma
-
-# 7. Optimizar codigo
-
-
+# 4. Optimizar codigo
 
 def globalFeed(request):
     current_profile = ""
@@ -95,10 +91,16 @@ def postTweet(request):
     else:
         
         tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
-        for image in request.FILES.getlist('tweetImage'):
-            TweetImage.objects.create(tweet=tweet, image=image)
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
-        # , images = request.FILES.getlist('tweetImage')
+        for media in request.FILES.getlist('tweetImage'):
+            contenido = media.read().decode('latin-1')
+            if contenido[-3:] == "100":
+                TweetImage.objects.create(tweet=tweet, video=media)
+            else:
+                TweetImage.objects.create(tweet=tweet, image=media)
+        if request.FILES.getlist('tweetImage'):
+            Tweet_profile.objects.create(tweet = tweet, profile = current_profile, haveMultimedia = True)
+        else:
+            Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
         return redirect('/')
     
 @login_required

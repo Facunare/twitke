@@ -13,8 +13,10 @@ class Tweet(models.Model):
     edited = models.BooleanField(default=False)
     parent_tweet = models.IntegerField(null=True)
     responses = models.IntegerField(null=True, default=0)
+
     
     
 class TweetImage(models.Model):
-    tweet = models.ForeignKey(Tweet, on_delete=models.CASCADE)
-    image = models.ImageField(null=True, blank=True, upload_to='tweetImages')
+    tweet = models.ForeignKey(Tweet, related_name='images', on_delete=models.CASCADE)
+    image = models.FileField(null=True, blank=True, upload_to='tweetImages')
+    video = models.FileField(null=True, blank=True, upload_to='tweetVideos')

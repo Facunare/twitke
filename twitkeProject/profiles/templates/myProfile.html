@@ -179,6 +179,10 @@
                         <input type="text" hidden name="myLikes">
                         <button class="myLikes">Mis likes</button>
                     </form>
+                    <form action="{% url 'myProfile' usuario.id %}">
+                        <input type="text" hidden name="myMedia">
+                        <button class="myLikes">Multimedia</button>
+                    </form>
                 </div>
             </div>
             <section class="modal">
@@ -463,7 +467,7 @@
             }
               
         </style>
-        
+        <script src="{% static 'toggle.js' %}"></script>
     {% endblock content %}
 
         

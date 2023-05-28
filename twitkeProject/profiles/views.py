@@ -13,6 +13,7 @@ def myProfile(request, id):
     cant_following = 0
     myLikes = request.GET.get("myLikes")
     myTweets = request.GET.get("myTweets")
+    myMedia = request.GET.get("myMedia")
     user = Profiles.objects.get(id=id)
     followers = user.followers_users.all()
     following = user.followed_users.all()
@@ -27,6 +28,9 @@ def myProfile(request, id):
         tweets = Tweet_profile.objects.filter(tweet_id__in=[tweet.id for tweet in tweetLIKE])
     elif myTweets == "":
         tweets = Tweet_profile.objects.filter(profile__user__id=id).all()
+        
+    elif myMedia == "":
+        tweets = Tweet_profile.objects.filter(haveMultimedia = True)
     
     for soli in solicitudes:
         if soli.profile == user:
@@ -120,4 +124,15 @@ def deleteVerifyRequest(request, id):
     verify_req = verfifyRequests.objects.get(profile_id = id)
     verify_req.delete()
     return redirect('verificate')
-    
+
+@login_required
+def darkMode(request):
+    if request.user.is_authenticated:
+        current_profile = Profiles.objects.get(user__username=request.user.username)
+        
+    if current_profile.darkMode:
+        current_profile.darkMode = False
+    else:
+        current_profile.darkMode = True
+    current_profile.save()
+    return JsonResponse({'darkMode': current_profile.darkMode})

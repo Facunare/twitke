@@ -11,15 +11,16 @@
 {% block content %}
 <body >
     <link rel="stylesheet" href="{% static 'verificate.css' %}">
+    <link rel="stylesheet" href="{% static 'globalFeed.css' %}">
     <div class="users">
-        <h1>Verificate users</h1>
-        <form action="" class="searchForm">
+        <h1>Verificar usuarios</h1>
+        <form action="" class="searchFormVerificate">
             <input type="text" name="searchUsers">
             <button><img src="{% static 'search-icon.svg' %}" alt=""></button>
         </form>
         {% if not users %}
-        <img src="{% static 'House searching-rafiki.svg' %}" alt="" class="notCoincidenceImg">
         <p class="notCoincidence">No hay solicitudes</p>
+        <img src="{% static 'House searching-rafiki.svg' %}" alt="" class="notCoincidenceImg">
         {% endif %}
         {% for profile in users %}  
             <div class="user">
@@ -32,7 +33,7 @@
                         <p>@{{profile.profile.username}}</p>
                     </div>
                 </div>
-                <div class="buttons">
+                <div class="buttonsVerificate">
 
                     <form action="{% url 'verificateUser' profile.profile.id %}">
                         {% if profile.profile.is_verified %}
@@ -90,4 +91,5 @@
         color: white;
       }
 </style>
+<script src="{% static 'toggle.js' %}"></script>
 {% endblock content %}

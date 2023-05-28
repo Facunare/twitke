@@ -37,7 +37,7 @@
     font-size: 13px;
 }
 
-.button{
+.buttonsVerificate .button{
     
     background-color: rgb(71, 71, 187);
     outline: none;
@@ -46,14 +46,15 @@
     padding: 3px;
     color: white;
 }
-.button:hover{
+.buttonsVerificate .button:hover{
     background-color: rgb(60, 60, 158);
 }
 
-.buttons{
+.buttonsVerificate{
     display: flex;
    margin-right: 35px;
    align-items: center;
+   justify-content: center;
 }
 
 .buttonTrash{
@@ -75,7 +76,7 @@
     transform: scale(1.1);
 }
 
-.searchForm input{
+.searchFormVerificate input{
     margin-left: 20px;
     outline: none;
     border: none;
@@ -84,7 +85,7 @@
     padding: 4px;
 }
 
-.searchForm button{
+.searchFormVerificate button{
     height: 30px;
     background-color: transparent;
     border: none;
@@ -93,14 +94,14 @@
     color: white;
     cursor: pointer;
 }
-.searchForm button:hover{
+.searchFormVerificate button:hover{
     background-color: rgba(209, 207, 207, 0.267);
 }
-.searchForm img{
+.searchFormVerificate img{
     width: 20px;
     height: 20px;
 }
-.searchForm{
+.searchFormVerificate{
     display: flex;
     align-items: center;
     gap: 5px;
@@ -110,4 +111,40 @@
     text-align: center;
     font-size: 25px;
     
+}
+
+
+.dark-theme .users{
+    background-color: black;
+    height: 100%;
+} 
+.dark-theme .users h1{
+    color: white;
+}
+
+
+.dark-theme .searchForm button{
+    background-color: white;
+
+    padding: 5px;
+   
+}
+
+.dark-theme .username{
+    color: white;
+}
+
+.dark-theme .username p:last-child{
+    color: rgba(113, 118, 123, 1);
+}
+
+.dark-theme .user{
+    border: 1px solid rgba(113, 118, 123, 1);
+}
+.dark-theme .buttonTrash img{
+    background-color: white;
+}
+
+.atName{
+    font-size: 13px;
 }

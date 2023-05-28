@@ -97,55 +97,78 @@
         </div>
         
         <span class="tweetMessage">{% if tweet.tweet %}{{tweet.tweet.content}}{% else %}{{tweet.content}}{% endif %}</span>
-        
-        
-        <div class="buttons">
-            <button class="msgButton" id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
-                    <svg class="msgSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-                    </svg>
-                </button>
+        {% if tweet.tweet.images.all %}
+        <div class="{% if tweet.tweet.images.all.count == 3 %} tresFotos {% elif tweet.tweet.images.all.count == 4 %} cuatroFotos {% endif %} fotos" style="{% if  tweet.tweet.images.all.count > 4 %} overflow-x: scroll; {% endif %}">
 
-                <form action="{% if tweet.tweet %}{% url 'like' tweet.tweet.id %}{% else %}{% url 'like' tweet.id %}{% endif %}" class="likeForm" id="likeForm">
-                    {% csrf_token %}
-                    <button class="likeBtn" onclick="{% if user.is_authenticated %} like(event, this) {% endif %}" tweet-id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}" >
-                        {% if current_profile in tweet.likes_users.all %}
-                            <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="red"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                        {% else %}                                           
-                            <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="black"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                        {% endif %}
-                    </button>
-                    {% if tweet.likes_users.all.count != 0 %}
-                        <p class="likeCount" id="{{tweet.tweet.id}}">{{tweet.likes_users.all.count}}</p>
-                    {% else %}
-                        <p class="likeCount" id="{{tweet.tweet.id}}"></p>
-                    {% endif %}
-                </form>
+            {% for media in tweet.tweet.images.all %}
+               
+                {% if media.image %}
+                <img src="{{ media.image.url }}" alt="Tweet Image"  class="foto" id="{{ media.image.url }}" style="{% if  tweet.tweet.images.all.count == 2 %} width: 50%; {% endif %}">
+
+                {% elif media.video %}
+
+                <video controls style="width: 100%; height: auto; border-radius: 10px;">
+
+                    <source src="{{ media.video.url }}">
+                </video> 
+                {% endif %}
+               
+               
                 
-                <form action="{% if tweet.tweet %}{% url 'retweet' tweet.tweet.id %}{% else %}{% url 'retweet' tweet.id %}{% endif %}"> 
-                    <button>
-                        {% if tweet.tweet in current_profile.retweets.all %}
-                            <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="green"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
-                        {% else %}
-                            <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="black"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
-                        {% endif %}
-                        </button>
-                    
-                </form>
-                <form action="{% if tweet.tweet %}{% url 'keepTweets' tweet.tweet.id %}{% else %}{% url 'keepTweets' tweet.id %}{% endif %}" id="keepForm">
-                    {% csrf_token %}
-                    <button tweet-id="{{tweet.tweet.id}}" onclick="{% if user.is_authenticated %} favs(event, this) {% endif %}" class="keptButton">                                           
-                            <svg class="keepSvg saved" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 96 960 960" width="24px"><path {% if tweet.tweet in current_profile.keeps.all or tweet in current_profile.keeps.all %}fill="rgb(211, 165, 15)"{% endif %}d="m323 851 157-94 157 95-42-178 138-120-182-16-71-168-71 167-182 16 138 120-42 178Zm-90 125 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-355Z"/></svg>                    
+            {% endfor %}
+
+
+        </div>
+
+        {% endif %}
+        <div class="buttons">
+            <div class="buttones">
+
+                    <button class="msgButton" id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
+                        <svg class="msgSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+                        </svg>
                     </button>
-                </form>
-            </button>
-            <p class="timeAgo">{% if tweet.tweet %}{{tweet.tweet.created_at|timesince}} ago {% else %}{{tweet.created_at|timesince}}{% endif %}</p>                       
+    
+                    <form action="{% if tweet.tweet %}{% url 'like' tweet.tweet.id %}{% else %}{% url 'like' tweet.id %}{% endif %}" class="likeForm" id="likeForm">
+                        {% csrf_token %}
+                        <button class="likeBtn" onclick="{% if user.is_authenticated %} like(event, this) {% endif %}" tweet-id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}" >
+                            {% if current_profile in tweet.likes_users.all %}
+                                <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="red"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            {% else %}                                           
+                                <svg class="likeSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="black"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                            {% endif %}
+                        </button>
+                        {% if tweet.likes_users.all.count != 0 %}
+                            <p class="likeCount" id="{{tweet.tweet.id}}">{{tweet.likes_users.all.count}}</p>
+                        {% else %}
+                            <p class="likeCount" id="{{tweet.tweet.id}}"></p>
+                        {% endif %}
+                    </form>
+                    
+                    <form action="{% if tweet.tweet %}{% url 'retweet' tweet.tweet.id %}{% else %}{% url 'retweet' tweet.id %}{% endif %}"> 
+                        <button>
+                            {% if tweet.tweet in current_profile.retweets.all %}
+                                <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="green"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
+                            {% else %}
+                                <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="black"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
+                            {% endif %}
+                            </button>
+                        
+                    </form>
+                    <form action="{% if tweet.tweet %}{% url 'keepTweets' tweet.tweet.id %}{% else %}{% url 'keepTweets' tweet.id %}{% endif %}" id="keepForm">
+                        {% csrf_token %}
+                        <button tweet-id="{{tweet.tweet.id}}" onclick="{% if user.is_authenticated %} favs(event, this) {% endif %}" class="keptButton">                                           
+                                <svg class="keepSvg saved" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 96 960 960" width="24px"><path {% if tweet.tweet in current_profile.keeps.all or tweet in current_profile.keeps.all %}fill="rgb(211, 165, 15)"{% endif %}d="m323 851 157-94 157 95-42-178 138-120-182-16-71-168-71 167-182 16 138 120-42 178Zm-90 125 65-281L80 506l288-25 112-265 112 265 288 25-218 189 65 281-247-149-247 149Zm247-355Z"/></svg>                    
+                        </button>
+                    </form>
+                
+                    <p class="timeAgo">{% if tweet.tweet %}{{tweet.tweet.created_at|timesince}} ago {% else %}{{tweet.created_at|timesince}}{% endif %}</p>                       
+            </div>
 
             
-            {% for image in tweet.images.all %}
-                hola
-            {% endfor %}
+            
             
         </div>
     </div>        
@@ -162,6 +185,14 @@
         </form>
     </div>
 </section>
+
+<section class="modal modalFoto">
+    <div class="modal_container_foto">
+        <button href="#" class="modal_close">X</button>
+        <img src="" alt="" style="width: 50%; max-height: 50%">
+    </div>
+</section>
+
 <section class="modalUpdate" style="z-index: 1000">
     <div class="modal_container_update" style="z-index: 1000">
         <form method="POST" class="formResponse" id="updateTweetForm">  

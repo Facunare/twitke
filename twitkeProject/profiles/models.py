@@ -21,6 +21,7 @@ class Profiles(models.Model):
     webSite = models.CharField(null=True, max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
+    darkMode = models.BooleanField(default=False)
     def __str__(self):
         return self.username
 

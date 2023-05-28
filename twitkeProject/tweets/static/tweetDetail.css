@@ -16,6 +16,31 @@
     align-items: center;
 }
 
+.fotos{
+    display: flex;
+    align-self: center;
+    width: 80%;
+    border-radius: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+    margin: 0 auto;
+    margin: 30px ;
+}
+
+.nothingHere{
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+    height: auto;
+}
+
+.fotos img{
+    width: 100%; 
+    height: 300px; 
+    object-fit:cover; 
+    justify-self:center;
+}
+
 .backNav a{
     margin: 0  10px;
     background-color: transparent;
@@ -51,6 +76,7 @@
 
 .created, .atName{
     color: rgba(113, 118, 123, 1);
+    font-size: 13px;
 }
 
 .buttons button{

@@ -9,4 +9,5 @@ urlpatterns = [
     path('update/profiles/<int:id>', views.updateProfile, name="updateProfile"),
     path('verifyRequest/<int:id>,', views.verifyRequest, name="verifyRequest"),
     path('verifyRequest/<int:id>/delete,', views.deleteVerifyRequest, name="deleteVerifyRequest"),
+    path('darkMode/', views.darkMode, name="darkMode")
 ]

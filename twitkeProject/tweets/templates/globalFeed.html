@@ -7,7 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
         <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-        
     </head>
     
     {% block content %}
@@ -16,8 +15,8 @@
     
     <div class="container-1">
         
-        <h1 class="feedTitle">Inicio</h1>
-        <div class="options">
+        <h1 class="feedTitle" data-section="first-section" data-value="title">Inicio</h1>
+        <div class="optionsFeed">
             <form action="" class="forYou">
                 {% csrf_token %}
                 <input type="text" name="foryou" hidden>
@@ -36,9 +35,16 @@
             <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm" enctype="multipart/form-data">
                 {% csrf_token %}
                 <textarea name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
-                <button id="miBoton" onclick="desactivarBoton()">
-                    Twittear
-                </button>
+                
+                <div class="cosas" style="display: flex;  align-items: center;">
+
+                    <button id="miBoton" onclick="desactivarBoton()">
+                        Twittear
+                    </button>
+                    <label for="tweetImage" class="attachment"><img src="{% static 'attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
+                    <input type="file" name="tweetImage" multiple id="tweetImage" hidden>
+                </div>
+                
             </form>
         {% endif %}
     </div>
@@ -68,28 +74,35 @@
         
 
         <script>
-            
-            
+          
             const msgButtons = document.querySelectorAll('.msgButton')
             const modal = document.querySelector('.modal')
             const cerrarModales = document.querySelectorAll('.modal_close')
             const divContent = document.querySelectorAll('.div-content')            
             const form = document.querySelector('.modal_container form');
-        
-            
+            const fotos = document.querySelectorAll('.foto')
+            const modalFoto = document.querySelector('.modalFoto')
+            const modalFotoFoto = document.querySelector('.modalFoto img')
             msgButtons.forEach(button=>{
                 
                 button.addEventListener('click', (e)=>{
                     e.preventDefault()  
                     e.stopPropagation()
-                    console.log(1)
                     modal.classList.add('modal--show')
                     const tweetId = button.id
                     form.action = `tweet/response/${tweetId}`
 
                 })
             })
-           
+
+            fotos.forEach(foto=>{
+
+                foto.addEventListener('click', (e)=>{
+                    e.preventDefault()  
+                    modalFotoFoto.src = foto.id
+                    modalFoto.classList.add('modal--show')
+                })
+            })
             const updateForm = document.querySelector('.modalUpdate')
             const edits = document.querySelectorAll('.edits')
             for(let edit of edits){
@@ -105,6 +118,7 @@
                     e.preventDefault()
                     modal.classList.remove('modal--show')
                     updateForm.classList.remove('modalUpdate--show')
+                    modalFoto.classList.remove('modal--show')
                 })
             }
             
@@ -143,10 +157,12 @@
             
 
     
+             
+        
+             
         </script>
         <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
         <script src="{% static 'ajaxFollow.js' %}"></script>
-
-    
+        <script src="{% static 'toggle.js' %}"></script>
 {% endblock content %}
 </html>

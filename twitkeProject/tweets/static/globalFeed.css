@@ -24,38 +24,6 @@
     text-align: center;
     font-size: 25px;
 }
-.firstNav{
-    justify-self: flex-start;
-    display: flex;
-    align-items: center;
-}
-
-.backNav{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-    background-color: black;
-    color: white;
-    align-items: center;
-    margin-left: 0px;
-
-}
-
-
-.backNav a{
-    margin: 0  10px;
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-    outline: none;
-}
-
-.backNav a svg{
-    color: white;
-    width: 27px;
-    filter: invert(1);
-    font-weight: bold;
-}
 
 main{
     display: flex;
@@ -89,8 +57,8 @@ main{
     padding: 5px;
     border: none;
     background-color: #368a8e;
-    position: absolute;
-    transform: translate(20px, -50px);
+    position: relative;
+    margin: 15px;
 }
 .postTweetForm button:hover{
     background-color: #41aaaf;
@@ -178,7 +146,74 @@ main{
 
 .buttons{
     display: flex;
+    flex-direction: column;
 }
+.buttones{
+    display: flex;
+}
+
+.fotos{
+    display: flex;
+    align-self: center;
+    width: 80%;
+    border-radius: 20px;
+    margin: 0 auto;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.fotos img{
+    width: 100%; 
+    height: 200px; 
+    object-fit:cover; 
+    
+    justify-self:center;
+}
+
+.tresFotos {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas con igual ancho */
+    grid-template-rows: auto auto; /* Filas ajustadas al contenido */
+    height: auto;
+    place-items: center;
+    margin: 0 auto;
+    max-width: 400px ; 
+  }
+  
+ .cuatroFotos{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: auto auto;
+    height: auto;
+   margin: 0 auto;
+    max-width: 400px ; 
+ }
+  .tresFotos img:nth-child(1) {
+    grid-column: 1; 
+    grid-row: 1 / span 3;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .tresFotos img:nth-child(2),
+  .tresFotos img:nth-child(3) {
+    grid-column: 2; 
+    object-fit: cover;
+    height: auto;
+  }
+
+
+  .cuatroFotos img:nth-child(1)
+  .cuatroFotos img:nth-child(4) {
+    grid-column: 1;
+    object-fit: cover;
+  }
+
+  .cuatroFotos img{
+    height: 100%;
+
+  }
+
 
 textarea{
     width: 34vw;
@@ -230,7 +265,7 @@ textarea{
     transform: translateX(-7px);
 }
 
-.modal, .modalUpdate{
+.modal, .modalUpdate, .modalFoto{
     position: fixed;
     top: 0;
     left: 0;
@@ -257,6 +292,26 @@ textarea{
 
 }
 
+.modal_container_foto{
+    width: 90%;
+    margin: auto;
+    max-width: 600px;
+    max-height: 90%;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5em 2em;
+    align-items: center;
+}
+
+.modal_container_foto .modal_close{
+    color: white;
+}
+
+.modalFoto.modal--show{
+
+    background-color: #00000086;
+}
 .modal_container_editProfile form{
     display: flex;
     flex-direction: column;
@@ -428,19 +483,19 @@ textarea{
     background-color: #41aaaf;
 }
 
-.options{
+.optionsFeed{
     display: grid;
     place-items: center;
     grid-template-columns: repeat(2, 1fr);
     height: 50px;
 }
 
-.options form{
+.optionsFeed form{
     width: 100%;
     height: 100%;
 }
 
-.options button{
+.optionsFeed button{
     width: 100%;
     height: 100%;
     background-color: rgb(2, 9, 22);
@@ -453,10 +508,226 @@ textarea{
 }
 
 
-.options button:hover{
+.optionsFeed button:hover{
     background-color: rgb(38, 41, 48);
 }
 
 .active{
     border-bottom: 2px solid rgb(8, 169, 243);
+}
+
+.cosas{
+    display: flex;
+    align-items: center;
+}
+
+.tweetImage{
+    display: flex;
+}
+
+.attachment{
+    cursor: pointer;
+    transition: background-color .3s ease;
+    padding: 6px;
+    border-radius: 50%;
+}
+.attachment:hover{
+    background-color: rgb(221, 218, 218);
+}
+
+.containerToggle{
+    width: 100%;
+    height: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#toggle {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 40px;
+    width: 75px;
+    background-color: #626468;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    transition: .5s ease background-color;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    outline: none;
+}
+
+
+#toggle:after{
+    content: "";
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    top: 5px;
+    left: 5px;
+    border-radius: 50%;
+    transition: all .5s ease;
+}
+
+.dark-theme #toggle{
+    background-color: white;
+}
+
+.dark-theme #toggle:after{
+    background-color: transparent;
+    box-shadow: 10px 10px #15181f;
+    top: -4px;
+    left: 30px;
+}
+
+.dark-theme .navbar-1, .dark-theme .navbar-2{
+    background-color: black;
+}
+
+.dark-theme .navbar-1{
+    border-right: 1px solid rgba(113, 118, 123, 1);
+}
+
+.dark-theme .navbar-2{
+    border-left: 1px solid rgba(113, 118, 123, 1);
+}
+
+.dark-theme .postTweetForm, .dark-theme textarea[name="content"]{
+    background-color: black;
+}
+
+.dark-theme .attachment{
+    background-color: white;
+    padding: 7px;
+}
+
+.dark-theme .attachment:hover{
+    background-color: rgb(150, 148, 148);
+}
+
+.dark-theme .div-content{
+    background-color: black;
+}
+
+.dark-theme .div-content .username .usernameTweet, .dark-theme span{
+    color: white;
+}
+
+.dark-theme .div-content .username .usernameTweet:hover{
+    text-decoration: underline 1px white;
+}
+
+.dark-theme .formName p{
+color: rgba(113, 118, 123, 1);;
+}
+
+.dark-theme .tweetOptions .optionButtons svg{
+    fill: rgba(113, 118, 123, 1);
+}
+
+.dark-theme .buttons svg{
+    fill: rgba(113, 118, 123, 1);
+}
+
+.dark-theme #id_content{
+    color: white;
+}
+
+.dark-theme .msgSvg:hover{
+    fill: rgb(66, 66, 233);
+}
+
+.dark-theme .likeSvg:hover{
+    fill: rgb(236, 52, 52);
+}
+
+.dark-theme .retweetSvg:hover{
+    fill: rgb(15, 184, 15);
+}
+
+.dark-theme .keepSvg:hover{
+    fill: rgb(211, 165, 15);
+}
+
+.dark-theme .tweet{
+    border-top: 1px solid rgba(113, 118, 123, 1);
+}
+.dark-theme .containerKept{
+    background-color: black;
+}
+
+.dark-theme .containerKept h2{
+    color: white;
+}
+
+.backNav{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    background-color: black;
+    color: white;
+    align-items: center;
+    margin-left: 0px;
+
+}
+.firstNav{
+    justify-self: flex-start;
+    display: flex;
+    align-items: center;
+}
+
+
+.backNav a{
+    margin: 0  10px;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+.backNav a svg{
+    color: white;
+    width: 27px;
+    filter: invert(1);
+    font-weight: bold;
+}
+
+.dark-theme .tweet:first-child{
+    border-bottom: 1px solid rgba(113, 118, 123, 1);
+} 
+
+.dark-theme .modal_container{
+    background-color:black;
+}
+
+.dark-theme .modal_container input{
+    background-color: black;
+    border: 1px solid  rgba(255, 255, 255, 0.192);
+    color: white;
+}
+
+.dark-theme .modal{
+    background-color: rgba(255, 255, 255, 0.192);
+}
+
+.dark-theme .modal_container .modal_close{
+    color: white;
+}
+
+.tweetMessage{
+    margin: 10px;
+    padding-right: 20px;
+}
+
+.dark-theme .followSpan{
+    color: rgba(113, 118, 123, 1);
+}
+
+.dark-theme .notCoincidence{
+    color: white;
 }

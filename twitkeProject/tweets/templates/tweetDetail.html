@@ -46,14 +46,37 @@
                 </div>
                 <p class="content">{{parent_tweet.tweet.content}}</p>
                 
-                
+                {% if parent_tweet.tweet.images.all %}
+                <div class="{% if parent_tweet.tweet.images.all.count == 3 %} tresFotos {% elif parent_tweet.tweet.images.all.count == 4 %} cuatroFotos {% endif %} fotos" style="{% if  parent_tweet.tweet.images.all.count > 4 %} overflow-x: scroll; {% endif %}">
+        
+                    {% for media in parent_tweet.tweet.images.all %}
+                       
+                        {% if media.image %}
+                        <img src="{{ media.image.url }}" alt="Tweet Image"  class="foto" id="{{ media.image.url }}" style="{% if  parent_tweet.tweet.images.all.count == 2 %} width: 50%; {% endif %}">
+        
+                        {% elif media.video %}
+        
+                        <video controls style="width: 100%; height: auto; border-radius: 10px;">
+        
+                            <source src="{{ media.video.url }}">
+                        </video> 
+                        {% endif %}
+                       
+                       
+                        
+                    {% endfor %}
+        
+        
+                </div>
+        
+                {% endif %}
                 <div class="dataSection">
                     
                     <p class="likesCounter">{{parent_tweet.likes_users.all.count}} Me gustas</p>
                     <p class="responses">{{parent_tweet.tweet.responses}} respuestas</p>
                     <p>0 Retweets</p>
                 </div>
-                <div class="buttons">
+                <div class="buttons" style="flex-direction: row;">
                     <button class="msgButton" id="{{parent_tweet.tweet.id}}">
                         <svg class="msgSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="rgba(113, 118, 123, 1)">
                             <path d="M0 0h24v24H0z" fill="none"/>
@@ -81,11 +104,13 @@
             
             </div class="responses">                                              
     
+            {% if tweets %}
                 {% for tweet in tweets %}
-                   
-                    {% include 'Tweet.html' %}    
-                
+                        {% include 'Tweet.html' %}    
                 {% endfor %}
+            {% else %}
+                <h1 class="nothingHere">Se el primero en comentar!</h1>
+            {% endif %}
                 
                 
             </div>      
@@ -265,5 +290,6 @@
 
         </script>
         <script src="ajaxFollow.js"></script>
+        <script src="{% static 'toggle.js' %}"></script>
         {% endblock content %}
 </html>

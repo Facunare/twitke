@@ -8,4 +8,4 @@ class Tweet_profile(models.Model):
     profile = models.ForeignKey(Profiles, null=True, on_delete=models.CASCADE)
     retwitted_by = models.ManyToManyField(Profiles, related_name="retweet_users")
     likes_users = models.ManyToManyField(Profiles, related_name="likes_tweets")
-    
+    haveMultimedia = models.BooleanField(default=False)

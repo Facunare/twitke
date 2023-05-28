@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'base.css' %}" />
     <title>Buy</title>
   </head>
-  <body>
+  <body class="{% if current_profile.darkMode %}dark-theme{% endif %}">
     <div class="container">
 
       <nav class="navbar-1">
@@ -29,6 +29,15 @@
               <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
               
               {% endif %}
+
+              <form action="{% url 'darkMode' %}?next={{ request.path }}" method="POST" id="darkModeForm">
+                <div class="containerToggle">
+                  {% csrf_token %}
+                  <button type="submit" name="" id="toggle" value="" for="submit" onclick="darkMode(event, this)"></button>
+                  
+                </div>
+              </form>
+              
               
             </ul>
             <div class="current">
@@ -51,6 +60,10 @@
                 </div>
                 {% endif %}
               </div>
+              
+            </div>
+            
+           
         </nav>
         
         <main class="baseMain">
@@ -65,12 +78,13 @@
         <nav class="navbar-2">
           <form action="{% url 'search' %}" class="searchForm">
             <div class="search-container">
-              <input type="text" class="searchbar" name="search" placeholder="Search">
+              <input type="text" class="searchbar" name="search" placeholder="Buscar">
               <button type="submit" class="search-button">
                 <img src="{% static '1093183.svg' %}" alt="">
               </button>
             </div>
           </form>
+          
           <section class="aQuienSeguir">
 
             <h3 style="color: white;">A quien seguir?</h3>
@@ -99,14 +113,17 @@
                 </div>
                   
               {% endfor %}
+             
             {% else %}
               <li class="elseSessionLi"><a class="elseSession" href="{% url 'signin' %}">Inicia sesion para ver</a></li>
             {% endif  %}
           </section>
+         
         </nav>
         
     </div>
   </body>
+  <script src="{% static 'toggle.js' %}"></script>
   <script>
     
 
@@ -125,6 +142,28 @@
       }
       return cookieValue;
   }
+
+  function darkMode(e, btn){
+    e.preventDefault();
+
+    const darkModeForm = new FormData(document.getElementById('darkModeForm'));
+    
+    fetch(`/darkMode/`, {
+        method: "POST",
+        body: darkModeForm,
+        headers: {
+            "X-CSRFToken": getCookie('csrftoken'),
+            "X-Requested-With": "XMLHttpRequest"
+        }
+    }).then(function(res){
+        return res.json();  
+    }).then(function(data){
+        console.log(data)
+        
+        
+    });
+}
+
 
   </script>
   <style>

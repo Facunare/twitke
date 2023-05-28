@@ -56,7 +56,7 @@ main{
     border-radius: 20px;
     padding: 5px;
     border: none;
-    background-color: #368a8e;
+    background-color: rgb(29, 155, 240);
     position: relative;
     margin: 15px;
 }
@@ -372,7 +372,7 @@ textarea{
     background-color: #45b4b9;
 }
 
-.modal_close{
+.modal_close, .modal_close_twittear{
     text-decoration: none;
     color: black;
     display: inline;
@@ -630,9 +630,7 @@ color: rgba(113, 118, 123, 1);;
     fill: rgba(113, 118, 123, 1);
 }
 
-.dark-theme .buttons svg{
-    fill: rgba(113, 118, 123, 1);
-}
+
 
 .dark-theme #id_content{
     color: white;
@@ -715,7 +713,7 @@ color: rgba(113, 118, 123, 1);;
     background-color: rgba(255, 255, 255, 0.192);
 }
 
-.dark-theme .modal_container .modal_close{
+.dark-theme .modal_container .modal_close, .dark-theme .modal_close_twittear{
     color: white;
 }
 
@@ -731,3 +729,15 @@ color: rgba(113, 118, 123, 1);;
 .dark-theme .notCoincidence{
     color: white;
 }
+
+.dark-theme .likeCount{
+    color: #71767b;
+}
+
+.dark-theme .formResponse textarea{
+    color: white;
+    outline: none;
+}
+.dark-theme .buttons svg{
+    fill: rgba(113, 118, 123, 1);
+}  

@@ -37,6 +37,7 @@
                   
                 </div>
               </form>
+              <li class="twittearButton"><button>Twittear</button></li>
               
               
             </ul>
@@ -122,9 +123,45 @@
         </nav>
         
     </div>
+    <section class="modal modalTwittear">
+      <div class="modal_container">
+          <button href="#" class="modal_close_twittear">X</button>
+          <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm" enctype="multipart/form-data">
+            {% csrf_token %}
+            <textarea name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false"  style="border-bottom: 1px solid #767676;"></textarea>
+            
+            <div class="cosas" style="display: flex;  align-items: center;">
+
+                <button id="miBoton" onclick="desactivarBoton()">
+                    Twittear
+                </button>
+                <label for="tweetImage" class="attachment"><img src="{% static 'attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
+                <input type="file" name="tweetImage" multiple id="tweetImage" hidden>
+            </div>
+            
+        </form>
+      </div>
+  </section>
   </body>
   <script src="{% static 'toggle.js' %}"></script>
   <script>
+
+    const twittearButton = document.querySelector('.twittearButton')
+    const modalTwit=document.querySelector('.modalTwittear')
+    const modal_close_modalTwitter = document.querySelector('.modal_close_twittear')
+    twittearButton.addEventListener('click', (e)=>{
+      e.preventDefault()
+      modalTwit.classList.add('modal--show')
+    })
+
+    modal_close_modalTwitter.addEventListener('click', (e)=>{
+      e.preventDefault()
+      console.log("hola")
+      modalTwit.classList.remove('modal--show')
+    })
+
+
+    
     
 
     function getCookie(name) {
@@ -186,7 +223,21 @@
       justify-content: center;
       
     }
+    .twittearButton button{
+      padding: 15px 50px;
+      margin-top: 15px;
+      background-color: rgb(29, 155, 240);
+      border-radius: 40px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      outline: none;
+      transition: .5s ease background-color;
+    }
 
+    .twittearButton button:hover{
+      background-color: rgb(23, 124, 192);
+    }
     .navbar-1 ul{
       height: 100%;
     

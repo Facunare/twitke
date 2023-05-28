@@ -20,6 +20,11 @@ from django.db.models import Q
 
 # 4. Optimizar codigo
 
+# 5. Color emoji darktheme
+
+# Cosas que no hice: idiomas
+
+
 def globalFeed(request):
     current_profile = ""
     search = request.GET.get("searchUser")
@@ -68,7 +73,7 @@ def like(request, id):
             current_profile.save()
             is_liked = False
         likes = tweet.likes_users.all().count()
-        return JsonResponse({'is_liked': is_liked, 'likes': likes, 'id': id})
+        return JsonResponse({'is_liked': is_liked, 'likes': likes, 'id': id, "darkMode": current_profile.darkMode})
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({'error': str(e)})

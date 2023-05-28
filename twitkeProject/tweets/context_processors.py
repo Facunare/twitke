@@ -19,4 +19,5 @@ def current_profile(request):
     if request.user.is_authenticated:
         current_profile = Profiles.objects.get(user__username=request.user.username)
 
-    return {'current_profile': current_profile}
+    return {'current_profile': current_profile, 'darkMode': current_profile.darkMode}
+

@@ -13,6 +13,7 @@ class Tweet(models.Model):
     edited = models.BooleanField(default=False)
     parent_tweet = models.IntegerField(null=True)
     responses = models.IntegerField(null=True, default=0)
+    
 
     
     

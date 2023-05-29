@@ -14,6 +14,7 @@ def myProfile(request, id):
     myLikes = request.GET.get("myLikes")
     myTweets = request.GET.get("myTweets")
     myMedia = request.GET.get("myMedia")
+    myRetweets = request.GET.get("myRetweets")
     user = Profiles.objects.get(id=id)
     followers = user.followers_users.all()
     following = user.followed_users.all()
@@ -32,6 +33,8 @@ def myProfile(request, id):
     elif myMedia == "":
         tweets = Tweet_profile.objects.filter(haveMultimedia = True)
     
+    elif myRetweets == "":
+        tweets = Tweet_profile.objects.filter(retwitted_by = user)
     for soli in solicitudes:
         if soli.profile == user:
             requested = True

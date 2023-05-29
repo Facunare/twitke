@@ -81,8 +81,18 @@
             const divContent = document.querySelectorAll('.div-content')            
             const form = document.querySelector('.modal_container form');
             const fotos = document.querySelectorAll('.foto')
-            const modalFoto = document.querySelector('.modalFoto')
-            const modalFotoFoto = document.querySelector('.modalFoto img')
+        const modalFoto = document.querySelector('.modalFoto')
+        const modalFotoFoto = document.querySelector('.modalFoto img')
+
+        fotos.forEach(foto=>{
+
+            foto.addEventListener('click', (e)=>{
+                e.preventDefault()  
+                console.log("hola")
+                modalFotoFoto.src = foto.id
+                modalFoto.classList.add('modal--show')
+            })
+        })
             msgButtons.forEach(button=>{
                 
                 button.addEventListener('click', (e)=>{
@@ -95,14 +105,7 @@
                 })
             })
 
-            fotos.forEach(foto=>{
-
-                foto.addEventListener('click', (e)=>{
-                    e.preventDefault()  
-                    modalFotoFoto.src = foto.id
-                    modalFoto.classList.add('modal--show')
-                })
-            })
+            
             const updateForm = document.querySelector('.modalUpdate')
             const edits = document.querySelectorAll('.edits')
             for(let edit of edits){

@@ -16,6 +16,8 @@ from django.db.models import Q
 
 # 2. IA 
 
+# 3. Arreglar ver fotos en otro lugar q no es globalfeed
+
 # 3. Diseño final
 
 # 4. Optimizar codigo
@@ -198,26 +200,27 @@ def updateTweet(request, id):
 
 @login_required
 def retweet(request, id):
-   
-
     tweet= Tweet.objects.get(id=id)
     tweet_to_retweet = Tweet_profile.objects.get(tweet = tweet)
     current_profile = Profiles.objects.get(user__username=request.user.username)
 
     if tweet_to_retweet.tweet in current_profile.retweets.all():
-        print("estoy")
         current_profile.retweets.remove(tweet_to_retweet.tweet)
         tweet_to_retweet.retwitted_by.remove(current_profile)
-        tweet_to_delete = Tweet_profile.objects.get(tweet = tweet)
-        tweet_to_delete.delete()
     else:
-        print("no estoy")
         current_profile.retweets.add(tweet_to_retweet.tweet)
         tweet_to_retweet.retwitted_by.add(current_profile)       
-        tweet = Tweet.objects.create(user = tweet_to_retweet.profile.user, content = tweet_to_retweet.tweet.content)
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+        # tweet = Tweet.objects.create(user = tweet_to_retweet.profile.user, content = tweet_to_retweet.tweet.content)
+        # Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
     
-    return redirect('/')
+    next = request.GET.get('next')
+    print(next)
+    # Realiza cualquier procesamiento adicional necesario
+    
+    if next:
+        return redirect(next)
+    else:
+        return redirect('/')
 
 
 from django.contrib.auth.models import User

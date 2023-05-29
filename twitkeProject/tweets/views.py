@@ -20,8 +20,6 @@ from django.db.models import Q
 
 # 4. Optimizar codigo
 
-# 5. Color emoji darktheme
-
 # Cosas que no hice: idiomas
 
 

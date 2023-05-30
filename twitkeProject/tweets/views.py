@@ -20,7 +20,7 @@ from django.db.models import Q
 
 # 4. Optimizar codigo
 
-# 5. Color like en detail
+# 5. Color like y retweet en detail, y que no redirija mal
 # Cosas que no hice: idiomas
 
 

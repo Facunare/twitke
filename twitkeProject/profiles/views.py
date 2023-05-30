@@ -31,7 +31,7 @@ def myProfile(request, id):
         tweets = Tweet_profile.objects.filter(profile__user__id=id).all()
         
     elif myMedia == "":
-        tweets = Tweet_profile.objects.filter(haveMultimedia = True)
+        tweets = Tweet_profile.objects.filter(profile__user__id=id, haveMultimedia = True)
     
     elif myRetweets == "":
         tweets = Tweet_profile.objects.filter(retwitted_by = user)

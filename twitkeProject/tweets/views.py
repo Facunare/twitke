@@ -16,8 +16,6 @@ from django.db.models import Q
 
 # 2. IA 
 
-# 3. Arreglar ver fotos en otro lugar q no es globalfeed
-
 # 3. Diseño final
 
 # 4. Optimizar codigo
@@ -29,7 +27,7 @@ def globalFeed(request):
     current_profile = ""
     search = request.GET.get("searchUser")
     foryou = request.GET.get("foryou")
-    print("hola" + str(foryou))
+ 
     images = TweetImage.objects.all()
     if search:
         users = Profiles.objects.filter(username__icontains = search).all()
@@ -38,7 +36,12 @@ def globalFeed(request):
     if request.user.is_authenticated:
         current_profile = Profiles.objects.get(user__username = request.user.username)
         followers = current_profile.followed_users.all()
-        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
+        # tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
+        tweets = Tweet_profile.objects.filter(Q(profile__in=followers), tweet__parent_tweet=None)
+    #     # tweets = Tweet_profile.objects.filter(
+    #     # Q(profile__in=followers) | Q(retwitted_by__profile__in=followers),
+    #     # tweet__parent_tweet=None
+    # )
     else:
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
 
@@ -51,6 +54,25 @@ def globalFeed(request):
             'images': images
     })
     
+@login_required
+def retweet(request, id):
+    tweet= Tweet.objects.get(id=id)
+    tweet_to_retweet = Tweet_profile.objects.get(tweet = tweet)
+    current_profile = Profiles.objects.get(user__username=request.user.username)
+
+    if tweet_to_retweet.tweet in current_profile.retweets.all():
+        current_profile.retweets.remove(tweet_to_retweet.tweet)
+        tweet_to_retweet.retwitted_by.remove(current_profile)
+    else:
+        current_profile.retweets.add(tweet_to_retweet.tweet)
+        tweet_to_retweet.retwitted_by.add(current_profile)       
+    
+    next = request.GET.get('next')
+
+    if next:
+        return redirect(next)
+    else:
+        return redirect('/')
 
 @login_required
 def like(request, id):
@@ -198,29 +220,6 @@ def updateTweet(request, id):
     
     return JsonResponse({'tweetContent': str(tweet_to_update.content), 'tweetId': id})
 
-@login_required
-def retweet(request, id):
-    tweet= Tweet.objects.get(id=id)
-    tweet_to_retweet = Tweet_profile.objects.get(tweet = tweet)
-    current_profile = Profiles.objects.get(user__username=request.user.username)
-
-    if tweet_to_retweet.tweet in current_profile.retweets.all():
-        current_profile.retweets.remove(tweet_to_retweet.tweet)
-        tweet_to_retweet.retwitted_by.remove(current_profile)
-    else:
-        current_profile.retweets.add(tweet_to_retweet.tweet)
-        tweet_to_retweet.retwitted_by.add(current_profile)       
-        # tweet = Tweet.objects.create(user = tweet_to_retweet.profile.user, content = tweet_to_retweet.tweet.content)
-        # Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
-    
-    next = request.GET.get('next')
-    print(next)
-    # Realiza cualquier procesamiento adicional necesario
-    
-    if next:
-        return redirect(next)
-    else:
-        return redirect('/')
 
 
 from django.contrib.auth.models import User

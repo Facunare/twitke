@@ -741,3 +741,28 @@ color: rgba(113, 118, 123, 1);;
 .dark-theme .buttons svg{
     fill: rgba(113, 118, 123, 1);
 }  
+
+.dark-theme .timeAgo{
+    color: white;
+}
+
+.dark-theme .baseMain{
+    background-color: black;
+}
+
+.dark-theme .postTweetForm{
+    border-bottom: 1px solid rgba(113, 118, 123, 1);
+}
+
+.dark-theme .formUserName button p, .nothingHere{
+    color: white;
+}
+
+.dark-theme .formUserName button p:hover{
+    text-decoration: underline white 1px;
+}
+
+.dark-theme .parent_tweet{
+    border: 1px solid rgba(113, 118, 123, 1);
+}
+

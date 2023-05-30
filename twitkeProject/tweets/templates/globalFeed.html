@@ -80,19 +80,7 @@
             const cerrarModales = document.querySelectorAll('.modal_close')
             const divContent = document.querySelectorAll('.div-content')            
             const form = document.querySelector('.modal_container form');
-            const fotos = document.querySelectorAll('.foto')
-        const modalFoto = document.querySelector('.modalFoto')
-        const modalFotoFoto = document.querySelector('.modalFoto img')
-
-        fotos.forEach(foto=>{
-
-            foto.addEventListener('click', (e)=>{
-                e.preventDefault()  
-                console.log("hola")
-                modalFotoFoto.src = foto.id
-                modalFoto.classList.add('modal--show')
-            })
-        })
+            
             msgButtons.forEach(button=>{
                 
                 button.addEventListener('click', (e)=>{
@@ -169,5 +157,6 @@
         <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
         <script src="{% static 'ajaxFollow.js' %}"></script>
         <script src="{% static 'toggle.js' %}"></script>
+        <script src="{% static 'photoTweet.js' %}"></script>
 {% endblock content %}
 </html>

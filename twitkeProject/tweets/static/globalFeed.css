@@ -783,3 +783,11 @@ color: rgba(113, 118, 123, 1);;
 .mensajes .msgCount{
     transform: translateX(-7px);
 }
+
+.likeSvg path:last-child:hover{
+    fill: red;
+}
+
+.retweetSvg path:last-child:hover{
+    fill: green;
+}

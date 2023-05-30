@@ -2,10 +2,10 @@
 
 
 
-const togglehaha = document.querySelector("#toggle")
+const toggle = document.querySelector("#toggle")
 const body = document.querySelector('body')
 
-togglehaha.addEventListener("click", function(){
+toggle.addEventListener("click", function(){
 
     body.classList.toggle("dark-theme")
     

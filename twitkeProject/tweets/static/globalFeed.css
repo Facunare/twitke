@@ -766,3 +766,20 @@ color: rgba(113, 118, 123, 1);;
     border: 1px solid rgba(113, 118, 123, 1);
 }
 
+.dark-theme .div-content:last-child {
+    border-bottom: 1px solid rgba(113, 118, 123, 1);
+}
+
+.retweetCount{
+    transform: translateX(-7px);
+}
+
+.mensajes{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mensajes .msgCount{
+    transform: translateX(-7px);
+}

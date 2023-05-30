@@ -20,6 +20,7 @@ from django.db.models import Q
 
 # 4. Optimizar codigo
 
+# 5. Color like en detail
 # Cosas que no hice: idiomas
 
 

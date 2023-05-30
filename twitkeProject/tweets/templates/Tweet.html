@@ -23,9 +23,12 @@
                         {% if tweet.tweet.edited %}
                             <p>- edited</p>
                         {% endif %}
-                        {% if current_profile in tweet.retwitted_by.all %}
-                            <p>Retwitted by {{tweet.profile.username}}</p>
-                        {% endif %}
+                        {% for user in tweet.retwitted_by.all %}
+                            {% if user in current_profile.followers_users.all %}
+
+                                <p style="margin-left: 10px;">- Retwitted by {{user.username}}</p>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                     <p style="font-size: 12px">{% if tweet.tweet %} @{{tweet.profile.username}}{% else %}{{profile.username}}{% endif %}</p>
                 </form>

@@ -37,11 +37,8 @@ def globalFeed(request):
         current_profile = Profiles.objects.get(user__username = request.user.username)
         followers = current_profile.followed_users.all()
         # tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
-        tweets = Tweet_profile.objects.filter(Q(profile__in=followers), tweet__parent_tweet=None)
-    #     # tweets = Tweet_profile.objects.filter(
-    #     # Q(profile__in=followers) | Q(retwitted_by__profile__in=followers),
-    #     # tweet__parent_tweet=None
-    # )
+        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(retwitted_by__in = followers),  tweet__parent_tweet=None)
+        
     else:
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
 

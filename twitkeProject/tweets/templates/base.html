@@ -125,7 +125,7 @@
     </div>
     <section class="modal modalTwittear">
       <div class="modal_container">
-          <button href="#" class="modal_close_twittear">X</button>
+          <button href="#" class="modal_close_twittear modal_close">X</button>
           <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm" enctype="multipart/form-data">
             {% csrf_token %}
             <textarea name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false"  style="border-bottom: 1px solid #767676;"></textarea>

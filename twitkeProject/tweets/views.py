@@ -12,15 +12,12 @@ from django.db.models import Q
 
 
 
-# 1. Retweet
+# 1. IA 
 
-# 2. IA 
+# 2. Diseño final
 
-# 3. Diseño final
+# 3. Optimizar codigo
 
-# 4. Optimizar codigo
-
-# 5. Color like y retweet en detail, y que no redirija mal
 # Cosas que no hice: idiomas
 
 
@@ -38,7 +35,7 @@ def globalFeed(request):
         current_profile = Profiles.objects.get(user__username = request.user.username)
         followers = current_profile.followed_users.all()
         # tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
-        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(retwitted_by__in = followers),  tweet__parent_tweet=None)
+        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(retwitted_by__in = followers) | Q(profile=current_profile),  tweet__parent_tweet=None)
         
     else:
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
@@ -61,16 +58,13 @@ def retweet(request, id):
     if tweet_to_retweet.tweet in current_profile.retweets.all():
         current_profile.retweets.remove(tweet_to_retweet.tweet)
         tweet_to_retweet.retwitted_by.remove(current_profile)
+        is_retwitted = False
     else:
         current_profile.retweets.add(tweet_to_retweet.tweet)
-        tweet_to_retweet.retwitted_by.add(current_profile)       
-    
-    next = request.GET.get('next')
-
-    if next:
-        return redirect(next)
-    else:
-        return redirect('/')
+        tweet_to_retweet.retwitted_by.add(current_profile)   
+        is_retwitted = True    
+    retweets = tweet_to_retweet.retwitted_by.all().count()
+    return JsonResponse({'is_retwitted': is_retwitted, 'retweets': retweets, 'id': id, "darkMode": current_profile.darkMode})
 
 @login_required
 def like(request, id):

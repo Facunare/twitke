@@ -158,16 +158,16 @@
                         {% endif %}
                     </form>
                     
-                    <form action="{% url 'retweet' tweet.tweet.id %}?next={{ request.path }}" class="retweetForm" style="display: flex; justify-content: center; align-items: center; "> 
-                        <button>
+                    <form action="{% url 'retweet' tweet.tweet.id %}?next={{ request.path }}" class="retweetForm" id="retweetForm" style="display: flex; justify-content: center; align-items: center; "> 
+                        <button class="retweetBtn" onclick="{% if user.is_authenticated %} retweet(event, this) {% endif %}" tweet-id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
                             
                             <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" {% if tweet.tweet in current_profile.retweets.all %}fill="green"{% else %}fill="black"{% endif %}><path d="M0 0h24v24H0z" fill="none"/><path  {% if tweet.tweet in current_profile.retweets.all %}fill="green"{% endif %} d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
                             
                         </button>
                         {% if tweet.retwitted_by.all.count != 0 %}
-                            <p class="retweetCount" style="color: rgba(113, 118, 123, 1)">{{tweet.retwitted_by.all.count}}</p>
+                            <p class="retweetCount"  id="{{tweet.tweet.id}}"style="color: rgba(113, 118, 123, 1)">{{tweet.retwitted_by.all.count}}</p>
                         {% else %}
-                            <p class="retweetCount" style="color:white;"></p>
+                            <p class="retweetCount"  id="{{tweet.tweet.id}}"></p>
                         {% endif %}
                         
                     </form>
@@ -317,6 +317,7 @@
      
 </script>
 <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
+<script src="{% static 'ajaxRetweet.js' %}"></script>
 <style>
     .username{
     display: flex;

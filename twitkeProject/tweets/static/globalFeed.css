@@ -730,7 +730,7 @@ color: rgba(113, 118, 123, 1);;
     color: white;
 }
 
-.dark-theme .likeCount{
+.dark-theme .likeCount,  .dark-theme .msgCount{
     color: #71767b;
 }
 
@@ -754,7 +754,7 @@ color: rgba(113, 118, 123, 1);;
     border-bottom: 1px solid rgba(113, 118, 123, 1);
 }
 
-.dark-theme .formUserName button p, .nothingHere{
+.dark-theme .formUserName button p, .dark-theme .nothingHere{
     color: white;
 }
 
@@ -791,3 +791,4 @@ color: rgba(113, 118, 123, 1);;
 .retweetSvg path:last-child:hover{
     fill: green;
 }
+

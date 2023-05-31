@@ -303,3 +303,7 @@ ul li a{
     width: 100%;
     align-items: flex-start;
 }
+
+.modalTwittear{
+    display: none;
+}

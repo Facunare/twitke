@@ -20,13 +20,13 @@
             <form action="" class="forYou">
                 {% csrf_token %}
                 <input type="text" name="foryou" hidden>
-                <button  id="buttonForYou">
+                <button  id="buttonForYou" data-section="first-section" data-value="foryou">
                     Para tí
                 </button>
             </form>
             <form action="{% url 'globalFeed' %}" class="follows">
                 {% csrf_token %}
-                <button id="buttonSiguiendo">
+                <button id="buttonSiguiendo" data-section="first-section" data-value="follow">
                     Siguiendo
                 </button>
             </form>

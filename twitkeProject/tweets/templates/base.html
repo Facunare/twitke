@@ -29,6 +29,14 @@
               <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
               
               {% endif %}
+              <div class="flags" id="flags">
+                <div class="flags__item" data-language="es" style="width:20px">
+                    <img src="{% static 'es.svg' %}" alt="" class="flags__img" style="width:20px; cursor: pointer;">
+                </div>
+                <div class="flags__item" data-language="es" style="width:20px">
+                  <img src="{% static 'gb.svg' %}" alt="" class="flags__img" style="width:20px; cursor: pointer;">
+              </div>
+            </div>
 
               <form action="{% url 'darkMode' %}?next={{ request.path }}" method="POST" id="darkModeForm">
                 <div class="containerToggle">
@@ -88,7 +96,7 @@
           
           <section class="aQuienSeguir">
 
-            <h3 style="color: white;">A quien seguir?</h3>
+            <h3 style="color: white;" data-section="navbar-2" data-value="whoFollow">A quien seguir?</h3>
             {% if random %}
               {% for user in random %}
                 <div class="user_card">
@@ -109,14 +117,14 @@
                   </div>
                   <form action="{% url 'follow' id=user.user.id %}" id="followForm4" method="POST">
                     {% csrf_token %}
-                    <button id="button4"  onclick="follow(event, this)" tweet-id="{{user.user.id}}" type="submit" class="boton"><p>{% if current_profile not in user.followers_users.all %}Follow{% else %}Unfollow{% endif %}</p></button>
+                    <button id="button4"  onclick="follow(event, this)" tweet-id="{{user.user.id}}" type="submit" class="boton" data-section="navbar-2" data-value="whoFollowButton"><p>{% if current_profile not in user.followers_users.all %}Follow{% else %}Unfollow{% endif %}</p></button>
                 </form>
                 </div>
                   
               {% endfor %}
              
             {% else %}
-              <li class="elseSessionLi"><a class="elseSession" href="{% url 'signin' %}">Inicia sesion para ver</a></li>
+              <li class="elseSessionLi"><a class="elseSession" href="{% url 'signin' %}" data-section="navbar-2" data-value="mustSignin">Inicia sesion para ver</a></li>
             {% endif  %}
           </section>
          
@@ -143,6 +151,7 @@
       </div>
   </section>
   </body>
+  <script src="{% static 'changeLanguage.js' %}"></script>
   <script>
 
     const twittearButton = document.querySelector('.twittearButton')

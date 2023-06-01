@@ -1,0 +1,36 @@
+{
+    "first-section": {
+        "title": "Inicio",
+        "foryou": "Para tí",
+        "follow": "Siguiendo"
+    },
+    "navbar":{
+        "whoFollow": "A quien seguir?",
+        "mustSignin": "Inicia sesion para ver",
+        "whoFollowButton": "Seguir",
+        "buttonTweet": "Twittear"
+    },
+    "signup":{
+        "title": "Registrarse",
+        "haveAccount": "¿Ya tienes una cuenta?. Ingresa aqui"
+    },
+    "signin":{
+        "title": "Iniciar sesion",
+        "haveAccount": "¿No tienes una cuenta?. Registrate aquí",
+        "forgotPassw": "Olvide mi contraseña"
+    },
+    "profile":{
+        "editButton": "Editar",
+        "accountDate": "Se unio en",
+        "followers": "seguidores",
+        "following": "siguiendo"
+    },
+    "keptTweets":{
+        "title": "Tweets guardados",
+        "title2": "Guarda tus tweets favoritos para verlos más tarde"
+    },
+    "verificate":{
+        "title": "Verificar usuarios",
+        "unverificate": "Desverificar"
+    }
+}

@@ -1,0 +1,36 @@
+{
+    "first-section": {
+        "title": "Home",
+        "foryou": "For you",
+        "follow": "Following"
+    },
+    "navbar":{
+        "whoFollow": "Who to follow?",
+        "mustSignin": "Login to see",
+        "whoFollowButton": "Follow",
+        "buttonTweet": "Tweet"
+    },
+    "signup":{
+        "title": "SignUp",
+        "haveAccount": "Do you already have an account? Enter here"
+    },
+    "signin":{
+        "title": "SignIn",
+        "haveAccount": "You do not have an account?. sign up here",
+        "forgotPassw": "I forgot my password"
+    },
+    "profile":{
+        "editButton": "Edit",
+        "accountDate": "Joined in",
+        "followers": "followers",
+        "following": "following"
+    },
+    "keptTweets":{
+        "title": "Keep tweets",
+        "title2": "Save your favorite tweets to view them later"
+    },
+    "verificate":{
+        "title": "Verificate users",
+        "deverify": "Deverify"
+    }
+}

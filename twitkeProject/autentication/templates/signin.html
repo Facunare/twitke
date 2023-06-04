@@ -15,21 +15,22 @@
     <link rel="stylesheet" href="{% static 'signin.css' %}">
     <main class="main-signin">
         <form action="/signin/" method="POST" class="form-singin">
-            <h1>Signin</h1>
+            <h1 data-section="signin" data-value="title">Signin</h1>
             {% csrf_token %}
             
-            <div class="input-div">
-                <img src="{% static 'user.svg' %}" alt="">
-                <input placeholder="Username" type="text" name="username" id="username" autocomplete="off">
+            <div class="form__group">
+                <input type="text" class="form__input min" placeholder=" " 
+                name="username">
+                <label for="username" class="label_form"  data-section="signup" data-value="labelUser" autocomplete="on" >Usuario</label>
             </div>
-            <div class="input-div">
-
-                <img src="{% static 'lock.svg' %}" alt="">
-                <input placeholder="Password" type="password" name="password" id="password" autocomplete="off">
+            <div class="form__group">
+                <input type="password" class="form__input min" placeholder=" " 
+                name="password">
+                <label for="password" class="label_form"  data-section="signup" data-value="labelPassword" autocomplete="on" >Contraseña</label>
             </div>
             <div class="buttons">
 
-                <button>
+                <button data-section="signin" data-value="buttonSign">
                     LOG IN
                 </button>
                 <a href="{% provider_login_url 'google' %}" class="google-btn">
@@ -37,16 +38,18 @@
                     Google
                 </a>
             </div>
-            <a href="{% url 'password_reset' %}" class="forgotPassw">Olvide mi contraseña</a>
+            <a href="{% url 'password_reset' %}" class="forgotPassw" data-section="signin" data-value="forgotPassw">Olvide mi contraseña</a>
 
-            <a href="{% url 'signup' %}" class="dontHaveAccount">¿No tienes una cuenta?. Registrate aquí</a>
+            <a href="{% url 'signup' %}" class="dontHaveAccount" data-section="signin" data-value="haveAccount">¿No tienes una cuenta?. Registrate aquí</a>
         </form>    
         {% if error %}
             <span class="error" style="position: absolute;color: red;
             top: 20px; outline: 1px solid red; border-radius: 10px; padding: 10px;">{{error}}</span> 
         {% endif %}
     </main>
-    
+    <style>
+        
+    </style>
     {% endblock content %}
 
 </body>

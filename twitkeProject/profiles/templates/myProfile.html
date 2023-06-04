@@ -36,16 +36,16 @@
                         
                             
                             {% if requested %}
-                                <button class="verifyButton" style="pointer-events: none">Solicitado</button>
+                                <button class="verifyButton" style="pointer-events: none" data-section="profile" data-value="required">Solicitado</button>
                             {% else %}
-                                <button class="verifyButton">Solicitar verificado</button>
+                                <button class="verifyButton" data-section="profile" data-value="require">Solicitar verificado</button>
                             {% endif %}
 
                             
                                         
                         </form>
                         {% endif %}
-                        <button class="editButton">Editar</button>
+                        <button class="editButton" data-section="profile" data-value="editButton">Editar</button>
                     {% endif %}
                     <section class="modal2">
                         <div class="modal_container_editProfile">
@@ -56,7 +56,7 @@
                                         {% csrf_token %}
 
                                         <button href="#" class="modal_close">X</button>
-                                        <button class="saveButton" onclick="update(event, this)" tweet-id="{{usuario.id}}">
+                                        <button class="saveButton" onclick="update(event, this)" tweet-id="{{usuario.id}}" data-section="profile" data-value="saveEdit">
                                             Guardar
                                         </button>
                                     </div>
@@ -122,7 +122,7 @@
                         {% if user.is_staff and not is_self%}
                             <form action="{% url 'verificateUser' usuario.id %}">
                                 {% if usuario.is_verified %}
-                                    <button class="Desverificar">Desverificar</button>
+                                    <button class="Desverificar" data-section="profile" data-value="deverify">Desverificar</button>
                                 {% endif%}
                             </form>
                         {% endif %}
@@ -131,7 +131,7 @@
                         
                             <form action="{% url 'follow' id=usuario.id %}" method="POST" id="followForm">
                                 {% csrf_token %}
-                                <button class="followButton" id="button1" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" >
+                                <button class="followButton" id="button1" onclick="follow(event, this)" tweet-id="{{usuario.user.id}}" data-section="profile" data-value="deverify">
                                     <p class="followP">{% if current_profile not in usuario.followers_users.all %} Follow {% else %} Unfollow {% endif %}
                                     </p>
                                     
@@ -147,7 +147,7 @@
                 {% if usuario.biography %}
                     <p class="userBiography">{{usuario.biography}}</p>
                 {% endif %}           
-                <h4 class="createdAt">Se union en {{ usuario.created_at|date:"F" }} de {{ usuario.created_at|date:"Y" }}</h4>
+                <h4 class="createdAt"> <span data-section="profile" data-value="accountDate">Se union en </span> {{ usuario.created_at|date:"F" }} <span  data-section="profile" data-value="accountDateOf">de</span> {{ usuario.created_at|date:"Y" }}</h4>
                 <div class="webAndCreated">
                     
                     {% if usuario.birthday %}
@@ -166,9 +166,9 @@
 
                 <div class="followers-info">
                   
-                    <a href="#" class="cant_followers">{{cant_followers}} <span class="followSpan">seguidores</span></a>
+                    <a href="#" class="cant_followers">{{cant_followers}} <span class="followSpan"  data-section="profile" data-value="followers">seguidores</span></a>
                     
-                    <a href="#" class="following">{{cant_following}} <span  class="followSpan">siguiendo</span></a>
+                    <a href="#" class="following">{{cant_following}} <span  class="followSpan"  data-section="profile" data-value="following">siguiendo</span></a>
                 </div>
                 <div class="profileOpc">
                     <form action="{% url 'myProfile' usuario.id %}">
@@ -192,7 +192,7 @@
             <section class="modal">
                 <div class="modal_container">
                     <button href="#" class="modal_close">X</button>
-                    <h1>Seguidores</h1>
+                    <h1 data-section="profile" data-value="followers">Seguidores</h1>
                     <div class="seguidores">
             
                         {% for follower in followers %}
@@ -216,7 +216,7 @@
                                     <form action="{% url 'follow' id=follower.id %}" method="POST" id="followForm2">
                                         {% csrf_token %}
                                         <button class="button2 followButton {% if current_profile not in follower.followers_users.all %} follow {% else %} unfollowButton {% endif %}" onclick="follow(event, this)" tweet-id="{{follower.user.id}}" id="button2" >
-                                            <p>{% if current_profile not in follower.followers_users.all %} Follow {% else %} Unfollow {% endif %}</p>
+                                            <p data-section="profile" data-value="followButton">{% if current_profile not in follower.followers_users.all %} Follow {% else %} Unfollow {% endif %}</p>
                                         </button>
                                     </form>
                                 {% endif %}
@@ -233,7 +233,7 @@
             <section class="modal3">
                 <div class="modal_container3">
                     <button href="#" class="modal_close">X</button>
-                    <h1>Siguiendo</h1>
+                    <h1 data-section="profile" data-value="following">Siguiendo</h1>
                     <div class="siguiendo">
                         {% for follow in following %}
                             <div class="seguidor">

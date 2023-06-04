@@ -8,9 +8,8 @@ from .models import Tweet, TweetImage
 from profiles.models import Profiles, verfifyRequests
 from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
+from insult_detection.insult_detection import InsultDetector
 # Create your views here.
-
-
 
 # 1. IA 
 
@@ -18,10 +17,11 @@ from django.db.models import Q
 
 # 3. Optimizar codigo
 
-# Cosas que no hice: idiomas
-
+def banned(request):
+    return render(request, 'banned.html')
 
 def globalFeed(request):
+    
     current_profile = ""
     search = request.GET.get("searchUser")
     foryou = request.GET.get("foryou")
@@ -33,6 +33,8 @@ def globalFeed(request):
         users = Profiles.objects.all()
     if request.user.is_authenticated:
         current_profile = Profiles.objects.get(user__username = request.user.username)
+        if current_profile.banned:
+            return redirect('banned')
         followers = current_profile.followed_users.all()
         # tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
         tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(retwitted_by__in = followers) | Q(profile=current_profile),  tweet__parent_tweet=None)
@@ -42,12 +44,15 @@ def globalFeed(request):
 
     if str(foryou) == "":
         tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
-    return render(request, 'globalFeed.html',{
-            'form': forms.postTweet,
-            'tweets': tweets,        
-            'users': users,
-            'images': images
-    })
+        
+    context = {
+        'form': forms.postTweet,
+        'tweets': tweets,        
+        'users': users,
+        'images': images
+    }
+    
+    return render(request, 'globalFeed.html',context)
     
 @login_required
 def retweet(request, id):
@@ -108,19 +113,28 @@ def postTweet(request):
             'form': forms.postTweet
         })
     else:
-        
-        tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
-        for media in request.FILES.getlist('tweetImage'):
-            contenido = media.read().decode('latin-1')
-            if contenido[-3:] == "100":
-                TweetImage.objects.create(tweet=tweet, video=media)
-            else:
-                TweetImage.objects.create(tweet=tweet, image=media)
-        if request.FILES.getlist('tweetImage'):
-            Tweet_profile.objects.create(tweet = tweet, profile = current_profile, haveMultimedia = True)
+        detector = InsultDetector(model_path='insult_detection/model.h5', tokenizer_path='insult_detection/tokenizer.json', max_seq_length=5)
+        is_insult = detector.classify_text(request.POST['content'])
+        if is_insult >= 0.5:
+             current_profile.strikes -= 1
+             current_profile.save()
+             if current_profile.strikes <= 0:
+                 current_profile.banned = True
+                 current_profile.save()
+             return render(request, 'insultDetected.html')
         else:
-            Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
-        return redirect('/')
+            tweet = Tweet.objects.create(user = request.user, content = request.POST['content'])
+            for media in request.FILES.getlist('tweetImage'):
+                contenido = media.read().decode('latin-1')
+                if contenido[-3:] == "100":
+                    TweetImage.objects.create(tweet=tweet, video=media)
+                else:
+                    TweetImage.objects.create(tweet=tweet, image=media)
+            if request.FILES.getlist('tweetImage'):
+                Tweet_profile.objects.create(tweet = tweet, profile = current_profile, haveMultimedia = True)
+            else:
+                Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+            return redirect('/')
     
 @login_required
 def responseTweet(request, id):

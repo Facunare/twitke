@@ -30,21 +30,23 @@
                     Siguiendo
                 </button>
             </form>
+            {% if is_insult %}
+                <h1>DIOS MIO</h1>
+            {% endif %}
         </div>
         {% if not buscado %}
-            <form action="{% url 'postTweet' %}" method="POST" class="postTweetForm" enctype="multipart/form-data">
+            <form action="{% url 'postTweet' %}?return_url={{ request.path }}" method="POST" class="postTweetForm" enctype="multipart/form-data">
                 {% csrf_token %}
-                <textarea name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
+                <textarea data-section="first-section" data-value="placeholderArea" name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
                 
                 <div class="cosas" style="display: flex;  align-items: center;">
 
-                    <button id="miBoton" onclick="desactivarBoton()">
+                    <button id="miBoton" onclick="desactivarBoton()"  data-section="navbar" data-value="buttonTweet">
                         Twittear
                     </button>
                     <label for="tweetImage" class="attachment"><img src="{% static 'attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
                     <input type="file" name="tweetImage" multiple id="tweetImage" hidden>
                 </div>
-                
             </form>
         {% endif %}
     </div>
@@ -157,6 +159,7 @@
         <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
         <script src="{% static 'ajaxFollow.js' %}"></script>
         <script src="{% static 'toggle.js' %}"></script>
+
         <script src="{% static 'photoTweet.js' %}"></script>
 {% endblock content %}
 </html>

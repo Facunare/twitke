@@ -792,3 +792,31 @@ color: rgba(113, 118, 123, 1);;
     fill: green;
 }
 
+
+.insultDetected{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 10px;
+    box-shadow: 0 0 5px 1px #999;
+    border-radius: 20px;
+    gap: 10px;
+}
+
+.insultDetected form button{
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    background-color:rgb(29, 155, 240);
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    transition: .5s ease background-color;
+
+}
+
+.insultDetected form button:hover{
+    background-color: rgb(23, 124, 192);
+}

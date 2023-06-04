@@ -13,13 +13,13 @@
     <link rel="stylesheet" href="{% static 'verificate.css' %}">
     <link rel="stylesheet" href="{% static 'globalFeed.css' %}">
     <div class="users">
-        <h1>Verificar usuarios</h1>
+        <h1 data-section="verificate" data-value="title">Verificar usuarios</h1>
         <form action="" class="searchFormVerificate">
             <input type="text" name="searchUsers">
             <button><img src="{% static 'search-icon.svg' %}" alt=""></button>
         </form>
         {% if not users %}
-        <p class="notCoincidence">No hay solicitudes</p>
+        <p class="notCoincidence" data-section="verificate" data-value="withoutRequest">No hay solicitudes</p>
         <img src="{% static 'House searching-rafiki.svg' %}" alt="" class="notCoincidenceImg">
         {% endif %}
         {% for profile in users %}  
@@ -37,9 +37,9 @@
 
                     <form action="{% url 'verificateUser' profile.profile.id %}">
                         {% if profile.profile.is_verified %}
-                            <button class="button">Desverificar</button>
+                            <button class="button"  data-section="verificate" data-value="deverify">Desverificar</button>
                         {% else %}
-                            <button class="button">Verificar</button>
+                            <button class="button"  data-section="verificate" data-value="verify">Verificar</button>
                         {% endif%}
                     </form>
                     <form class="form"action="{% url 'deleteVerifyRequest' profile.profile.id %}">                      

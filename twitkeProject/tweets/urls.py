@@ -15,5 +15,6 @@ urlpatterns = [
     path('update/tweet/<int:id>', views.updateTweet, name="updateTweet"),
     path('retweet/<int:id>', views.retweet, name="retweet"),
     path("verificate/", views.verificate, name="verificate"),
-    path('verificate/user/<int:id>', views.verificateUser, name="verificateUser")
+    path('verificate/user/<int:id>', views.verificateUser, name="verificateUser"),
+    path('banned/', views.banned, name='banned'),
 ]

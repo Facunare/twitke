@@ -1,0 +1,53 @@
+{
+    "first-section": {
+        "title": "Home",
+        "foryou": "For you",
+        "follow": "Following",
+        "placeholderArea": "What are you thinking..."
+    },
+    "navbar":{
+        "whoFollow": "Who to follow?",
+        "mustSignin": "Login to see",
+        "whoFollowButton": "Follow",
+        "buttonTweet": "Tweet"
+    },
+    "signup":{
+        "title": "Signup",
+        "haveAccount": "Do you already have an account? Enter here",
+        "buttonLog": "SIGN UP",
+        "labelUser": "Username",
+        "labelPassword": "Password",
+        "labelConfirmPassword": "Confirm password",
+        "labelEmail": "Email"
+        
+    },
+    "signin":{
+        "title": "SignIn",
+        "haveAccount": "You do not have an account?. sign up here",
+        "forgotPassw": "I forgot my password",
+        "buttonSign": "SIGN IN"
+    },
+    "profile":{
+        "editButton": "Edit",
+        "accountDate": "Joined in",
+        "accountDateOf": "of",
+        "followers": "followers",
+        "following": "following",
+        "require": "require",
+        "required": "required",
+        "saveEdit": "Save",
+        "deverify": "Deverify",
+        "followButton": "Follow",
+        "withoutRequest": "There aren´t requests"
+
+    },
+    "keptTweets":{
+        "title": "Keep tweets",
+        "title2": "Save your favorite tweets to view them later"
+    },
+    "verificate":{
+        "title": "Verificate users",
+        "deverify": "Deverify",
+        "verify": "Verify"
+    }
+}

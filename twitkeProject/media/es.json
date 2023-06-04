@@ -2,7 +2,8 @@
     "first-section": {
         "title": "Inicio",
         "foryou": "Para tí",
-        "follow": "Siguiendo"
+        "follow": "Siguiendo",
+        "placeholderArea": "What are you thinking..."
     },
     "navbar":{
         "whoFollow": "A quien seguir?",
@@ -12,7 +13,13 @@
     },
     "signup":{
         "title": "Registrarse",
-        "haveAccount": "¿Ya tienes una cuenta?. Ingresa aqui"
+        "haveAccount": "¿Ya tienes una cuenta?. Ingresa aqui",
+        "buttonLog": "REGISTRARSE",
+
+        "labelUser": "Usuario",
+        "labelPassword": "Contraseña",
+        "labelConfirmPassword": "Confirmar contraseña",
+        "labelEmail": "Correo electronico"
     },
     "signin":{
         "title": "Iniciar sesion",
@@ -23,7 +30,14 @@
         "editButton": "Editar",
         "accountDate": "Se unio en",
         "followers": "seguidores",
-        "following": "siguiendo"
+        "following": "siguiendo",
+        "require": "Solicitar verificado",
+        "required": "Solicitado",
+        "saveEdit": "Guardar",
+        "deverify": "Desverificar",
+        "followButton": "Seguir",
+        "accountDateOf": "de",
+        "withoutRequest": "No hay solicitudes"
     },
     "keptTweets":{
         "title": "Tweets guardados",
@@ -31,6 +45,7 @@
     },
     "verificate":{
         "title": "Verificar usuarios",
-        "unverificate": "Desverificar"
+        "deverify": "Deverify",
+        "verify": "Verificar"
     }
 }

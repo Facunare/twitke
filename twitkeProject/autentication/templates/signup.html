@@ -18,25 +18,29 @@
             <form action="/signup/" method="POST" class="form-singup">
                 <h1 data-section="signup" data-value="title">Signup</h1>
                 {% csrf_token %}
-                <div class="input-div">
-                    <img src="{% static 'user.svg' %}" alt="">
-                    <input placeholder="Username" type="text" name="username" id="username" autocomplete="off" class="passwords">
+                <div class="form__group">
+                    <input type="text"class="form__input min" placeholder=" " 
+                    name="username">
+                    <label for="username" class="label_form"  autocomplete="on" data-section="signup" data-value="labelUser">Usuario</label>
                 </div>
-                <div class="input-div">
-                    <img src="{% static 'lock.svg' %}" alt="">
-                    <input placeholder="Password" type="password" name="password1" id="password1" autocomplete="off" class="passwords">
+                <div class="form__group">
+                    <input type="password" class="form__input min" placeholder=" " 
+                    name="password1">
+                    <label for="password1" class="label_form"   autocomplete="on" data-section="signup" data-value="labelPassword">Contraseña</label>
                 </div>
-                <div class="input-div">
-                    <img src="{% static 'lock.svg' %}" alt="">
-                    <input placeholder="Confirm Password" type="password" name="password2" id="password2" autocomplete="off">
+                <div class="form__group">
+                    <input type="password"  class="form__input min" placeholder=" " 
+                    name="password2">
+                    <label for="password2" class="label_form" autocomplete="on" data-section="signup" data-value="labelConfirmPassword">Confirmar contraseña</label>
                 </div>
-                <div class="input-div">
-                    <img src="{% static 'lock.svg' %}" alt="">
-                    <input placeholder="Email" type="email" name="email" id="email" autocomplete="off">
+                <div class="form__group">
+                    <input type="email" class="form__input min" placeholder=" " 
+                    name="email">
+                    <label for="email" class="label_form" autocomplete="on" data-section="signup" data-value="labelEmail">Correo electronico</label>
                 </div>
                 <div class="buttons">
 
-                    <button>
+                    <button  data-section="signup" data-value="buttonLog">
                         SIGN UP
                     </button>
                     <a href="{% provider_login_url 'google' %}" class="google-btn">
@@ -52,6 +56,7 @@
             {% endif %}
         </main>
         <script src="{% static 'validation.js' %}"></script>
+        
     {% endblock content %}
 
         

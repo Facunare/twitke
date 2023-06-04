@@ -22,6 +22,8 @@ class Profiles(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_verified = models.BooleanField(default=False)
     darkMode = models.BooleanField(default=False)
+    strikes = models.IntegerField(default=3)
+    banned = models.BooleanField(default=False)
     def __str__(self):
         return self.username
 

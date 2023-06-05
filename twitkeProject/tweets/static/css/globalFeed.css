@@ -820,3 +820,57 @@ color: rgba(113, 118, 123, 1);;
 .insultDetected form button:hover{
     background-color: rgb(23, 124, 192);
 }
+
+.dark-theme .insultDetected h1, .dark-theme .insultDetected p{
+    color:white;
+}
+
+.username{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+
+.usernameTweet{
+    margin: 0;
+    width: 100%;
+}
+
+.timeAgo{
+    font-size: 11px;
+    align-self: center;
+    margin-left: auto;
+    padding-right: 30px;
+}
+
+.fotito{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.tweet:hover{
+    background-color: rgba(253, 249, 249, 0.795);
+}
+
+.profilePhoto:hover{
+    filter: grayscale(.3);
+    transition: filter ease .3s;
+}
+
+.fotito{
+    margin: 0;
+}
+
+.username p{
+    font-size: 11px;
+}
+
+.fotoPerfil button{
+    width: auto;
+    margin: 0;
+}
+  .atName{
+    font-size: 13px;
+  }

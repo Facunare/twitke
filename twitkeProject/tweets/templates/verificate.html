@@ -10,17 +10,17 @@
 </head>
 {% block content %}
 <body >
-    <link rel="stylesheet" href="{% static 'verificate.css' %}">
-    <link rel="stylesheet" href="{% static 'globalFeed.css' %}">
+    <link rel="stylesheet" href="{% static 'css/verificate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/globalFeed.css' %}">
     <div class="users">
         <h1 data-section="verificate" data-value="title">Verificar usuarios</h1>
         <form action="" class="searchFormVerificate">
             <input type="text" name="searchUsers">
-            <button><img src="{% static 'search-icon.svg' %}" alt=""></button>
+            <button><img src="{% static 'img/search-icon.svg' %}" alt=""></button>
         </form>
         {% if not users %}
-        <p class="notCoincidence" data-section="verificate" data-value="withoutRequest">No hay solicitudes</p>
-        <img src="{% static 'House searching-rafiki.svg' %}" alt="" class="notCoincidenceImg">
+          <p class="notCoincidence" data-section="verificate" data-value="withoutRequest">No hay solicitudes</p>
+          <img src="{% static 'img/House searching-rafiki.svg' %}" alt="" class="notCoincidenceImg">
         {% endif %}
         {% for profile in users %}  
             <div class="user">
@@ -43,7 +43,7 @@
                         {% endif%}
                     </form>
                     <form class="form"action="{% url 'deleteVerifyRequest' profile.profile.id %}">                      
-                        <button class="buttonTrash"><img src="{% static 'delete_FILL0_wght400_GRAD0_opsz48.svg' %}"></button>
+                        <button class="buttonTrash"><img src="{% static 'img/delete_FILL0_wght400_GRAD0_opsz48.svg' %}"></button>
                     </form>
                 </div>
             </div>
@@ -51,44 +51,4 @@
         {% endfor %}
     </div>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const verificateButton = document.querySelectorAll('.buttonTrash');
-        console.log(verificateButton)
-        verificateButton.forEach(function(button) {
-          button.addEventListener('click', function(e) {
-            const url = this.getAttribute('href');
-            const Toast = Swal.mixin({
-              toast: true,
-              position: 'top-right',
-              iconColor: 'white',
-              customClass: {
-                popup: 'colored-toast'
-              },
-              showConfirmButton: false,
-              timer: 2500, // 2.5 segundos
-              timerProgressBar: true
-            })
-            Toast.fire({
-              icon: 'success',
-              title: 'Deleted'
-            }).then(function(result) {
-              setTimeout(function() {
-                if (result.isConfirmed) {
-                  window.location.href = url;
-                }
-              }, 1000);
-            });
-          });
-        });
-      });
-      
-</script> -->
-<style>
-    .colored-toast.swal2-icon-success {
-        background-color: red !important;
-        color: white;
-      }
-</style>
 {% endblock content %}

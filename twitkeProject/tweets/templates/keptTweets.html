@@ -10,7 +10,7 @@
   </head>
   <body>
     {% block content %}
-    <link rel="stylesheet" href="{% static 'globalFeed.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/globalFeed.css' %}" />
     <div class="containerKept">
       <div class="backNav">
                 
@@ -23,7 +23,7 @@
     </div>
       {% if keeps.all|length == 0 %}
           <h2 style="margin-top: 100px" data-section="keptTweets" data-value="title2">Guarda tus tweets favoritos para verlos más tarde</h2>
-          <img src="{% static 'New-Startup-idea-searching.svg' %}" style="transform: scale(.7)">
+          <img src="{% static 'img/New-Startup-idea-searching.svg' %}" style="transform: scale(.7)">
       {% else %}
         {% for tweet in keeps %}
             {% include 'Tweet.html' %}
@@ -74,13 +74,7 @@
             }
   </script>
   <style>
-    .div-content:last-child{
-      border-bottom: 1px solid black;   
-    }
-    
-    .atName{
-      font-size: 13px;
-    }
+
   </style>
   {% endblock %}
 </html>

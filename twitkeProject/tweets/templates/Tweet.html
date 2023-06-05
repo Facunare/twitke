@@ -1,9 +1,9 @@
 {% load static %}
-<a href="{% if tweet.tweet %}{% url 'tweetDetails' tweet.tweet.id %}{% else %}{% url 'tweetDetails' tweet.id %}{% endif %}" class="tweet">
+<a href="{% url 'tweetDetails' tweet.tweet.id %}" class="tweet">
     <div class="div-content" id="{{tweet.id}}">
         <div class="tweetHead">
             <div class="fotoPerfil">
-                <form action="{% if tweet.tweet %}{% url 'myProfile' tweet.profile.user.id %}{% else %}{% url 'myProfile' tweet.user.id %}{% endif %}">
+                <form action="{% url 'myProfile' tweet.profile.user.id %}">
 
                     {% if tweet.profile.profileImage %}
                     <button><img src="{{tweet.profile.profileImage.url}} " alt="" class="fotito profilePhoto"></button>
@@ -11,13 +11,13 @@
                     <button><svg class="profilePhoto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>ProfileIcon</title><circle cx="16" cy="16" r="16" fill="#666"/><path d="M12.73 13.1a3.271 3.271 0 1 1 3.27 3.2 3.237 3.237 0 0 1-3.27-3.2zm-2.73 9.069h1.088a4.91 4.91 0 0 1 9.818 0h1.094a5.884 5.884 0 0 0-3.738-5.434 4.238 4.238 0 0 0 2.1-3.635 4.366 4.366 0 0 0-8.73 0 4.238 4.238 0 0 0 2.1 3.635 5.878 5.878 0 0 0-3.732 5.434z" fill="#eee"/><path fill="none" d="M0 0h32v32h-32z"/></svg></button>
                     {% endif %}
                 </form>
-                <form action="{% if tweet.tweet %}{% url 'myProfile' tweet.profile.user.id %}{% else %}{% url 'myProfile' tweet.user.id %}{% endif %}" class="formName">
+                <form action="{% url 'myProfile' tweet.profile.user.id %}" class="formName">
                     
                     <div class="username">
-                        <button class="usernameTweet">{% if tweet.tweet %}{{tweet.tweet.user.username}}{% else %}{{tweet.user.username}}{% endif %}</button>
+                        <button class="usernameTweet">{{tweet.tweet.user.username}}</button>
                         {% if tweet.profile.is_verified %}
 
-                            <img src="{% static 'Twitter-Verified.svg' %}" alt="" style="width: 30px">
+                            <img src="{% static 'img/Twitter-Verified.svg' %}" alt="" style="width: 30px">
                         {% endif %}
                         
                         {% if tweet.tweet.edited %}
@@ -30,79 +30,47 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <p style="font-size: 12px">{% if tweet.tweet %} @{{tweet.profile.username}}{% else %}{{profile.username}}{% endif %}</p>
+                    <p style="font-size: 12px">@{{tweet.profile.username}}</p>
                 </form>
             </div>
             <div class="tweetOptions" style="z-index: 0">                         
                 <button  class="optionButtons" data="true"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48"><path d="M479.858 896Q460 896 446 881.858q-14-14.141-14-34Q432 828 446.142 814q14.141-14 34-14Q500 800 514 814.142q14 14.141 14 34Q528 868 513.858 882q-14.141 14-34 14Zm0-272Q460 624 446 609.858q-14-14.141-14-34Q432 556 446.142 542q14.141-14 34-14Q500 528 514 542.142q14 14.141 14 34Q528 596 513.858 610q-14.141 14-34 14Zm0-272Q460 352 446 337.858q-14-14.141-14-34Q432 284 446.142 270q14.141-14 34-14Q500 256 514 270.142q14 14.141 14 34Q528 324 513.858 338q-14.141 14-34 14Z"/></svg></button>
-                <div class="options" optionsId="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
-                    <ul>
-                        {% if tweet.profile %}
-                            {% if  tweet.profile.user.username == user.username %}
-                                <form action="{% url 'deleteTweet' tweet.tweet.id %}" class="deleteForm">
-                                    {% csrf_token %}
-                                    <button>
-                                        Delete
-                                    </button>
-                                </form>
-                               
-                                <form action="{% url 'updateTweet' tweet.tweet.id %}" method="POST" id="editTweetForm">
-                                    {% csrf_token %}
-                                    <button class="edits" onclick="edit(event, this, 'GET')" tweet-id="{{tweet.tweet.id}}">Editar</button>
+                <div class="options" optionsId="{{tweet.tweet.id}}">
+                    <ul>                      
+                        {% if  tweet.profile.user.username == user.username %}
+                            <form action="{% url 'deleteTweet' tweet.tweet.id %}" class="deleteForm">
+                                {% csrf_token %}
+                                <button>
+                                    Delete
+                                </button>
+                            </form>
+                            
+                            <form action="{% url 'updateTweet' tweet.tweet.id %}" method="POST" id="editTweetForm">
+                                {% csrf_token %}
+                                <button class="edits" onclick="edit(event, this, 'GET')" tweet-id="{{tweet.tweet.id}}">Editar</button>
 
-                                    <input type="hidden" name="tweet_id" value="{{tweet.tweet.id}}">
-                                </form>
+                                <input type="hidden" name="tweet_id" value="{{tweet.tweet.id}}">
+                            </form>
+                            {% else %}
+
+                                {% if current_user not in usuario.followers_users.all %}
+                                    <form action="{% url 'follow' id=tweet.profile.user.id %}?return_url={{ request.path }}" method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" class="followButton">Follow</button>
+                                    </form>
                                 {% else %}
-
-                                    {% if current_user not in usuario.followers_users.all %}
-                                        <form action="{% url 'follow' id=tweet.profile.user.id %}?return_url={{ request.path }}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="followButton">Follow</button>
-                                        </form>
-                                    {% else %}
-                                        <form action="{% url 'follow' id=tweet.profile.user.id %}?return_url={{ request.path }}" method="POST">
-                                            {% csrf_token %}
-                                            <button type="submit" class="followButton">Unfollow</button>
-                                        </form>
-                                    {% endif %} 
-                                
-                            {% endif %}
-                        {% else %}
-                            {% if usuario.username == user.username %}
-                                    <form action="{% url 'deleteTweet' tweet.id %}" class="deleteForm">
+                                    <form action="{% url 'follow' id=tweet.profile.user.id %}?return_url={{ request.path }}" method="POST">
                                         {% csrf_token %}
-                                        <button>
-                                            Delete
-                                        </button>
+                                        <button type="submit" class="followButton">Unfollow</button>
                                     </form>
-                                    
-                                    
-                                    <form action="{% url 'updateTweet' tweet.id %}" method="GET" id="editTweetForm">
-                                        {% csrf_token %}
-                                        <button class="edits" onclick="edit(event, this)" tweet-id="{{tweet.tweet.id}}">Editar</button>
-                                    </form>
-                                    {% else %}
-
-                                        {% if current_user not in usuario.followers_users.all %}
-                                            <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
-                                                {% csrf_token %}
-                                                <button type="submit" class="followButton">Follow</button>
-                                            </form>
-                                        {% else %}
-                                            <form action="{% url 'follow' id=tweet.user.id %}?return_url={{ request.path }}" method="POST">
-                                                {% csrf_token %}
-                                                <button type="submit" class="followButton">Unfollow</button>
-                                            </form>
-                                        {% endif %} 
-                                    
-                                {% endif %}
+                                {% endif %}                            
                         {% endif %}
                     </ul>
                 </div>
             </div>                                              
         </div>
         
-        <span class="tweetMessage">{% if tweet.tweet %}{{tweet.tweet.content}}{% else %}{{tweet.content}}{% endif %}</span>
+        <span class="tweetMessage">{{tweet.tweet.content}}</span>
         {% if tweet.tweet.images.all %}
         <div class="{% if tweet.tweet.images.all.count == 3 %} tresFotos {% elif tweet.tweet.images.all.count == 4 %} cuatroFotos {% endif %} fotos" style="{% if  tweet.tweet.images.all.count > 4 %} overflow-x: scroll; {% endif %}">
 
@@ -131,7 +99,7 @@
             <div class="buttones">
                 <div class="mensajes">
 
-                    <button class="msgButton" id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
+                    <button class="msgButton" id="{{tweet.tweet.id}}">
                         <svg class="msgSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
                             <path d="M0 0h24v24H0z" fill="none"/>
                             <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
@@ -145,9 +113,9 @@
                     {% endif %}
     
                 </div>
-                    <form action="{% if tweet.tweet %}{% url 'like' tweet.tweet.id %}{% else %}{% url 'like' tweet.id %}{% endif %}" class="likeForm" id="likeForm">
+                    <form action="{% url 'like' tweet.tweet.id %}" class="likeForm" id="likeForm">
                         {% csrf_token %}
-                        <button class="likeBtn" onclick="{% if user.is_authenticated %} like(event, this) {% endif %}" tweet-id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}" >
+                        <button class="likeBtn" onclick="{% if user.is_authenticated %} like(event, this) {% endif %}" tweet-id="{{tweet.tweet.id}}" >
 
                                 <svg class="likeSvg" {% if current_profile in tweet.likes_users.all %}fill="red"{% endif %}  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"><path  d="M0 0h24v24H0z" fill="none"/><path {% if current_profile in tweet.likes_users.all %}fill="red"{% endif %} d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>                    
                         </button>
@@ -159,7 +127,7 @@
                     </form>
                     
                     <form action="{% url 'retweet' tweet.tweet.id %}?next={{ request.path }}" class="retweetForm" id="retweetForm" style="display: flex; justify-content: center; align-items: center; "> 
-                        <button class="retweetBtn" onclick="{% if user.is_authenticated %} retweet(event, this) {% endif %}" tweet-id="{% if tweet.tweet %}{{tweet.tweet.id}}{% else %}{{tweet.id}}{% endif %}">
+                        <button class="retweetBtn" onclick="{% if user.is_authenticated %} retweet(event, this) {% endif %}" tweet-id="{{tweet.tweet.id}}">
                             
                             <svg class="retweetSvg" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" {% if tweet.tweet in current_profile.retweets.all %}fill="green"{% else %}fill="black"{% endif %}><path d="M0 0h24v24H0z" fill="none"/><path  {% if tweet.tweet in current_profile.retweets.all %}fill="green"{% endif %} d="M19 8l-4 4h3c0 3.31-2.69 6-6 6-1.01 0-1.97-.25-2.8-.7l-1.46 1.46C8.97 19.54 10.43 20 12 20c4.42 0 8-3.58 8-8h3l-4-4zM6 12c0-3.31 2.69-6 6-6 1.01 0 1.97.25 2.8.7l1.46-1.46C15.03 4.46 13.57 4 12 4c-4.42 0-8 3.58-8 8H1l4 4 4-4H6z"/></svg>                             
                             
@@ -178,7 +146,7 @@
                         </button>
                     </form>
                 
-                    <p class="timeAgo">{% if tweet.tweet %}{{tweet.tweet.created_at|timesince}} ago {% else %}{{tweet.created_at|timesince}}{% endif %}</p>                       
+                    <p class="timeAgo">{{tweet.tweet.created_at|timesince}} ago</p>                       
             </div>
 
             
@@ -190,7 +158,7 @@
 <section class="modal modalMsg">
     <div class="modal_container">
         <button href="#" class="modal_close">X</button>
-        <form action="{% if tweet.tweet %}{% url 'responseTweet' tweet.tweet.id %}{% else %}{% url 'responseTweet' tweet.id %}{% endif %}" method="POST" class="formResponse" > 
+        <form action="{% url 'responseTweet' tweet.tweet.id %}" method="POST" class="formResponse" > 
             {% csrf_token %}
             <input type="text" class="response" name="contentResponse" placeholder="Twittea tu respuesta..." autocomplete="off">
             <button class="responseButton">
@@ -316,53 +284,5 @@
     
      
 </script>
-<script src="{% static 'ajaxUpdateTweet.js' %}"></script>
-<script src="{% static 'ajaxRetweet.js' %}"></script>
-<style>
-    .username{
-    display: flex;
-    width: 100%;
-    align-items: center;
-}
-
-
-.usernameTweet{
-    margin: 0;
-    width: 100%;
-}
-
-.timeAgo{
-    font-size: 11px;
-    align-self: center;
-    margin-left: auto;
-    padding-right: 30px;
-}
-
-.fotito{
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-}
-
-.tweet:hover{
-    background-color: rgba(253, 249, 249, 0.795);
-}
-
-.profilePhoto:hover{
-    filter: grayscale(.3);
-    transition: filter ease .3s;
-}
-
-.fotito{
-    margin: 0;
-}
-
-.username p{
-    font-size: 11px;
-}
-
-.fotoPerfil button{
-    width: auto;
-    margin: 0;
-}
-</style>
+<script src="{% static 'js/ajaxUpdateTweet.js' %}"></script>
+<script src="{% static 'js/ajaxRetweet.js' %}"></script>

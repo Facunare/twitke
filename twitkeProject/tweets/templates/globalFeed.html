@@ -10,8 +10,8 @@
     </head>
     
     {% block content %}
-    <link rel="stylesheet" href="{% static 'globalFeed.css' %}" />
-    <link rel="stylesheet" href="{% static 'User.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/globalFeed.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/User.css' %}" />
     
     <div class="container-1">
         
@@ -44,7 +44,7 @@
                     <button id="miBoton" onclick="desactivarBoton()"  data-section="navbar" data-value="buttonTweet">
                         Twittear
                     </button>
-                    <label for="tweetImage" class="attachment"><img src="{% static 'attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
+                    <label for="tweetImage" class="attachment"><img src="{% static 'img/attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
                     <input type="file" name="tweetImage" multiple id="tweetImage" hidden>
                 </div>
             </form>
@@ -66,7 +66,7 @@
             {% endfor %}
             
             {% if error %}
-                <img src="{% static '8331572.jpg' %}" alt="" class="notFoundImage">
+                <img src="{% static 'img/8331572.jpg' %}" alt="" class="notFoundImage">
                 <h1 class="notCoincidence">No se encontraron coincidencias</h1>
             {% endif %}
 
@@ -156,10 +156,10 @@
         
              
         </script>
-        <script src="{% static 'ajaxUpdateTweet.js' %}"></script>
-        <script src="{% static 'ajaxFollow.js' %}"></script>
-        <script src="{% static 'toggle.js' %}"></script>
+        <script src="{% static 'js/ajaxUpdateTweet.js' %}"></script>
+        <script src="{% static 'js/ajaxFollow.js' %}"></script>
+        <script src="{% static 'js/toggle.js' %}"></script>
 
-        <script src="{% static 'photoTweet.js' %}"></script>
+        <script src="{% static 'js/photoTweet.js' %}"></script>
 {% endblock content %}
 </html>

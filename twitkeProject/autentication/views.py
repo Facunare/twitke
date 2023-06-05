@@ -7,10 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, authenticate
 from profiles.models import Profiles
-# Create your views here.
-
 from allauth.socialaccount.models import SocialAccount
-
 from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect

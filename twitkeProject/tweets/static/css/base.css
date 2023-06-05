@@ -307,3 +307,42 @@ ul li a{
 .modalTwittear{
     display: none;
 }
+
+.current{
+    margin-top: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease background-color;
+  }
+
+  .current:hover{
+    background-color: rgb(51, 51, 51);
+  }
+
+  .navbar-1{
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .twittearButton button{
+    padding: 15px 50px;
+    margin-top: 15px;
+    background-color: rgb(29, 155, 240);
+    border-radius: 40px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    transition: .5s ease background-color;
+  }
+
+  .twittearButton button:hover{
+    background-color: rgb(23, 124, 192);
+  }
+  .navbar-1 ul{
+    height: 100%;
+  
+  }

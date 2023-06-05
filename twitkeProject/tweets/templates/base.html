@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
     <title>Buy</title>
   </head>
   <body class="{% if current_profile.darkMode %}dark-theme{% endif %}">
@@ -14,27 +14,27 @@
       <nav class="navbar-1">
           <ul>
             <h1 style="font-size: 50px">Twitke</h1>
-            <li><a href="{% url 'globalFeed' %}"><img  class="img-ul" src="{% static 'home_FILL0_wght400_GRAD0_opsz48.svg' %}"></a><li>
+            <li><a href="{% url 'globalFeed' %}"><img  class="img-ul" src="{% static 'img/home_FILL0_wght400_GRAD0_opsz48.svg' %}"></a><li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
-            <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
+            <li><a href="{% url 'myProfile' user.id %}"><img class="img-ul"  src="{% static 'img/person_FILL0_wght400_GRAD0_opsz48.svg'%}" ></a></li>
+            <li><a href="{% url 'keeped' user.id %}"><img class="img-ul"  src="{% static 'img/bookmark_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
               {% if user.is_staff %}
-              <li><a class="verificateNav" href="{% url 'verificate' %}"><img  class="img-ul" src="{% static 'verify-verified-check-icon.svg' %}"></a></li>
+              <li><a class="verificateNav" href="{% url 'verificate' %}"><img  class="img-ul" src="{% static 'img/verify-verified-check-icon.svg' %}"></a></li>
               {% endif %}
-              <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
+              <li><a href="{% url 'logout' %}"><img  class="img-ul" src="{% static 'img/logout_FILL0_wght400_GRAD0_opsz48.svg' %}"></a></li>
               {% else %}
               
               
-              <li class="signupButton"><a href="{% url 'signup' %}" ><img  class="img-ul" src="{% static 'register-14.svg' %}"></a></li>
-              <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'login-svgrepo-com.svg' %}"></a></li>
+              <li class="signupButton"><a href="{% url 'signup' %}" ><img  class="img-ul" src="{% static 'img/register-14.svg' %}"></a></li>
+              <li class="signinButton"><a href="{% url 'signin' %}"><img  class="img-ul" src="{% static 'img/login-svgrepo-com.svg' %}"></a></li>
               
               {% endif %}
               {% comment %} <div class="flags" id="flags">
                 <div class="flags__item" data-language="es" style="width:20px">
-                    <img src="{% static 'es.svg' %}" alt="" class="flags__img" style="width:20px; cursor: pointer;">
+                    <img src="{% static 'img/es.svg' %}" alt="" class="flags__img" style="width:20px; cursor: pointer;">
                 </div>
                 <div class="flags__item" data-language="en" style="width:20px">
-                  <img src="{% static 'gb.svg' %}" alt="" class="flags__img" style="width:20px; cursor: pointer;">
+                  <img src="{% static 'img/gb.svg' %}" alt="" class="flags__img" style="width:20px; cursor: pointer;">
               </div>
             </div> {% endcomment %}
 
@@ -89,7 +89,7 @@
             <div class="search-container">
               <input type="text" class="searchbar" name="search" placeholder="Buscar">
               <button type="submit" class="search-button">
-                <img src="{% static '1093183.svg' %}" alt="">
+                <img src="{% static 'img/1093183.svg' %}" alt="">
               </button>
             </div>
           </form>
@@ -143,7 +143,7 @@
                 <button id="miBoton" onclick="desactivarBoton()">
                     Twittear
                 </button>
-                <label for="tweetImage" class="attachment"><img src="{% static 'attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
+                <label for="tweetImage" class="attachment"><img src="{% static 'img/attachment-pin-icon.svg' %}" alt="" style="width: 15px; display: flex;"></label>
                 <input type="file" name="tweetImage" multiple id="tweetImage" hidden>
             </div>
             
@@ -151,7 +151,7 @@
       </div>
   </section>
   </body>
-  <script src="{% static 'changeLanguage.js' %}"></script>
+  <script src="{% static 'js/changeLanguage.js' %}"></script>
   <script>
 
     const twittearButton = document.querySelector('.twittearButton')
@@ -211,45 +211,5 @@
 
 
   </script>
-  <style>
-    .current{
-      margin-top: auto;
-      margin-bottom: 20px;
-      padding: 10px;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: .3s ease background-color;
-    }
-
-    .current:hover{
-      background-color: rgb(51, 51, 51);
-    }
-
-    .navbar-1{
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-      
-    }
-    .twittearButton button{
-      padding: 15px 50px;
-      margin-top: 15px;
-      background-color: rgb(29, 155, 240);
-      border-radius: 40px;
-      color: white;
-      border: none;
-      cursor: pointer;
-      outline: none;
-      transition: .5s ease background-color;
-    }
-
-    .twittearButton button:hover{
-      background-color: rgb(23, 124, 192);
-    }
-    .navbar-1 ul{
-      height: 100%;
-    
-    }
-  </style>
 </html>
 

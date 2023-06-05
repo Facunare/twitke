@@ -11,7 +11,7 @@ from django.db.models import Q
 from insult_detection.insult_detection import InsultDetector
 # Create your views here.
 
-# 1. IA 
+# 1. Unban function 
 
 # 2. Diseño final
 
@@ -140,8 +140,6 @@ def postTweet(request):
 def responseTweet(request, id):
     current_profile = Profiles.objects.get(user__username = request.user.username)
     tweetOriginal = Tweet_profile.objects.get(tweet_id = id)
-    print("-----------------")
-    print(tweetOriginal)
     if request.method == "POST":
         tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'], parent_tweet = id)
         Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
@@ -243,8 +241,7 @@ def verificate(request):
 
     
 @staff_member_required
-def verificateUser(request, id):
-    
+def verificateUser(request, id):   
     user = Profiles.objects.get(id = id)
     if user.is_verified:
         user.is_verified = False

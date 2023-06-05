@@ -1,6 +1,12 @@
 {% load static %}
 <a href="{% url 'tweetDetails' tweet.tweet.id %}" class="tweet">
     <div class="div-content" id="{{tweet.id}}">
+        {% if tweet.parent_tweet %}
+            <form action="{% url 'tweetDetails' tweet.parent_tweet.tweet.id %}" class="inResponse">
+
+                <button style="font-size: 13px;">En respuesta a @{{tweet.parent_tweet.profile.username}}</button>
+            </form>
+        {% endif %}
         <div class="tweetHead">
             <div class="fotoPerfil">
                 <form action="{% url 'myProfile' tweet.profile.user.id %}">

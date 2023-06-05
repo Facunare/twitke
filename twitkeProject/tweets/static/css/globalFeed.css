@@ -6,6 +6,7 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    border-bottom: 1px solid black;
 }
 .containerKept{
     display: flex;
@@ -874,3 +875,14 @@ color: rgba(113, 118, 123, 1);;
   .atName{
     font-size: 13px;
   }
+
+.inResponse button:hover{
+    text-decoration: underline 1px black;
+}
+
+.inResponse button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}

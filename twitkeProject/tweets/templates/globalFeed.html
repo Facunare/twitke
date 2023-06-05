@@ -30,14 +30,11 @@
                     Siguiendo
                 </button>
             </form>
-            {% if is_insult %}
-                <h1>DIOS MIO</h1>
-            {% endif %}
         </div>
         {% if not buscado %}
             <form action="{% url 'postTweet' %}?return_url={{ request.path }}" method="POST" class="postTweetForm" enctype="multipart/form-data">
                 {% csrf_token %}
-                <textarea data-section="first-section" data-value="placeholderArea" name="content" placeholder="Que estas pensando..." cols="57" rows="10" required="" id="id_content" spellcheck="false" {% if tweets %} style="border-bottom: none;" {% else %} style="border-bottom: 1px solid black;" {% endif %}></textarea>
+                <textarea data-section="first-section" data-value="placeholderArea" name="content" placeholder="Que estas pensando..." cols="27" rows="10" required="" id="id_content" spellcheck="false"></textarea>
                 
                 <div class="cosas" style="display: flex;  align-items: center;">
 

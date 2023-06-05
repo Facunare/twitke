@@ -15,8 +15,6 @@ from insult_detection.insult_detection import InsultDetector
 
 # 2. Diseño final
 
-# 3. Optimizar codigo
-
 def banned(request):
     return render(request, 'banned.html')
 
@@ -36,14 +34,13 @@ def globalFeed(request):
         if current_profile.banned:
             return redirect('banned')
         followers = current_profile.followed_users.all()
-        # tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(profile=current_profile), tweet__parent_tweet=None)
-        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(retwitted_by__in = followers) | Q(profile=current_profile),  tweet__parent_tweet=None)
+        tweets = Tweet_profile.objects.filter(Q(profile__in=followers) | Q(retwitted_by__in = followers) | Q(profile=current_profile),  parent_tweet=None)
         
     else:
-        tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
+        tweets = Tweet_profile.objects.all().filter(parent_tweet = None)
 
     if str(foryou) == "":
-        tweets = Tweet_profile.objects.all().filter(tweet__parent_tweet = None)
+        tweets = Tweet_profile.objects.all().filter(parent_tweet = None)
         
     context = {
         'form': forms.postTweet,
@@ -141,8 +138,8 @@ def responseTweet(request, id):
     current_profile = Profiles.objects.get(user__username = request.user.username)
     tweetOriginal = Tweet_profile.objects.get(tweet_id = id)
     if request.method == "POST":
-        tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'], parent_tweet = id)
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile)
+        tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'])
+        Tweet_profile.objects.create(tweet = tweet, profile = current_profile, parent_tweet = tweetOriginal)
         tweetOriginal.tweet.responses += 1
         tweetOriginal.save()
         tweetOriginal.tweet.save()
@@ -150,8 +147,9 @@ def responseTweet(request, id):
     
 
 def tweetDetails(request, id):
-    tweet = Tweet_profile.objects.all().filter(tweet__parent_tweet = id)
-    parent_tweet = Tweet_profile.objects.get(tweet_id = id)
+    parent_tweet = Tweet_profile.objects.get(tweet__id = id)
+    tweet = Tweet_profile.objects.all().filter(parent_tweet= parent_tweet)
+    print(parent_tweet)
     profile = Profiles.objects.get(id=parent_tweet.profile.user.id)
     likes = parent_tweet.likes_users.all()
     return render(request, 'tweetDetail.html',{

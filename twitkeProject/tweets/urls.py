@@ -17,4 +17,7 @@ urlpatterns = [
     path("verificate/", views.verificate, name="verificate"),
     path('verificate/user/<int:id>', views.verificateUser, name="verificateUser"),
     path('banned/', views.banned, name='banned'),
+    path('unban/', views.unban, name='unban'),
+    path('unban/user/<int:id>', views.unbanUser, name="unbanUser"),
+    path('deleteUnbanRequest/<int:id>/delete,', views.deleteUnbanRequest, name="deleteUnbanRequest"),
 ]

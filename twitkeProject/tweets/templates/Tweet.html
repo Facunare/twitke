@@ -4,7 +4,7 @@
         {% if tweet.parent_tweet %}
             <form action="{% url 'tweetDetails' tweet.parent_tweet.tweet.id %}" class="inResponse">
 
-                <button style="font-size: 13px;">En respuesta a @{{tweet.parent_tweet.profile.username}}</button>
+                <button style="font-size: 13px;">En respuesta a @{{tweet.parent_tweet.profile.atName}}</button>
             </form>
         {% endif %}
         <div class="tweetHead">
@@ -36,7 +36,7 @@
                             {% endif %}
                         {% endfor %}
                     </div>
-                    <p style="font-size: 12px">@{{tweet.profile.username}}</p>
+                    <p style="font-size: 12px">@{{tweet.profile.atName}}</p>
                 </form>
             </div>
             <div class="tweetOptions" style="z-index: 0">                         

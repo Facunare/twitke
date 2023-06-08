@@ -2,6 +2,7 @@ const form = document.querySelector('.form-singup')
 const username = document.querySelector('#username')
 const password = document.querySelector('#password1')
 const password2 = document.querySelector('#password2')
+const email = document.querySelector('#email')
 let passwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
 
 username.addEventListener('input', e => {
@@ -36,6 +37,17 @@ password2.addEventListener('input', e => {
       }
 })
 
+const regexWebSite = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+email.addEventListener('input', e => {
+    
+    if (!regexWebSite.test(email.value)) {
+      email.style.border = '1px solid red';
+    } else {
+      email.style.border = '1px solid green';
+    }
+})
+
 
 
 form.addEventListener("submit", e => {
@@ -49,6 +61,9 @@ form.addEventListener("submit", e => {
       entrar = true;
     }
   
+    if (!regexWebSite.test(email.value)) {
+      entrar = true;
+    } 
     if (!entrar) {
       form.submit();
     }

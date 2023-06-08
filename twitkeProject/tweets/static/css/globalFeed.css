@@ -793,6 +793,10 @@ color: rgba(113, 118, 123, 1);;
     fill: green;
 }
 
+.retweetSvg path:first-child:hover{
+    fill: green;
+}
+
 
 .insultDetected{
     display: flex;
@@ -886,3 +890,83 @@ color: rgba(113, 118, 123, 1);;
     cursor: pointer;
     outline: none;
 }
+
+.dark-theme .inResponse button{
+    color: white;
+}
+
+.dark-theme .inResponse button:hover{
+    text-decoration: underline 1px white;
+}
+
+.retweetBtn:hover > .retweetSvg path:last-child{
+    fill: green;
+}
+
+
+.unbanForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+}
+
+.unbanForm textarea{
+    width: 100%;
+    outline: none;
+    resize: none;
+}
+
+.unbanForm button{
+    padding: 5px;
+    margin-top: 20px;
+    background-color: #1a73e8;
+    color: white;
+    cursor: pointer;
+    border: none;
+    transition: .3s ease background-color, .3s ease box-shadow;
+    width: 100px;
+}
+
+.unbanForm button:hover{
+    background-color: #1b66c8;
+    box-shadow: 0 1px .3px .5px #c4c2c2;
+}
+
+  .banned-div{
+    box-shadow: 0 0 5px 1px #999;
+    border-radius: 20px;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    height: auto;
+    width: 40rem;
+  }
+
+  .banned-div input[type="submit"]{
+        padding: 5px;
+        margin-top: 20px;
+        background-color: rgb(224, 8, 8);
+        width: 100px;
+        color: white;
+        cursor: pointer;
+        border: none;
+        transition: .3s ease background-color, .3s ease box-shadow;
+    }
+
+  .banned-div input[type="submit"]:hover{
+      background-color: rgb(180, 5, 5);
+      box-shadow: 0 1px .3px .5px #c4c2c2;
+  }
+
+  .unbanForm .buttons{
+    display: inline;
+
+  }
+  
+  .banned-div p{
+    margin-top: 20px;
+  }

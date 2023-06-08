@@ -5,18 +5,15 @@ from django.contrib.admin.views.decorators import staff_member_required
 from . import forms
 from django.http import JsonResponse
 from .models import Tweet, TweetImage
-from profiles.models import Profiles, verfifyRequests
+from profiles.models import Profiles, verfifyRequests, unbanRequests
 from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
 from insult_detection.insult_detection import InsultDetector
-# Create your views here.
 
-# 1. Unban function 
 
 # 2. Diseño final
 
-def banned(request):
-    return render(request, 'banned.html')
+# 3. Optimizacion codigo
 
 def globalFeed(request):
     
@@ -138,12 +135,22 @@ def responseTweet(request, id):
     current_profile = Profiles.objects.get(user__username = request.user.username)
     tweetOriginal = Tweet_profile.objects.get(tweet_id = id)
     if request.method == "POST":
-        tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'])
-        Tweet_profile.objects.create(tweet = tweet, profile = current_profile, parent_tweet = tweetOriginal)
-        tweetOriginal.tweet.responses += 1
-        tweetOriginal.save()
-        tweetOriginal.tweet.save()
-        return redirect(f'/tweet/detail/{id}')
+        detector = InsultDetector(model_path='insult_detection/model.h5', tokenizer_path='insult_detection/tokenizer.json', max_seq_length=5)
+        is_insult = detector.classify_text(request.POST['contentResponse'])
+        if is_insult >= 0.5:
+             current_profile.strikes -= 1
+             current_profile.save()
+             if current_profile.strikes <= 0:
+                 current_profile.banned = True
+                 current_profile.save()
+             return render(request, 'insultDetected.html')
+        else:            
+            tweet = Tweet.objects.create(user = request.user, content = request.POST['contentResponse'])
+            Tweet_profile.objects.create(tweet = tweet, profile = current_profile, parent_tweet = tweetOriginal)
+            tweetOriginal.tweet.responses += 1
+            tweetOriginal.save()
+            tweetOriginal.tweet.save()
+            return redirect(f'/tweet/detail/{id}')
     
 
 def tweetDetails(request, id):
@@ -230,12 +237,13 @@ from django.contrib.auth.models import User
 def verificate(request):
     searchUsers = request.GET.get("searchUsers")
     if searchUsers:
-        users = verfifyRequests.objects.filter(profile__username__icontains = searchUsers).all()
+        users = verfifyRequests.objects.filter(profile__atName__icontains = searchUsers).all()
     else:
         users = verfifyRequests.objects.all()
     return render(request, 'verificate.html',{
         'users': users
     })
+
 
     
 @staff_member_required
@@ -247,3 +255,57 @@ def verificateUser(request, id):
         user.is_verified = True
     user.save()
     return redirect('verificate')
+
+@staff_member_required
+def unbanUser(request, id):   
+    user = Profiles.objects.get(id = id)
+    if user.banned:
+        user.banned = False
+        user.strikes = 3
+        unban_req = unbanRequests.objects.get(profile_id = id)
+        unban_req.delete()
+    else:
+        user.banned = True
+    user.save()
+    return redirect('unban')
+
+
+@staff_member_required
+def unban(request):
+    searchUsers = request.GET.get("searchUsers")
+    if searchUsers:
+        users = unbanRequests.objects.filter(profile__atName__icontains = searchUsers).all()
+    else:
+        users = unbanRequests.objects.all()
+    return render(request, 'unban.html',{
+        'users': users
+    })
+    
+@login_required
+def deleteUnbanRequest(request, id):
+    unban_req = unbanRequests.objects.get(profile_id = id)
+    unban_req.delete()
+    return redirect('unban')
+
+@login_required
+def unbanRequest(request, id):
+    profile = Profiles.objects.get(id = id)
+    unbanRequests.objects.create(profile = profile, reason = request.POST['reason'])
+    return_url = request.GET.get('return_url')
+    if return_url:
+        return redirect(return_url)
+    return redirect('myProfile', id=id)
+
+def banned(request):
+    solicitudes = unbanRequests.objects.all()
+    requested = False
+    current_profile = Profiles.objects.get(user__username=request.user.username)
+    for soli in solicitudes:
+        if soli.profile == current_profile:
+            requested = True
+        else:
+            requested = False
+    print(requested)
+    return render(request, 'banned.html',{
+        'requested': requested,
+    })

@@ -9,7 +9,7 @@ class BannedMiddleware:
     def __call__(self, request):
         if request.user.is_authenticated:
             current_profile = Profiles.objects.get(user__username=request.user.username)
-            if current_profile.banned and not request.path.startswith(reverse('logout'))  and not request.path.startswith(reverse('banned')):
+            if current_profile.banned and not request.path.startswith(reverse('logout')) and not request.path.startswith(reverse('banned')) and not request.path.startswith('/unbanRequest/') and not request.path.startswith('/admin/'):
                 return redirect('banned')
 
         response = self.get_response(request)

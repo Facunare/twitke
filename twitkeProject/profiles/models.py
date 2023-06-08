@@ -7,7 +7,7 @@ from tweets.models import Tweet
 
 class Profiles(models.Model):
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE )
-    username = models.CharField(max_length=30, null=True, default="")
+    atName = models.CharField(max_length=30, null=True, default="")
     keeps = models.ManyToManyField(Tweet, related_name='kept_by_profiles', blank=True)
     retweets = models.ManyToManyField(Tweet, related_name='retweets_by_profiles', blank=True)
     biography = models.TextField(max_length=250,  null=True, default="", blank=True)
@@ -25,8 +25,12 @@ class Profiles(models.Model):
     strikes = models.IntegerField(default=3)
     banned = models.BooleanField(default=False)
     def __str__(self):
-        return self.username
+        return self.atName
 
 class verfifyRequests(models.Model):
     profile = models.ForeignKey(Profiles, null=True, on_delete=models.CASCADE)
+    
+class unbanRequests(models.Model):
+    profile = models.ForeignKey(Profiles, null=True, on_delete=models.CASCADE)
+    reason =  models.TextField(max_length=250,  null=True, default="", blank=True)
     

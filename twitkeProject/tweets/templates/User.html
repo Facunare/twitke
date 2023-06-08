@@ -7,7 +7,7 @@
     <form action="{% url 'myProfile' profile.user.id %}" class="formUserName">
         <button class="usernameTweet" style="color:white"><p>{{profile.user.username}}</p></button>
     </form>
-    <p class="atName" >@{{profile.username}}</p>
+    <p class="atName" >@{{profile.atName}}</p>
     <p>{{profile.biography}}</p>
     {% if current_profile.id != profile.id %}
     <form action="{% url 'follow' id=profile.user.id %}" id="followForm4" method="POST">

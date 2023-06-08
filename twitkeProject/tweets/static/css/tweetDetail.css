@@ -108,7 +108,7 @@
 
 
 
-.modal, .modal_likes{
+.modal, .modal_likes, .modal_retweets{
     position: fixed;
     top: 0;
     left: 0;
@@ -122,7 +122,7 @@
     pointer-events: none;
 }
 
-.modal_container, .modal_container_likes{
+.modal_container, .modal_container_likes, .modal_container_retweets{
     width: 90%;
     background-color: white;
     margin: auto;
@@ -359,6 +359,9 @@
     cursor: pointer;
 }
 
+.retweetsCount{
+    cursor: pointer;
+}
 .likeDiv{
     border: 1px solid black;
     padding: 3px;

@@ -30,7 +30,7 @@
 
                     
                     {% if is_self %}
-                        {% if usuario.followers >= 999 and not usuario.is_verified%}
+                        {% if usuario.followers >= 999 and not usuario.is_verified %}
                         
                         <form action="{% url 'verifyRequest' usuario.id %}?return_url={{ request.path }}">
                         
@@ -143,7 +143,7 @@
                     {% endif %}
                     
                 </div>
-                <h4 class="atName">@{{usuario.username}}</h4>    
+                <h4 class="atName">@{{usuario.atName}}</h4>    
                 {% if usuario.biography %}
                     <p class="userBiography">{{usuario.biography}}</p>
                 {% endif %}           
@@ -208,7 +208,7 @@
                                         <form action="{% url 'myProfile' follower.user.id %}">
                                             <button class="usernameTweet">{{follower.user.username}}</button>
                                         </form>
-                                        <p class="atNameProfile">@{{follower.username}}</p>
+                                        <p class="atNameProfile">@{{follower.atName}}</p>
                                     </div>
                                 </div>
                                 
@@ -247,7 +247,7 @@
                                         <form action="{% url 'myProfile' follow.user.id %}">
                                             <button class="usernameTweet">{{follow.user.username}}</button>
                                         </form>
-                                        <p class="atNameProfile">@{{follow.username}}</p>
+                                        <p class="atNameProfile">@{{follow.atName}}</p>
                                     </div>
 
                                 </div>  

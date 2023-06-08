@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect    
 from django.contrib.auth.models import User
-from .models import Profiles, Tweet, verfifyRequests
+from .models import Profiles, Tweet, verfifyRequests, unbanRequests
 from datetime import datetime
 from tweet_profiles.models import Tweet_profile
 # Create your views here.
@@ -122,11 +122,16 @@ def verifyRequest(request, id):
         return redirect(return_url)
     return redirect('myProfile', id=id)
 
+
+
+
 @login_required
 def deleteVerifyRequest(request, id):
     verify_req = verfifyRequests.objects.get(profile_id = id)
     verify_req.delete()
     return redirect('verificate')
+
+
 
 @login_required
 def darkMode(request):
@@ -139,3 +144,13 @@ def darkMode(request):
         current_profile.darkMode = True
     current_profile.save()
     return JsonResponse({'darkMode': current_profile.darkMode})
+
+@login_required
+def unbanRequest(request, id):
+    print(id)
+    profile = Profiles.objects.get(id = id)
+    unban = unbanRequests.objects.create(profile = profile, reason = request.POST['reason'])
+    return_url = request.GET.get('return_url')
+    if return_url:
+        return redirect(return_url)
+    return redirect('myProfile', id=id)

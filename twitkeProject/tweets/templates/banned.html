@@ -1,4 +1,4 @@
-{% extends 'base.html' %}{% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -8,10 +8,50 @@
     <title>Buy</title>
     
 </head>
-{% block content %}
+
 <body >
     <link rel="stylesheet" href="{% static 'css/globalFeed.css' %}">
-    <h1>Estas baneado</h1>
-   
+    <div class="banned-div">
+
+      <h1>Tu cuenta ha sido baneada</h1>
+      <p>Ya no podras utilizar esta cuenta, ya que fue inhablitada por infringir las normas</p>
+      {% if current_profile.banned %}
+        
+        <form action="{% url 'unbanRequest' current_profile.id %}?return_url={{ request.path }}" method="POST" class="unbanForm">   
+          {% csrf_token %}                  
+            {% if requested %}
+            <div class="buttons">
+
+              
+              <button class="verifyButton" style="pointer-events: none" data-section="profile" data-value="required">Solicitado</button>
+            </div>
+            {% else %}
+            <textarea  name="reason" id="" cols="60" rows="10" style="resize: none; width: auto;" placeholder="¿Porque deberia ser desbaneado?"></textarea>
+                <div class="buttons">
+
+                  <button>Solicitar</button>
+                </div>
+                {% endif %}        
+              </form>
+              <form action="{% url 'logout' %}">
+                <input type="submit" value="Cerrar sesion">
+              </form>
+       
+      {% endif %}
+      
+    </div>
 </body>
-{% endblock content %}
+<style>
+  *{
+    font-family: 'Roboto', sans-serif;
+  }
+  body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+  
+</style>

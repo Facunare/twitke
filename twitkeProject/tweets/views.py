@@ -10,11 +10,6 @@ from tweet_profiles.models import Tweet_profile
 from django.db.models import Q
 from insult_detection.insult_detection import InsultDetector
 
-
-# 2. Diseño final
-
-# 3. Optimizacion codigo
-
 def globalFeed(request):
     
     current_profile = ""

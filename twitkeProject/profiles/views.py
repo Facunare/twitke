@@ -83,12 +83,12 @@ def updateProfile(request, id):
         if request.POST['input-name']:
             print(request.POST['input-name'])
             for perfil in profiles:
-                if perfil.username == str(request.POST['input-name']):
+                if perfil.atName == str(request.POST['input-name']):
                     print('Ese nombre esta en uso')
                     used = True
                     return JsonResponse({'is_used': used})
                 else:
-                    profile.username = str(request.POST['input-name'])
+                    profile.atName = str(request.POST['input-name'])
                     
                 
                     

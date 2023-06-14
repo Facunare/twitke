@@ -970,3 +970,7 @@ color: rgba(113, 118, 123, 1);;
   .banned-div p{
     margin-top: 20px;
   }
+
+  .containerKept .div-content:last-child{
+    border-bottom: 1px solid black;
+  }

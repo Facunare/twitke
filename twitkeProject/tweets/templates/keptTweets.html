@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Buy</title>
+    <title>Twitke - guardados</title>
     
   </head>
   <body>
@@ -20,7 +20,7 @@
             
             <h3 data-section="keptTweets" data-value="title">Tweets guardados</h3>
         </div>
-    </div>
+    </div class="keptTweets">
       {% if keeps.all|length == 0 %}
           <h2 style="margin-top: 100px" data-section="keptTweets" data-value="title2">Guarda tus tweets favoritos para verlos más tarde</h2>
           <img src="{% static 'img/New-Startup-idea-searching.svg' %}" style="transform: scale(.7)">
@@ -74,7 +74,7 @@
             }
   </script>
   <style>
-
+    
   </style>
   {% endblock %}
 </html>
